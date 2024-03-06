@@ -1,0 +1,42 @@
+$base:(
+  colorPrimary: #1677ff,
+  colorError: #ff4d4f,
+  colorWarning: #faad14,
+  colorSuccess: #52c41a,
+  colorInfo: #1677ff,
+);
+
+$themes:(
+  "dark":(
+    colorBgBase: #031B3F,
+    colorBgElevated: #253269,
+    colorBgLayout: #314D79,
+    colorTextBase: #fff,
+    colorCover: #002f70,
+    colorShadow: #22447a,
+  ),
+  "light":(
+    colorBgBase: #fff,
+    colorBgElevated: #fff,
+    colorBgLayout: #f5f5f5,
+    colorTextBase: #333,
+    colorCover: #d6e7ff,
+    colorShadow: #efefef,
+  ),
+);
+
+@mixin themeMixin {
+  @each $themeName, $map in $themes {
+    $themeName: $themeName !global; // 全局变量供函数调用，如果无需全局调用，可不写!global
+    $themeMap:map-merge($map, $base) !global; // 全局变量供函数调用
+    // 新定义一个类
+    .theme-#{$themeName} {
+      @content; // 插入位置
+    }
+  }
+}
+
+// 从主题色map中取出对应颜色
+@function theme($themeAttribute) {
+  @return map-get($themeMap, $themeAttribute);
+}
