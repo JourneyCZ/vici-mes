@@ -1,20 +1,20 @@
 <template>
   <div class="header-container">
-    <a-switch
+    <el-switch
       class="header-theme-check"
-      v-model:checked="themeChecked"
+      v-model="themeChecked"
+      inline-prompt
+      :active-icon="MoonNight"
+      :inactive-icon="Sunny"
       @change="themeChange"
-    >
-      <template #checkedChildren><CheckOutlined /></template>
-      <template #unCheckedChildren><CloseOutlined /></template>
-    </a-switch>
+    />
   </div>
 </template>
 
 <script setup>
 import { ref, computed } from 'vue'
 import { useStore } from 'vuex'
-import { CheckOutlined, CloseOutlined } from '@ant-design/icons-vue'
+import { Sunny, MoonNight } from '@element-plus/icons-vue'
 
 const emit = defineEmits(['themeChange'])
 
@@ -37,7 +37,7 @@ function themeChange (checked) {
   background: rgba($color: #000000, $alpha: 0);
 
   .header-theme-check {
-    margin-left: 20px;
+    display: none;
   }
 }
 </style>

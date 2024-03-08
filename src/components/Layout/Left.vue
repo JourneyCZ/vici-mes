@@ -1,45 +1,72 @@
 <template>
-  <div class="left-container">
+  <div :class="['left-container', { 'left-collapsed': Collapsed }]">
     <div class="left-logo-title">
       <div class="left-logo"></div>
       <div class="left-title">MES-制造执行系统</div>
     </div>
-    <a-menu
+    <el-menu
       class="left-menu"
-      v-model:openKeys="openKeys"
-      v-model:selectedKeys="current"
-      style="width: 256rem"
-      mode="inline"
-      :items="menus"
-      @click="menuClick"
-    ></a-menu>
+      :default-active="current"
+      :router="true"
+      :collapse="Collapsed"
+      @select="menuSelect"
+    >
+      <template
+        v-for="menu in menus"
+        :key="menu.value"
+      >
+        <el-sub-menu
+          v-if="menu.children"
+          :index="menu.value"
+        >
+          <template #title>
+            <span>{{ menu.label }}</span>
+          </template>
+          <el-menu-item
+            v-for="child in menu.children"
+            :key="child.value"
+            :index="child.value"
+          >{{ child.label }}</el-menu-item>
+        </el-sub-menu>
+        <el-menu-item
+          v-else
+          :index="menu.value"
+        >{{ menu.label }}</el-menu-item>
+      </template>
+    </el-menu>
   </div>
 </template>
 
 <script setup>
-import { ref, watch } from 'vue'
+import { ref, watch, computed } from 'vue'
 import { useRouter, useRoute } from 'vue-router'
+import { useStore } from 'vuex'
+
+// 获取状态管理仓库
+const store = useStore()
+
+// 菜单折叠
+const Collapsed = computed(() => store.state.base.collapsed)
 
 // 菜单
-const current = ref(['home'])
+const current = ref('/home')
 const menus = ref([
   {
-    key: '/mes/home',
+    value: '/home',
     label: '首页',
-    title: '首页'
   },
   {
-    key: '/mes/sale',
+    value: '/sale',
     label: '销售管理',
     title: '销售管理',
     children: [
       {
-        key: '/mes/sale/order',
+        value: '/sale/order',
         label: '销售订单',
         title: '销售订单'
       },
       {
-        key: '/mes/sale/customer',
+        value: '/sale/customer',
         label: '客户管理',
         title: '客户管理'
       }
@@ -50,13 +77,13 @@ const menus = ref([
 // 监听路由变化，改变当前选中菜单
 const route = useRoute()
 watch(() => route.path, newPath => {
-  current.value = [newPath]
+  current.value = newPath
 })
 
-// 点击菜单，触发路由跳转
+// 菜单选择，触发路由跳转
 const router = useRouter()
-function menuClick (menu) {
-  router.push(menu.key)
+function menuSelect (menu) {
+  router.push(menu.value)
 }
 </script>
 
@@ -69,35 +96,47 @@ function menuClick (menu) {
       display: flex;
       align-items: center;
       justify-content: center;
-      padding: 6rem 0;
+      padding: 16px 20px;
 
       .left-logo {
-        width: 22rem;
-        height: 22rem;
+        width: 26px;
+        height: 26px;
         background: url('@/assets/images/logo.svg') no-repeat center/100% 100%;
-        margin-right: 6rem;
+        margin-right: 8px;
       }
 
       .left-title {
-        font-weight: 600;
-        font-size: 18rem;
+        font-size: 20px;
+        line-height: 26px;
         color: #fff;
       }
     }
 
-    .left-menu {
-      font-size: 12rem;
+    :deep(.left-menu) {
       color: #fff;
       background-color: rgba(0, 0, 0, 0);
 
-      :deep(.ant-menu-item-active),  :deep(.ant-menu-item-selected) {
-        color: #fff;
-        background-color: #1890ff !important;
+      .el-menu {
+        background-color: rgba(0, 0, 0, 0);
       }
 
-      :deep(.ant-menu-submenu-active), :deep(.ant-menu-submenu-selected>.ant-menu-submenu-title) {
-        color: #fff;
+      .el-menu-item,
+      .el-sub-menu__title {
+        font-size: 16px;
+        color: #fff !important;
       }
+
+      .el-menu-item.is-active,
+      .el-menu-item:hover,
+      .el-sub-menu__title:hover {
+        color: #fff !important;
+        background-color: #1890ff !important;
+      }
+    }
+  }
+  .left-collapsed {
+    .left-title {
+      display: none;
     }
   }
 }

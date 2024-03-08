@@ -4,13 +4,22 @@ const router = createRouter({
   history: createWebHistory(),
   routes: [
     {
-      path: '/mes',
-      redirect: '/mes/home'
+      path: '/',
+      redirect: '/home'
     },
     {
-      path: '/mes/home',
+      path: '/home',
       name: '首页',
-      component: () => import('../views/home/index.vue')
+      component: () => import('@/views/home/index.vue')
+    },
+    {
+      path: '/sale',
+      redirect: '/order'
+    },
+    {
+      path: '/sale/order',
+      name: '销售订单',
+      component: () => import('@/views/sale/order/index.vue')
     }
   ]
 })

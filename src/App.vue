@@ -7,7 +7,4 @@ import Layout from '@/components/Layout/index.vue'
 </template>
 
 <style scoped lang="scss">
-h1 {
-  font-size: 64rem;
-}
 </style>

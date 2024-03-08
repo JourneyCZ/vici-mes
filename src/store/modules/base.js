@@ -1,15 +1,14 @@
 const base = {
   state: () => ({
-    theme: 'light'
+    theme: 'light',
+    collapsed: false
   }),
   mutations: {
-    setTheme (state, theme) {
-      state.theme = theme
-    }
-  },
-  getters: {
-    getTheme (state) {
-      return state.theme
+    setTheme (state, value) {
+      state.theme = value
+    },
+    setCollapsed (state, value) {
+      state.collapsed = value
     }
   }
 }

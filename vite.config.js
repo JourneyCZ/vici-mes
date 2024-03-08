@@ -9,6 +9,10 @@ const __dirname = path.dirname(__filename)
 
 // https://vitejs.dev/config/
 export default defineConfig({
+  server: {
+    port: 8888, // 设置服务启动端口号
+    open: true, // 设置服务启动时是否自动打开浏览器
+  },
   plugins: [
     vue(),
     eslintPlugin({

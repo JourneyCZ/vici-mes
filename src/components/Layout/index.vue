@@ -1,27 +1,25 @@
 <template>
-  <a-config-provider
-    :theme="{
-      algorithm: antdvAlgorithm,
-    }"
-  >
-    <div :class="['theme-base', themeClass]">
+  <div :class="['theme-base', themeClass]">
+    <el-config-provider :locale="zhCn">
       <div class="page-container">
-          <Left class="page-left" />
+        <Left class="page-left" />
         <div class="page-main">
           <Header class="page-header" @themeChange="themeChange" />
-          <router-view class="page-body" />
+          <div class="page-body">
+            <router-view />
+          </div>
         </div>
       </div>
-    </div>
-  </a-config-provider>
+    </el-config-provider>
+  </div>
 </template>
 
 <script setup>
 import { computed } from 'vue'
 import { useStore } from 'vuex'
-import { theme as antdvTheme } from 'ant-design-vue'
 import Header from './Header.vue'
 import Left from './Left.vue'
+import zhCn from 'element-plus/dist/locale/zh-cn.mjs'
 
 // 获取状态管理仓库
 const store = useStore()
@@ -32,9 +30,6 @@ const themeClass = computed(() => `theme-${theme.value}`)
 function themeChange (value) {
   store.commit('setTheme', value)
 }
-
-// ant-design-vue 主题
-const antdvAlgorithm = computed(() => theme.value === 'dark' ? antdvTheme.darkAlgorithm : antdvTheme.defaultAlgorithm)
 </script>
 
 <style lang="scss" scoped>
@@ -53,20 +48,6 @@ const antdvAlgorithm = computed(() => theme.value === 'dark' ? antdvTheme.darkAl
     transition-property: background-color;
     transition: background-color 0.6s;
 
-    .page-header {
-      width: 100%;
-      height: 64px;
-      padding: 0 20rem;
-    }
-
-    .page-body {
-      flex: auto;
-      display: flex;
-      justify-content: space-between;
-      width: 100%;
-      overflow: hidden;
-    }
-
     .page-left {
       flex: none;
       overflow-x: hidden;
@@ -75,10 +56,28 @@ const antdvAlgorithm = computed(() => theme.value === 'dark' ? antdvTheme.darkAl
 
     .page-main {
       flex: auto;
-      min-width: 100px;
+      display: flex;
+      flex-direction: column;
       background-color: theme('colorBgLayout');
-      overflow-x: hidden;
-      overflow-y: auto;
+      overflow: hidden;
+
+      .page-header {
+        box-sizing: border-box;
+        width: 100%;
+        height: 46px;
+        background-color: theme('colorBgElevated');
+        padding: 0 20px;
+      }
+
+      .page-body {
+        flex: auto;
+        box-sizing: border-box;
+        width: 100%;
+        height: 10%;
+        overflow-x: hidden;
+        overflow-y: auto;
+        padding: 20px;
+      }
     }
   }
 }
