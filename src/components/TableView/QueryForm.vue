@@ -1,12 +1,72 @@
+<template>
+  <div class="query-form-container">
+    <!-- 查询表单 -->
+    <el-form
+      ref="QueryForm"
+      class="query-form"
+      :model="query"
+    >
+      <!-- 表单项 -->
+      <div class="query-form-items">
+        <slot name="FormItems" :query="query"></slot>
+        <!-- 折叠表单项 -->
+        <div class="query-form-fold-items" v-show="!folded">
+          <slot name="FoldedItems" :query="query"></slot>
+        </div>
+      </div>
+      <!-- 表单按钮 -->
+      <div class="query-form-buttons">
+        <el-button type="primary" @click="submit">搜索</el-button>
+        <el-button @click="reset">重置</el-button>
+      </div>
+    </el-form>
+    <!-- 表单-折叠操作栏 -->
+    <div class="query-form-handle">
+      <el-icon
+        class="query-form-fold-icon"
+        @click="folded = !folded"
+      >
+        <ArrowDown v-if="folded" />
+        <ArrowUp v-else />
+      </el-icon>
+    </div>
+  </div>
+</template>
+
+<script setup>
+import { ref, defineProps, defineEmits } from 'vue'
+
+const { query } = defineProps({
+  query: {
+    type: Object,
+    default () {
+      return {}
+    }
+  }
+})
+const emits = defineEmits('submit', 'reset')
+
+// 表单折叠
+const folded = ref(true)
+
+// 表单搜索
+function submit () {
+  emits('submit', query)
+}
+
+// 表单重置
+const QueryForm = ref()
+function reset () {
+  QueryForm.value.resetFields()
+  emits('reset', query)
+}
+</script>
+
+<style lang="scss" scoped>
 @include themeMixin {
-  .view-container {
+  .query-form-container {
     display: flex;
     flex-direction: column;
-    box-sizing: border-box;
-    width: 100%;
-    height: 100%;
-    background-color: theme('colorBgElevated');
-    padding: 20px;
 
     // 查询表单
     :deep(.query-form) {
@@ -15,7 +75,7 @@
       width: 100%;
 
       // 表单项
-      .query-form-items,
+      &>.query-form-items,
       .query-form-fold-items {
         flex: auto;
         display: flex;
@@ -84,24 +144,6 @@
       }
     }
 
-    // 数据表格-操作栏
-    .data-table-handle {
-      display: flex;
-      justify-content: space-between;
-      margin-bottom: 10px;
-
-      :deep(.el-button .el-icon) {
-        margin-right: 6px;
-      }
-    }
-
-    // 数据表格
-    :deep(.data-table) {
-      flex: auto;
-
-      .data-table-header {
-        background-color: rgb(245, 247, 250);
-      }
-    }
   }
 }
+</style>
