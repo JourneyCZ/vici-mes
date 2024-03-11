@@ -50,8 +50,8 @@ function themeChange (value) {
 
     .page-left {
       flex: none;
-      overflow-x: hidden;
-      overflow-y: auto;
+      width: 250px;
+      overflow: hidden;
     }
 
     .page-main {
@@ -81,4 +81,4 @@ function themeChange (value) {
     }
   }
 }
-</style>./Left.vue
+</style>
