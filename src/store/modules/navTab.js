@@ -5,15 +5,16 @@ const navTab = {
         value: '/home',
         label: '首页',
       },
-      {
-        value: '/dashboard',
-        label: '智能驾驶舱',
-      },
     ],
   }),
   mutations: {
-    setTabs (state, value) {
-      state.tabs = value
+    setTabs (state, tabs) {
+      state.tabs = tabs
+    },
+    addTab (state, tab) {
+      if (state.tabs.findIndex(item => item.value === tab.value) === -1) {
+        state.tabs.push(tab)
+      }
     },
   }
 }

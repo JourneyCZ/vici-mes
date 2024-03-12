@@ -9,7 +9,6 @@
       :default-active="current"
       :router="true"
       :collapse="Collapsed"
-      @select="menuSelect"
     >
       <template
         v-for="menu in menus"
@@ -26,11 +25,13 @@
             v-for="child in menu.children"
             :key="child.value"
             :index="child.value"
+            @click="menuClick(child)"
           >{{ child.label }}</el-menu-item>
         </el-sub-menu>
         <el-menu-item
           v-else
           :index="menu.value"
+          @click="menuClick(menu)"
         >{{ menu.label }}</el-menu-item>
       </template>
     </el-menu>
@@ -38,9 +39,9 @@
 </template>
 
 <script setup>
-import { ref, watch, computed } from 'vue'
-import { useRouter, useRoute } from 'vue-router'
+import { ref, computed, watchEffect } from 'vue'
 import { useStore } from 'vuex'
+import { useRoute } from 'vue-router'
 
 // 获取状态管理仓库
 const store = useStore()
@@ -49,7 +50,12 @@ const store = useStore()
 const Collapsed = computed(() => store.state.base.collapsed)
 
 // 菜单
-const current = ref('/home')
+const current = ref()
+const route = useRoute()
+console.log('route', route.fullPath)
+watchEffect(() => {
+  current.value = route.path
+})
 const menus = ref([
   {
     value: '/home',
@@ -225,16 +231,10 @@ const menus = ref([
   },
 ])
 
-// 监听路由变化，改变当前选中菜单
-const route = useRoute()
-watch(() => route.path, newPath => {
-  current.value = newPath
-})
-
-// 菜单选择，触发路由跳转
-const router = useRouter()
-function menuSelect (menu) {
-  router.push(menu.value)
+// 菜单点击
+function menuClick (menu) {
+  current.value = menu.value
+  store.commit('addTab', menu)
 }
 </script>
 
