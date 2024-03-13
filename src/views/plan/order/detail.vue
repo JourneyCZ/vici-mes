@@ -26,11 +26,11 @@
         </el-select>
       </el-form-item>
       <el-form-item
-        label="销售编号"
-        prop="orderNumber"
+        label="计划编号"
+        prop="planNumber"
       >
         <el-input
-          v-model="formData.orderNumber"
+          v-model="formData.planNumber"
           placeholder="可填写，忽略将自动生成"
           clearable
         />
@@ -89,7 +89,7 @@
 import { ref, computed, defineProps, defineEmits } from 'vue'
 
 // 弹窗数据
-const dialogTitle = ref('销售订单信息')
+const dialogTitle = ref('计划订单信息')
 const DetailFormRef = ref()
 const formData = ref({})
 

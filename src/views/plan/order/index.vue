@@ -8,66 +8,43 @@
     >
       <!-- 表单项 -->
       <template #FormItems="{ query }">
-        <el-form-item label="销售编号" prop="orderNumber">
+        <el-form-item label="计划编号" prop="planNumber">
           <el-input
-            v-model="query.orderNumber"
-            placeholder="请输入销售编号"
+            v-model="query.planNumber"
+            placeholder="请输入计划编号"
           />
         </el-form-item>
-        <el-form-item label="客户名称" prop="custumerName">
-          <el-input
-            v-model="query.custumerName"
-            placeholder="请输入客户名称"
+        <el-form-item label="计划开始时间" prop="planStartTimeArr">
+          <el-date-picker
+            v-model="query.planStartTimeArr"
+            type="daterange"
+            value-format="YYYY-MM-DD"
+            start-placeholder="开始日期"
+            end-placeholder="结束日期"
           />
         </el-form-item>
-        <el-form-item label="订单类型" prop="orderType">
-          <el-select
-            v-model="query.orderType"
-          >
-            <el-option
-              v-for="item in orderTypes"
-              :key="item.value"
-              :value="Number(item.value)"
-            >
-              {{ item.label }}
-            </el-option>
-          </el-select>
+        <el-form-item label="计划结束时间" prop="planEndTimeArr">
+          <el-date-picker
+            v-model="query.planEndTimeArr"
+            type="daterange"
+            value-format="YYYY-MM-DD"
+            start-placeholder="开始日期"
+            end-placeholder="结束日期"
+          />
         </el-form-item>
       </template>
       <!-- 表单折叠项 -->
       <template #FoldedItems="{ query }">
-        <el-form-item label="订单金额" prop="orderAmountMin">
-          <el-input-number
-            v-model="query.orderAmountMin"
-            :min="0"
-            :max="query.orderAmountMax"
-            controls-position="right"
-            placeholder="请输入最小值"
-          />
-          <div :span="2" class="query-form-separator">-</div>
-          <el-input-number
-            v-model="query.orderAmountMax"
-            :min="query.orderAmountMin"
-            controls-position="right"
-            placeholder="请输入最大值"
+        <el-form-item label="产品名称" prop="productionName">
+          <el-input
+            v-model="query.productionName"
+            placeholder="请输入产品名称"
           />
         </el-form-item>
-        <el-form-item label="交货时间" prop="deliveryTimeArr">
-          <el-date-picker
-            v-model="query.deliveryTimeArr"
-            type="daterange"
-            value-format="YYYY-MM-DD"
-            start-placeholder="开始日期"
-            end-placeholder="结束日期"
-          />
-        </el-form-item>
-        <el-form-item label="创建时间" prop="createTimeArr">
-          <el-date-picker
-            v-model="query.createTimeArr"
-            type="daterange"
-            value-format="YYYY-MM-DD"
-            start-placeholder="开始日期"
-            end-placeholder="结束日期"
+        <el-form-item label="销售编号" prop="orderNumber">
+          <el-input
+            v-model="query.orderNumber"
+            placeholder="请输入销售编号"
           />
         </el-form-item>
       </template>
@@ -82,7 +59,7 @@
           @click="handleDetail('add')"
         >
           <el-icon><Plus /></el-icon>
-          添加销售订单
+          添加计划订单
         </el-button>
         <el-button type="warning" plain>
           <el-icon><Download /></el-icon>
@@ -147,20 +124,13 @@ import { ref } from 'vue'
 /**
  * 查询表单
  */
-// 订单类型
-const orderTypes = ref([
-  { value: '1', label: '订单类型1' },
-  { value: '2', label: '订单类型2' }
-])
 // 表单数据
 const query = ref({
+  planNumber: null, // 计划编号
+  planStartTimeArr: [], // 计划开始时间
+  planEndTimeArr: [], // 计划结束时间
+  productionName: null, // 产品名称
   orderNumber: null, // 销售编号
-  custumerName: null, // 客户名称
-  orderType: null, // 订单类型
-  orderAmountMin: undefined, // 订单金额-最小值
-  orderAmountMax: undefined, // 订单金额-最大值
-  deliveryTimeArr: [], // 交货时间
-  createTimeArr: [], // 创建时间
 })
 // 表单搜索
 function querySubmit (newQuery) {
@@ -183,7 +153,11 @@ const tableCols = ref([
     minWidth: '180px',
     fixed: 'left',
   }, {
-    prop: 'saleNum',
+    prop: 'planNumber',
+    label: '计划编号',
+    minWidth: '180px',
+  }, {
+    prop: 'orderNumber',
     label: '销售编号',
     minWidth: '180px',
   }, {
@@ -209,10 +183,6 @@ const tableCols = ref([
   }, {
     prop: 'planTimeEnd',
     label: '计划结束时间',
-    minWidth: '180px',
-  }, {
-    prop: 'orderType',
-    label: '订单类型',
     minWidth: '180px',
   }, {
     prop: 'merchandiserName',
@@ -256,8 +226,7 @@ const tableCols = ref([
 const tableData = ref([
   {
     cusotmerName: '李总',
-    saleNum: 'ORDER1001',
-    productList: '阀门',
+    planNumber: 'PLAN1001',
   }
 ])
 // 表格分页

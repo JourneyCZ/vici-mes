@@ -22,6 +22,10 @@
         width: calc(50% - 20px);
         margin-right: 20px;
 
+        &.full-item {
+          width: calc(100% - 20px);
+        }
+
         .el-input,
         .el-input-number {
           width: 100%;

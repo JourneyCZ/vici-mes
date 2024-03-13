@@ -66,6 +66,10 @@ function tabChange (path) {
 function tabRemove (path) {
   const newTabs = tabs.value.filter(item => item.path !== path)
   store.commit('setTabs', newTabs)
+  if (path === route.path) {
+    // 移除当前标签页，则跳转到最后一个标签页
+    router.push(newTabs?.slice(-1)[0]?.path)
+  }
 }
 </script>
 

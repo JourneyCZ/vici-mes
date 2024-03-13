@@ -5,6 +5,7 @@
       ref="QueryFormRef"
       class="query-form"
       :model="query"
+      :label-width="labelWidth"
     >
       <!-- 表单项 -->
       <div class="query-form-items">
@@ -42,6 +43,10 @@ const { query } = defineProps({
     default () {
       return {}
     }
+  },
+  labelWidth: {
+    type: String,
+    default: 'auto'
   }
 })
 const emits = defineEmits('submit', 'reset')

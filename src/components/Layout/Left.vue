@@ -53,14 +53,14 @@ const current = ref()
 const route = useRoute()
 watchEffect(() => {
   const { path, name } = route
-  if (path !== '/') {
+  if (path !== current.value && path !== '/') {
     current.value = path
     store.commit('addTab', { path, name })
   }
 })
 
 // 从路由中获取菜单
-const menus = routes
+const menus = ref(routes)
 </script>
 
 <style lang="scss" scoped>

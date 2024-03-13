@@ -26,47 +26,77 @@
         </el-select>
       </el-form-item>
       <el-form-item
-        label="销售编号"
-        prop="orderNumber"
+        label="客户编号"
+        prop="custumerNumber"
       >
         <el-input
-          v-model="formData.orderNumber"
+          v-model="formData.custumerNumber"
           placeholder="可填写，忽略将自动生成"
           clearable
         />
       </el-form-item>
       <el-form-item
-        label="订单类型"
+        label="客户类型"
         prop="orderType"
       >
         <el-select
           v-model="formData.orderType"
-          placeholder="请选择订单类型"
+          placeholder="请选择客户类型"
           clearable
         >
-          <el-option value="1">订单类型1</el-option>
-          <el-option value="2">订单类型2</el-option>
+          <el-option value="1">客户类型1</el-option>
+          <el-option value="2">客户类型2</el-option>
         </el-select>
       </el-form-item>
       <el-form-item
-        label="订单金额"
-        prop="orderAmount"
+        label="客户职位"
+        prop="custumerPosition"
       >
-        <el-input-number
-          v-model="formData.orderAmount"
-          :min="0"
-          controls-position="right"
-          placeholder="请输入订单金额"
+        <el-input
+          v-model="formData.custumerPosition"
+          placeholder="请输入客户职位"
           clearable
         />
       </el-form-item>
       <el-form-item
-        label="跟单员"
-        prop="merchandiserId"
+        label="联系人"
+        prop="contactName"
       >
         <el-input
-          v-model="formData.merchandiserId"
-          placeholder="请输入跟单员"
+          v-model="formData.contactName"
+          placeholder="请输入联系人"
+          clearable
+        />
+      </el-form-item>
+      <el-form-item
+        label="联系方式"
+        prop="contactWay"
+      >
+        <el-input
+          v-model="formData.contactWay"
+          placeholder="请输入联系方式"
+          clearable
+        />
+      </el-form-item>
+      <el-form-item
+        class="full-item"
+        label="对公账号"
+        prop="publicAccount"
+      >
+        <el-input
+          v-model="formData.publicAccount"
+          placeholder="请输入对公账号"
+          clearable
+        />
+      </el-form-item>
+      <el-form-item
+        class="full-item"
+        label="地址"
+        prop="address"
+      >
+        <el-input
+          v-model="formData.address"
+          placeholder="请输入地址"
           clearable
         />
       </el-form-item>
@@ -89,7 +119,7 @@
 import { ref, computed, defineProps, defineEmits } from 'vue'
 
 // 弹窗数据
-const dialogTitle = ref('销售订单信息')
+const dialogTitle = ref('客户信息')
 const DetailFormRef = ref()
 const formData = ref({})
 
