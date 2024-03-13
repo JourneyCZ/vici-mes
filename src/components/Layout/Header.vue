@@ -13,17 +13,18 @@
     </div>
     <!-- 标签页 -->
     <el-tabs
+      v-model="activeTab"
       class="header-tabs"
       type="card"
-      editable
+      @tab-change="tabChange"
       @tab-remove="tabRemove"
     >
       <el-tab-pane
         v-for="item in tabs"
-        :key="item.value"
-        :name="item.value"
-        :label="item.label"
-        :closable="item.value !== '/index'"
+        :key="item.path"
+        :name="item.path"
+        :label="item.name"
+        :closable="item.path !== '/home'"
       >
         {{ item.content }}
       </el-tab-pane>
@@ -32,8 +33,9 @@
 </template>
 
 <script setup>
-import { ref, computed } from 'vue'
+import { ref, watch, computed } from 'vue'
 import { useStore } from 'vuex'
+import { useRoute, useRouter } from 'vue-router'
 import { Sunny, MoonNight } from '@element-plus/icons-vue'
 
 const emit = defineEmits(['themeChange'])
@@ -49,9 +51,20 @@ function themeChange (checked) {
 }
 
 // 标签页
+const route = useRoute()
+const router = useRouter()
+const activeTab = ref(route.path)
+watch(() => route.path, newPath => {
+  activeTab.value = newPath
+})
 const tabs = computed(() => store.state.navTab.tabs)
-function tabRemove (name) {
-  const newTabs = tabs.value.filter(item => item.value !== name)
+// 标签页-切换
+function tabChange (path) {
+  router.push(path)
+}
+// 标签页-移除
+function tabRemove (path) {
+  const newTabs = tabs.value.filter(item => item.path !== path)
   store.commit('setTabs', newTabs)
 }
 </script>
@@ -78,10 +91,6 @@ function tabRemove (name) {
     .el-tabs__header {
       border: none;
       margin: 0;
-
-      .el-tabs__new-tab {
-        display: none;
-      }
     }
   }
 }
