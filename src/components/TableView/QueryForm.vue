@@ -2,7 +2,7 @@
   <div class="query-form-container">
     <!-- 查询表单 -->
     <el-form
-      ref="QueryForm"
+      ref="QueryFormRef"
       class="query-form"
       :model="query"
     >
@@ -55,9 +55,9 @@ function submit () {
 }
 
 // 表单重置
-const QueryForm = ref()
+const QueryFormRef = ref()
 function reset () {
-  QueryForm.value.resetFields()
+  QueryFormRef.value?.resetFields()
   emits('reset', query)
 }
 </script>

@@ -2,7 +2,6 @@
   <div class="view-container">
     <!-- 查询表单 -->
     <QueryForm
-      ref="QueryForm"
       :query="query"
       @submit="querySubmit"
       @reset="queryReset"
@@ -77,7 +76,11 @@
     <!-- 数据表格-操作栏 -->
     <div class="data-table-handle">
       <div class="data-table-handle-left">
-        <el-button type="primary" plain>
+        <el-button
+          type="primary"
+          plain
+          @click="handleDetail('add')"
+        >
           <el-icon><Plus /></el-icon>
           添加销售订单
         </el-button>
@@ -119,11 +122,26 @@
         </template>
       </el-table-column>
     </el-table>
+    <el-pagination
+      class="data-table-page"
+      v-model:current-page="page.current"
+      v-model:page-size="page.size"
+      :page-sizes="page.sizes"
+      layout="total, sizes, prev, pager, next, jumper"
+      :total="page.total"
+      @current-change="pageCurrentChange"
+      @size-change="pageSizeChange"
+    />
+    <!-- 详情弹窗 -->
+    <DetailDialog
+      v-model:visible="DetailVisible"
+    />
   </div>
 </template>
 
 <script setup>
 import QueryForm from '@/components/TableView/QueryForm.vue'
+import DetailDialog from './detail.vue'
 import { ref } from 'vue'
 
 /**
@@ -242,9 +260,24 @@ const tableData = ref([
     productList: '阀门',
   }
 ])
-// 表格详情
-function handleDetail () {
+// 表格分页
+const page = ref({
+  current: 1,
+  size: 10,
+  sizes: [10, 20, 30, 40, 50],
+  total: tableData.value?.length || 0,
+})
+function pageCurrentChange () {
 
+}
+function pageSizeChange () {
+
+}
+// 表格详情弹窗
+const DetailVisible = ref(false)
+// 表格详情
+function handleDetail (operate, data) {
+  DetailVisible.value = true
 }
 // 表格删除
 function handleDelete () {

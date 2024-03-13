@@ -1,0 +1,41 @@
+@include themeMixin {
+  .detail-dialog {
+    width: 60%;
+    padding: 0;
+
+    .el-dialog__header {
+      background-color: theme('colorPrimary');
+      padding: 10px 20px;
+
+      .el-dialog__title,
+      .el-dialog__close {
+        color: #fff;
+      }
+    }
+
+    .detail-form {
+      display: flex;
+      flex-wrap: wrap;
+      padding: 20px 20px 10px;
+
+      .el-form-item {
+        width: calc(50% - 20px);
+        margin-right: 20px;
+
+        .el-input,
+        .el-input-number {
+          width: 100%;
+          
+          .el-input__inner {
+            text-align: left;
+          }
+        }
+      }
+    }
+
+    .el-dialog__footer {
+      text-align: center;
+      padding: 0 20px 20px;
+    }
+  }
+}
