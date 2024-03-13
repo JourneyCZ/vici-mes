@@ -2,8 +2,8 @@ const navTab = {
   state: () => ({
     tabs: [
       {
-        value: '/home',
-        label: '首页',
+        path: '/home',
+        name: '首页',
       },
     ],
   }),
@@ -12,7 +12,7 @@ const navTab = {
       state.tabs = tabs
     },
     addTab (state, tab) {
-      if (state.tabs.findIndex(item => item.value === tab.value) === -1) {
+      if (state.tabs.findIndex(item => item.path === tab.path) === -1) {
         state.tabs.push(tab)
       }
     },

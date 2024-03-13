@@ -21,10 +21,10 @@
     >
       <el-tab-pane
         v-for="item in tabs"
-        :key="item.value"
-        :name="item.value"
-        :label="item.label"
-        :closable="item.value !== '/home'"
+        :key="item.path"
+        :name="item.path"
+        :label="item.name"
+        :closable="item.path !== '/home'"
       >
         {{ item.content }}
       </el-tab-pane>
@@ -59,12 +59,12 @@ watch(() => route.path, newPath => {
 })
 const tabs = computed(() => store.state.navTab.tabs)
 // 标签页-切换
-function tabChange (name) {
-  router.push(name)
+function tabChange (path) {
+  router.push(path)
 }
 // 标签页-移除
-function tabRemove (name) {
-  const newTabs = tabs.value.filter(item => item.value !== name)
+function tabRemove (path) {
+  const newTabs = tabs.value.filter(item => item.path !== path)
   store.commit('setTabs', newTabs)
 }
 </script>
