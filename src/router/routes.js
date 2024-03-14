@@ -46,10 +46,12 @@ export default [
       {
         path: '/production/order',
         name: '生产工单',
+        component: () => import('@/views/production/order/index.vue'),
       },
       {
         path: '/production/task',
         name: '生产任务',
+        component: () => import('@/views/production/task/index.vue'),
       },
       {
         path: '/production/report',
@@ -132,7 +134,7 @@ export default [
         name: '产品',
       },
       {
-        path: '/base/procedure',
+        path: '/base/process',
         name: '工序',
       },
       {

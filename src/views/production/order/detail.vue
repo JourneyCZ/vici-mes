@@ -13,90 +13,96 @@
       label-width="auto"
     >
       <el-form-item
-        label="客户"
-        prop="cusotmerId"
-      >
-        <el-select
-          v-model="formData.cusotmerId"
-          placeholder="请选择客户"
-          clearable
-        >
-          <el-option value="1" label="李总"></el-option>
-          <el-option value="2" label="刘总"></el-option>
-        </el-select>
-      </el-form-item>
-      <el-form-item
-        label="客户编号"
-        prop="custumerNumber"
+        label="工单编号"
+        prop="productionNumber"
       >
         <el-input
-          v-model="formData.custumerNumber"
+          v-model="formData.productionNumber"
           placeholder="可填写，忽略将自动生成"
           clearable
         />
       </el-form-item>
       <el-form-item
-        label="客户类型"
-        prop="orderType"
+        label="产品"
+        prop="productId"
       >
         <el-select
-          v-model="formData.orderType"
-          placeholder="请选择客户类型"
+          v-model="formData.productId"
+          placeholder="请选择产品"
           clearable
         >
-          <el-option value="1">客户类型1</el-option>
-          <el-option value="2">客户类型2</el-option>
+          <el-option value="1" label="产品1"></el-option>
+          <el-option value="2" label="产品2"></el-option>
         </el-select>
       </el-form-item>
       <el-form-item
-        label="客户职位"
-        prop="custumerPosition"
+        label="计划数量"
+        prop="planQuantity"
       >
-        <el-input
-          v-model="formData.custumerPosition"
-          placeholder="请输入客户职位"
+        <el-input-number
+          v-model="formData.planQuantity"
+          :min="0"
+          controls-position="right"
+          placeholder="请输入计划数量"
           clearable
         />
       </el-form-item>
       <el-form-item
-        label="联系人"
-        prop="contactName"
+        label="生产数量"
+        prop="planQuantity"
       >
-        <el-input
-          v-model="formData.contactName"
-          placeholder="请输入联系人"
+        <el-input-number
+          v-model="formData.planQuantity"
+          :min="0"
+          controls-position="right"
+          placeholder="请输入生产数量"
           clearable
         />
       </el-form-item>
       <el-form-item
-        label="联系方式"
-        prop="contactWay"
+        label="交货时间"
+        prop="deliveryTime"
       >
-        <el-input
-          v-model="formData.contactWay"
-          placeholder="请输入联系方式"
-          clearable
+        <el-date-picker
+          v-model="formData.deliveryTime"
+          type="datetime"
+          value-format="YYYY-MM-DD HH:mm:ss"
+          start-placeholder="请选择交货时间"
+        />
+      </el-form-item>
+      <el-form-item />
+      <el-form-item
+        label="计划开始时间"
+        prop="planStartTime"
+      >
+        <el-date-picker
+          v-model="formData.planStartTime"
+          type="datetime"
+          value-format="YYYY-MM-DD HH:mm:ss"
+          start-placeholder="请选择计划开始时间"
+        />
+      </el-form-item>
+      <el-form-item
+        label="计划结束时间"
+        prop="planEndTime"
+      >
+        <el-date-picker
+          v-model="formData.planEndTime"
+          type="datetime"
+          value-format="YYYY-MM-DD HH:mm:ss"
+          start-placeholder="请选择计划结束时间"
         />
       </el-form-item>
       <el-form-item
         class="full-item"
-        label="对公账号"
-        prop="publicAccount"
+        label="备注"
+        prop="remark"
       >
         <el-input
-          v-model="formData.publicAccount"
-          placeholder="请输入对公账号"
-          clearable
-        />
-      </el-form-item>
-      <el-form-item
-        class="full-item"
-        label="地址"
-        prop="address"
-      >
-        <el-input
-          v-model="formData.address"
-          placeholder="请输入地址"
+          v-model="formData.remark"
+          type="textarea"
+          :rows="2"
+          placeholder="请输入备注"
           clearable
         />
       </el-form-item>
@@ -137,7 +143,7 @@ const props = defineProps({
 })
 
 // 弹窗数据
-const dialogTitle = ref('客户信息')
+const dialogTitle = ref('计划订单信息')
 const DetailFormRef = ref()
 const formData = ref({})
 watchEffect(() => {

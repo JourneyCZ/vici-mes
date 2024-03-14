@@ -90,12 +90,13 @@
         :fixed="col.fixed || null"
       />
       <el-table-column label="操作" width="120" fixed="right">
-        <template v-solt="{ row }">
+        <template v-slot="{ row }">
           <el-button type="primary" link @click="handleDetail('edit', row)">编辑</el-button>
           <el-button type="danger" link @click="handleDelete(row.id)">删除</el-button>
         </template>
       </el-table-column>
     </el-table>
+    <!-- 数据表格-分页 -->
     <el-pagination
       class="data-table-page"
       v-model:current-page="page.current"
@@ -106,9 +107,12 @@
       @current-change="pageCurrentChange"
       @size-change="pageSizeChange"
     />
+
     <!-- 详情弹窗 -->
     <DetailDialog
-      v-model:visible="DetailVisible"
+      v-model:visible="detailVisible"
+      :operate="detailOperate"
+      :data="detailData"
     />
   </div>
 </template>
@@ -193,6 +197,7 @@ const tableCols = ref([
 // 表格数据
 const tableData = ref([
   {
+    cusotmerId: '1',
     cusotmerName: '李总',
     custumerNumber: 'CUST1001',
   }
@@ -211,10 +216,14 @@ function pageSizeChange () {
 
 }
 // 表格详情弹窗
-const DetailVisible = ref(false)
+const detailVisible = ref(false)
+const detailOperate = ref('add')
+const detailData = ref(null)
 // 表格详情
 function handleDetail (operate, data) {
-  DetailVisible.value = true
+  detailVisible.value = true
+  detailOperate.value = operate
+  detailData.value = data || null
 }
 // 表格删除
 function handleDelete () {

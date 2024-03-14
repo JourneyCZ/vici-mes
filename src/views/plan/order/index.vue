@@ -35,9 +35,9 @@
       </template>
       <!-- 表单折叠项 -->
       <template #FoldedItems="{ query }">
-        <el-form-item label="产品名称" prop="productionName">
+        <el-form-item label="产品名称" prop="productName">
           <el-input
-            v-model="query.productionName"
+            v-model="query.productName"
             placeholder="请输入产品名称"
           />
         </el-form-item>
@@ -93,12 +93,13 @@
         :fixed="col.fixed || null"
       />
       <el-table-column label="操作" width="120" fixed="right">
-        <template v-solt="{ row }">
+        <template v-slot="{ row }">
           <el-button type="primary" link @click="handleDetail('edit', row)">编辑</el-button>
           <el-button type="danger" link @click="handleDelete(row.id)">删除</el-button>
         </template>
       </el-table-column>
     </el-table>
+    <!-- 数据表格-分页 -->
     <el-pagination
       class="data-table-page"
       v-model:current-page="page.current"
@@ -109,9 +110,12 @@
       @current-change="pageCurrentChange"
       @size-change="pageSizeChange"
     />
+
     <!-- 详情弹窗 -->
     <DetailDialog
-      v-model:visible="DetailVisible"
+      v-model:visible="detailVisible"
+      :operate="detailOperate"
+      :data="detailData"
     />
   </div>
 </template>
@@ -129,7 +133,7 @@ const query = ref({
   planNumber: null, // 计划编号
   planStartTimeArr: [], // 计划开始时间
   planEndTimeArr: [], // 计划结束时间
-  productionName: null, // 产品名称
+  productName: null, // 产品名称
   orderNumber: null, // 销售编号
 })
 // 表单搜索
@@ -161,56 +165,56 @@ const tableCols = ref([
     label: '销售编号',
     minWidth: '180px',
   }, {
-    prop: 'productList',
-    label: '产品清单',
+    prop: 'productNumber',
+    label: '产品编号',
     minWidth: '180px',
   }, {
-    prop: 'productFinished',
-    label: '已完成产品',
+    prop: 'productName',
+    label: '产品名称',
+    minWidth: '180px',
+  }, {
+    prop: 'remark',
+    label: '备注',
     minWidth: '180px',
   }, {
     prop: 'process',
     label: '进度',
     minWidth: '180px',
   }, {
-    prop: 'orderAmount',
-    label: '订单金额',
+    prop: 'status',
+    label: '状态',
     minWidth: '180px',
   }, {
-    prop: 'planTimeStart',
+    prop: 'planQuantity',
+    label: '计划数量',
+    minWidth: '180px',
+  }, {
+    prop: 'stockQuantity',
+    label: '库存数量',
+    minWidth: '180px',
+  }, {
+    prop: 'productionQuantity',
+    label: '生产数量',
+    minWidth: '180px',
+  }, {
+    prop: 'deliveryTime',
+    label: '交货时间',
+    minWidth: '180px',
+  }, {
+    prop: 'planStartTime',
     label: '计划开始时间',
     minWidth: '180px',
   }, {
-    prop: 'planTimeEnd',
+    prop: 'planEndTime',
     label: '计划结束时间',
     minWidth: '180px',
   }, {
-    prop: 'merchandiserName',
-    label: '跟单员',
+    prop: 'productionStartTime',
+    label: '生产开始时间',
     minWidth: '180px',
   }, {
-    prop: 'custumerPosition',
-    label: '客户职位',
-    minWidth: '180px',
-  }, {
-    prop: 'contactName',
-    label: '联系人',
-    minWidth: '180px',
-  }, {
-    prop: 'contactWay',
-    label: '联系方式',
-    minWidth: '180px',
-  }, {
-    prop: 'publicAccount',
-    label: '对公账号',
-    minWidth: '180px',
-  }, {
-    prop: 'address',
-    label: '地址',
-    minWidth: '180px',
-  }, {
-    prop: 'orderRemark',
-    label: '订单备注',
+    prop: 'productionEndTime',
+    label: '生产结束时间',
     minWidth: '180px',
   }, {
     prop: 'createUserName',
@@ -225,6 +229,7 @@ const tableCols = ref([
 // 表格数据
 const tableData = ref([
   {
+    cusotmerId: '1',
     cusotmerName: '李总',
     planNumber: 'PLAN1001',
   }
@@ -243,10 +248,14 @@ function pageSizeChange () {
 
 }
 // 表格详情弹窗
-const DetailVisible = ref(false)
+const detailVisible = ref(false)
+const detailOperate = ref('add')
+const detailData = ref(null)
 // 表格详情
 function handleDetail (operate, data) {
-  DetailVisible.value = true
+  detailVisible.value = true
+  detailOperate.value = operate
+  detailData.value = data || null
 }
 // 表格删除
 function handleDelete () {

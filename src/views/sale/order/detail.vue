@@ -21,8 +21,8 @@
           placeholder="请选择客户"
           clearable
         >
-          <el-option value="1">李总</el-option>
-          <el-option value="2">刘总</el-option>
+          <el-option value="1" label="李总"></el-option>
+          <el-option value="2" label="刘总"></el-option>
         </el-select>
       </el-form-item>
       <el-form-item
@@ -44,8 +44,8 @@
           placeholder="请选择订单类型"
           clearable
         >
-          <el-option value="1">订单类型1</el-option>
-          <el-option value="2">订单类型2</el-option>
+          <el-option value="1" label="订单类型1"></el-option>
+          <el-option value="2" label="订单类型2"></el-option>
         </el-select>
       </el-form-item>
       <el-form-item
@@ -86,20 +86,35 @@
 </template>
 
 <script setup>
-import { ref, computed, defineProps, defineEmits } from 'vue'
+import { ref, computed, watchEffect, defineProps, defineEmits } from 'vue'
+
+// 弹窗属性
+const props = defineProps({
+  visible: {
+    type: Boolean,
+    default: false
+  },
+  operate: {
+    type: String,
+    default: 'add'
+  },
+  data: {
+    type: Object,
+    default () {
+      return {}
+    }
+  }
+})
 
 // 弹窗数据
 const dialogTitle = ref('销售订单信息')
 const DetailFormRef = ref()
 const formData = ref({})
+watchEffect(() => {
+  formData.value = props.data || {}
+})
 
 // 弹窗开关
-const props = defineProps({
-  visible: {
-    type: Boolean,
-    default: false
-  }
-})
 const emits = defineEmits(['update:visible'])
 const dialogVisible = computed({
   get: () => props.visible,

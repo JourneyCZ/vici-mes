@@ -2,7 +2,7 @@
   <div :class="['left-container', { 'left-collapsed': Collapsed }]">
     <div class="left-logo-title">
       <div class="left-logo"></div>
-      <div class="left-title">MES-制造执行系统</div>
+      <div class="left-title">轻云制造执行系统</div>
     </div>
     <el-menu
       class="left-menu"
