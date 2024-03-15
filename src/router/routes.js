@@ -56,6 +56,7 @@ export default [
       {
         path: '/production/report',
         name: '生产报工',
+        component: () => import('@/views/production/report/index.vue'),
       },
     ]
   },
@@ -66,18 +67,22 @@ export default [
       {
         path: '/repertory/stockroom',
         name: '仓库管理',
+        component: () => import('@/views/repertory/stockroom/index.vue'),
       },
       {
         path: '/repertory/stockIn',
         name: '入库单',
+        component: () => import('@/views/repertory/stockIn/index.vue'),
       },
       {
         path: '/repertory/stockOut',
         name: '出库单',
+        component: () => import('@/views/repertory/stockOut/index.vue'),
       },
       {
         path: '/repertory/sendReceive',
         name: '收发明细',
+        component: () => import('@/views/repertory/sendReceive/index.vue'),
       },
       {
         path: '/repertory/balance',

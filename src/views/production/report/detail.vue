@@ -13,60 +13,96 @@
       label-width="auto"
     >
       <el-form-item
-        label="客户"
-        prop="customerId"
-      >
-        <el-select
-          v-model="formData.customerId"
-          placeholder="请选择客户"
-          clearable
-        >
-          <el-option value="1" label="李总"></el-option>
-          <el-option value="2" label="刘总"></el-option>
-        </el-select>
-      </el-form-item>
-      <el-form-item
-        label="计划编号"
-        prop="planNumber"
+        label="工单编号"
+        prop="productionNumber"
       >
         <el-input
-          v-model="formData.planNumber"
+          v-model="formData.productionNumber"
           placeholder="可填写，忽略将自动生成"
           clearable
         />
       </el-form-item>
       <el-form-item
-        label="订单类型"
-        prop="orderType"
+        label="产品"
+        prop="productId"
       >
         <el-select
-          v-model="formData.orderType"
-          placeholder="请选择订单类型"
+          v-model="formData.productId"
+          placeholder="请选择产品"
           clearable
         >
-          <el-option value="1" label="订单类型1"></el-option>
-          <el-option value="2" label="订单类型2"></el-option>
+          <el-option value="1" label="产品1"></el-option>
+          <el-option value="2" label="产品2"></el-option>
         </el-select>
       </el-form-item>
       <el-form-item
-        label="订单金额"
-        prop="orderAmount"
+        label="计划数量"
+        prop="planQuantity"
       >
         <el-input-number
-          v-model="formData.orderAmount"
+          v-model="formData.planQuantity"
           :min="0"
           controls-position="right"
-          placeholder="请输入订单金额"
+          placeholder="请输入计划数量"
           clearable
         />
       </el-form-item>
       <el-form-item
-        label="跟单员"
-        prop="merchandiserId"
+        label="生产数量"
+        prop="planQuantity"
+      >
+        <el-input-number
+          v-model="formData.planQuantity"
+          :min="0"
+          controls-position="right"
+          placeholder="请输入生产数量"
+          clearable
+        />
+      </el-form-item>
+      <el-form-item
+        label="交货时间"
+        prop="deliveryTime"
+      >
+        <el-date-picker
+          v-model="formData.deliveryTime"
+          type="datetime"
+          value-format="YYYY-MM-DD HH:mm:ss"
+          start-placeholder="请选择交货时间"
+        />
+      </el-form-item>
+      <el-form-item />
+      <el-form-item
+        label="计划开始时间"
+        prop="planStartTime"
+      >
+        <el-date-picker
+          v-model="formData.planStartTime"
+          type="datetime"
+          value-format="YYYY-MM-DD HH:mm:ss"
+          start-placeholder="请选择计划开始时间"
+        />
+      </el-form-item>
+      <el-form-item
+        label="计划结束时间"
+        prop="planEndTime"
+      >
+        <el-date-picker
+          v-model="formData.planEndTime"
+          type="datetime"
+          value-format="YYYY-MM-DD HH:mm:ss"
+          start-placeholder="请选择计划结束时间"
+        />
+      </el-form-item>
+      <el-form-item
+        class="full-item"
+        label="备注"
+        prop="remark"
       >
         <el-input
-          v-model="formData.merchandiserId"
-          placeholder="请输入跟单员"
+          v-model="formData.remark"
+          type="textarea"
+          :rows="2"
+          placeholder="请输入备注"
           clearable
         />
       </el-form-item>

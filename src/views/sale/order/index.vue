@@ -14,9 +14,9 @@
             placeholder="请输入销售编号"
           />
         </el-form-item>
-        <el-form-item label="客户名称" prop="custumerName">
+        <el-form-item label="客户名称" prop="customerName">
           <el-input
-            v-model="query.custumerName"
+            v-model="query.customerName"
             placeholder="请输入客户名称"
           />
         </el-form-item>
@@ -159,7 +159,7 @@ const orderTypes = ref([
 // 表单数据
 const query = ref({
   orderNumber: null, // 销售编号
-  custumerName: null, // 客户名称
+  customerName: null, // 客户名称
   orderType: null, // 订单类型
   orderAmountMin: undefined, // 订单金额-最小值
   orderAmountMax: undefined, // 订单金额-最大值
@@ -182,7 +182,7 @@ function queryReset (newQuery) {
 // 表格列数据
 const tableCols = ref([
   {
-    prop: 'cusotmerName',
+    prop: 'customerName',
     label: '客户',
     minWidth: '180px',
     fixed: 'left',
@@ -223,7 +223,7 @@ const tableCols = ref([
     label: '跟单员',
     minWidth: '180px',
   }, {
-    prop: 'custumerPosition',
+    prop: 'customerPosition',
     label: '客户职位',
     minWidth: '180px',
   }, {
@@ -259,8 +259,8 @@ const tableCols = ref([
 // 表格数据
 const tableData = ref([
   {
-    cusotmerId: '1',
-    cusotmerName: '李总',
+    customerId: '1',
+    customerName: '李总',
     saleNum: 'ORDER1001',
     productList: '阀门',
   }

@@ -72,14 +72,6 @@
     <!-- 数据表格-操作栏 -->
     <div class="data-table-handle">
       <div class="data-table-handle-left">
-        <el-button
-          type="primary"
-          plain
-          @click="handleDetail('add')"
-        >
-          <el-icon><Plus /></el-icon>
-          添加生产任务
-        </el-button>
         <el-button type="warning" plain>
           <el-icon><Download /></el-icon>
           导出
@@ -111,10 +103,17 @@
         :minWidth="col.minWidth || null"
         :fixed="col.fixed || null"
       />
-      <el-table-column label="操作" width="120" fixed="right">
+      <el-table-column label="操作" width="460" fixed="right">
         <template v-slot="{ row }">
-          <el-button type="primary" link @click="handleDetail('edit', row)">编辑</el-button>
-          <el-button type="danger" link @click="handleDelete(row.id)">删除</el-button>
+          <el-button type="primary" link @click="handleDetail('edit', row)">开始</el-button>
+          <el-button type="primary" link @click="handleDetail('edit', row)">暂停</el-button>
+          <el-button type="primary" link @click="handleDetail('edit', row)">完成</el-button>
+          <el-button type="primary" link @click="handleDetail('edit', row)">报修</el-button>
+          <el-button type="primary" link @click="handleDetail('edit', row)">报工</el-button>
+          <el-button type="primary" link @click="handleDetail('edit', row)">查看</el-button>
+          <el-button type="primary" link @click="handleDetail('edit', row)">换班</el-button>
+          <el-button type="primary" link @click="handleDetail('edit', row)">换班记录</el-button>
+          <el-button type="primary" link @click="handleDetail('edit', row)">拆分</el-button>
         </template>
       </el-table-column>
     </el-table>
@@ -307,10 +306,6 @@ function handleDetail (operate, data) {
   detailVisible.value = true
   detailOperate.value = operate
   detailData.value = data || null
-}
-// 表格删除
-function handleDelete () {
-
 }
 </script>
 

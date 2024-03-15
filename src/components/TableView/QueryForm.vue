@@ -98,7 +98,8 @@ function reset () {
 
           .el-input,
           .el-select,
-          .el-input-number {
+          .el-input-number,
+          .el-cascader {
             flex: auto;
           }
 

@@ -8,41 +8,31 @@
     >
       <!-- 表单项 -->
       <template #FormItems="{ query }">
-        <el-form-item label="客户编号" prop="customerNumber">
+        <el-form-item label="仓库名称" prop="stockroomName">
           <el-input
-            v-model="query.customerNumber"
-            placeholder="请输入客户编号"
+            v-model="query.stockroomName"
+            placeholder="请输入仓库名称"
           />
         </el-form-item>
-        <el-form-item label="客户名称" prop="customerName">
-          <el-input
-            v-model="query.customerName"
-            placeholder="请输入客户名称"
-          />
+        <el-form-item label="仓库类型" prop="stockroomType">
+          <el-select
+            v-model="query.stockroomType"
+            placeholder="请选择仓库类型"
+            clearable
+          >
+            <el-option value="1" label="普通仓库"></el-option>
+            <el-option value="2" label="寄售库"></el-option>
+          </el-select>
         </el-form-item>
-        <el-form-item label="联系人" prop="contactName">
-          <el-input
-            v-model="query.contactName"
-            placeholder="请输入联系人"
-          />
-        </el-form-item>
-      </template>
-      <!-- 表单折叠项 -->
-      <template #FoldedItems="{ query }">
-        <el-form-item label="创建人" prop="createUserName">
-          <el-input
-            v-model="query.createUserName"
-            placeholder="请输入创建人"
-          />
-        </el-form-item>
-        <el-form-item label="创建时间" prop="createTimeArr">
-          <el-date-picker
-            v-model="query.createTimeArr"
-            type="daterange"
-            value-format="YYYY-MM-DD"
-            start-placeholder="开始日期"
-            end-placeholder="结束日期"
-          />
+        <el-form-item label="仓库状态" prop="stockroomStatus">
+          <el-select
+            v-model="query.stockroomStatus"
+            placeholder="请选择仓库状态"
+            clearable
+          >
+            <el-option value="1" label="启用"></el-option>
+            <el-option value="0" label="停用"></el-option>
+          </el-select>
         </el-form-item>
       </template>
     </QueryForm>
@@ -56,7 +46,7 @@
           @click="handleDetail('add')"
         >
           <el-icon><Plus /></el-icon>
-          添加客户
+          添加仓库
         </el-button>
         <el-button type="warning" plain>
           <el-icon><Download /></el-icon>
@@ -127,13 +117,9 @@ import { ref } from 'vue'
  */
 // 表单数据
 const query = ref({
-  customerNumber: null, // 客户编号
-  customerName: null, // 客户名称
-  orderType: null, // 客户类型
-  orderAmountMin: undefined, // 订单金额-最小值
-  orderAmountMax: undefined, // 订单金额-最大值
-  deliveryTimeArr: [], // 交货时间
-  createTimeArr: [], // 创建时间
+  stockroomName: null, // 仓库名称
+  stockroomType: null, // 仓库类型
+  stockroomStatus: null, // 仓库状态
 })
 // 表单搜索
 function querySubmit (newQuery) {
@@ -151,34 +137,26 @@ function queryReset (newQuery) {
 // 表格列数据
 const tableCols = ref([
   {
-    prop: 'customerNumber',
-    label: '客户编号',
+    prop: 'stockroomNumber',
+    label: '仓库编号',
     minWidth: '180px',
     fixed: 'left',
   }, {
-    prop: 'customerName',
-    label: '客户名称',
+    prop: 'stockroomName',
+    label: '仓库名称',
     minWidth: '180px',
     fixed: 'left',
   }, {
-    prop: 'orderType',
-    label: '客户类型',
+    prop: 'stockroomType',
+    label: '仓库类型',
     minWidth: '180px',
   }, {
-    prop: 'customerPosition',
-    label: '客户职位',
+    prop: 'stockroomStatus',
+    label: '仓库状态',
     minWidth: '180px',
   }, {
-    prop: 'contactName',
-    label: '联系人',
-    minWidth: '180px',
-  }, {
-    prop: 'contactWay',
-    label: '联系方式',
-    minWidth: '180px',
-  }, {
-    prop: 'publicAccount',
-    label: '对公账号',
+    prop: 'stockroomKeeper',
+    label: '仓库管理员',
     minWidth: '180px',
   }, {
     prop: 'address',
@@ -192,14 +170,18 @@ const tableCols = ref([
     prop: 'createTime',
     label: '创建时间',
     minWidth: '180px',
-  },
+  }, {
+    prop: 'remark',
+    label: '备注',
+    minWidth: '180px',
+  }
 ])
 // 表格数据
 const tableData = ref([
   {
-    customerId: '1',
-    customerName: '李总',
-    customerNumber: 'CUST1001',
+    stockroomId: '1',
+    stockroomName: '李总',
+    stockroomNumber: 'CUST1001',
   }
 ])
 // 表格分页

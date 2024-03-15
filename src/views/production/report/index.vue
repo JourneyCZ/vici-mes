@@ -8,44 +8,80 @@
     >
       <!-- 表单项 -->
       <template #FormItems="{ query }">
-        <el-form-item label="计划编号" prop="planNumber">
+        <el-form-item label="工单编号" prop="productionNumber">
           <el-input
-            v-model="query.planNumber"
-            placeholder="请输入计划编号"
+            v-model="query.productionNumber"
+            placeholder="请输入工单编号"
           />
         </el-form-item>
-        <el-form-item label="计划开始时间" prop="planStartTimeArr">
-          <el-date-picker
-            v-model="query.planStartTimeArr"
-            type="daterange"
-            value-format="YYYY-MM-DD"
-            start-placeholder="开始日期"
-            end-placeholder="结束日期"
-          />
-        </el-form-item>
-        <el-form-item label="计划结束时间" prop="planEndTimeArr">
-          <el-date-picker
-            v-model="query.planEndTimeArr"
-            type="daterange"
-            value-format="YYYY-MM-DD"
-            start-placeholder="开始日期"
-            end-placeholder="结束日期"
-          />
-        </el-form-item>
-      </template>
-      <!-- 表单折叠项 -->
-      <template #FoldedItems="{ query }">
         <el-form-item label="产品名称" prop="productName">
           <el-input
             v-model="query.productName"
             placeholder="请输入产品名称"
           />
         </el-form-item>
-        <el-form-item label="销售编号" prop="orderNumber">
+        <el-form-item label="工序名称" prop="processName">
           <el-input
-            v-model="query.orderNumber"
-            placeholder="请输入销售编号"
+            v-model="query.processName"
+            placeholder="请输入工序名称"
           />
+        </el-form-item>
+      </template>
+      <!-- 表单折叠项 -->
+      <template #FoldedItems="{ query }">
+        <el-form-item label="报工开始时间" prop="reportStartTimeArr">
+          <el-date-picker
+            v-model="query.reportStartTimeArr"
+            type="daterange"
+            value-format="YYYY-MM-DD"
+            start-placeholder="开始日期"
+            end-placeholder="结束日期"
+          />
+        </el-form-item>
+        <el-form-item label="报工结束时间" prop="reportEndTimeArr">
+          <el-date-picker
+            v-model="query.reportEndTimeArr"
+            type="daterange"
+            value-format="YYYY-MM-DD"
+            start-placeholder="开始日期"
+            end-placeholder="结束日期"
+          />
+        </el-form-item>
+        <el-form-item label="实际报工时间" prop="actualReportTimeArr">
+          <el-date-picker
+            v-model="query.actualReportTimeArr"
+            type="daterange"
+            value-format="YYYY-MM-DD"
+            start-placeholder="开始日期"
+            end-placeholder="结束日期"
+          />
+        </el-form-item>
+        <el-form-item label="生产人员" prop="productionPeople">
+          <el-input
+            v-model="query.productionPeople"
+            placeholder="请输入生产人员"
+          />
+        </el-form-item>
+        <el-form-item label="计价方式" prop="pricingManner">
+          <el-select
+            v-model="query.pricingManner"
+            placeholder="请选择计价方式"
+            clearable
+          >
+            <el-option value="1" label="计件"></el-option>
+            <el-option value="2" label="计时"></el-option>
+          </el-select>
+        </el-form-item>
+        <el-form-item label="工序状态" prop="processStatus">
+          <el-select
+            v-model="query.processStatus"
+            placeholder="请选择工序状态"
+            clearable
+          >
+            <el-option value="2" label="执行中"></el-option>
+            <el-option value="3" label="已完成"></el-option>
+            <el-option value="4" label="已暂停"></el-option>
+          </el-select>
         </el-form-item>
       </template>
     </QueryForm>
@@ -53,14 +89,6 @@
     <!-- 数据表格-操作栏 -->
     <div class="data-table-handle">
       <div class="data-table-handle-left">
-        <el-button
-          type="primary"
-          plain
-          @click="handleDetail('add')"
-        >
-          <el-icon><Plus /></el-icon>
-          添加计划订单
-        </el-button>
         <el-button type="warning" plain>
           <el-icon><Download /></el-icon>
           导出
@@ -92,10 +120,11 @@
         :minWidth="col.minWidth || null"
         :fixed="col.fixed || null"
       />
-      <el-table-column label="操作" width="120" fixed="right">
+      <el-table-column label="操作" width="240" fixed="right">
         <template v-slot="{ row }">
-          <el-button type="primary" link @click="handleDetail('edit', row)">编辑</el-button>
-          <el-button type="danger" link @click="handleDelete(row.id)">删除</el-button>
+          <el-button type="primary" link @click="handleDetail('edit', row)">查看</el-button>
+          <el-button type="primary" link @click="handleDetail('edit', row)">调整审批数据</el-button>
+          <el-button type="primary" link @click="handleDetail('edit', row)">调整记录</el-button>
         </template>
       </el-table-column>
     </el-table>
@@ -130,11 +159,15 @@ import { ref } from 'vue'
  */
 // 表单数据
 const query = ref({
-  planNumber: null, // 计划编号
-  planStartTimeArr: [], // 计划开始时间
-  planEndTimeArr: [], // 计划结束时间
+  productionNumber: null, // 工单编号
   productName: null, // 产品名称
-  orderNumber: null, // 销售编号
+  processName: null, // 工序名称
+  reportStartTimeArr: [], // 报工开始时间
+  reportEndTimeArr: [], // 报工结束时间
+  actualReportTimeArr: [], // 实际报工时间
+  productionPeople: [], // 生产人员
+  pricingManner: [], // 计价方式
+  processStatus: null, // 工序状态
 })
 // 表单搜索
 function querySubmit (newQuery) {
@@ -152,18 +185,10 @@ function queryReset (newQuery) {
 // 表格列数据
 const tableCols = ref([
   {
-    prop: 'customerName',
-    label: '客户',
+    prop: 'productionNumber',
+    label: '工单编号',
     minWidth: '180px',
     fixed: 'left',
-  }, {
-    prop: 'planNumber',
-    label: '计划编号',
-    minWidth: '180px',
-  }, {
-    prop: 'orderNumber',
-    label: '销售编号',
-    minWidth: '180px',
   }, {
     prop: 'productNumber',
     label: '产品编号',
@@ -173,48 +198,60 @@ const tableCols = ref([
     label: '产品名称',
     minWidth: '180px',
   }, {
-    prop: 'remark',
-    label: '备注',
+    prop: 'productSpecification',
+    label: '产品规格',
+    minWidth: '180px',
+  }, {
+    prop: 'processName',
+    label: '工序名称',
+    minWidth: '180px',
+  }, {
+    prop: 'processNumber',
+    label: '工序编号',
+    minWidth: '180px',
+  }, {
+    prop: 'processStatus',
+    label: '工序状态',
+    minWidth: '180px',
+  }, {
+    prop: 'reportQuantity',
+    label: '报工总数',
+    minWidth: '180px',
+  }, {
+    prop: 'pricingManner',
+    label: '计价方式',
+    minWidth: '180px',
+  }, {
+    prop: 'wagePrice',
+    label: '工资单价(元)',
+    minWidth: '180px',
+  }, {
+    prop: 'predictWage',
+    label: '预计工资(元)',
+    minWidth: '180px',
+  }, {
+    prop: 'goodProductQuantity',
+    label: '良品数量',
+    minWidth: '180px',
+  }, {
+    prop: 'defectiveProductQuantity',
+    label: '不良品数量',
     minWidth: '180px',
   }, {
     prop: 'process',
     label: '进度',
     minWidth: '180px',
   }, {
-    prop: 'status',
-    label: '状态',
-    minWidth: '180px',
-  }, {
-    prop: 'planQuantity',
-    label: '计划数量',
-    minWidth: '180px',
-  }, {
-    prop: 'stockQuantity',
-    label: '库存数量',
-    minWidth: '180px',
-  }, {
-    prop: 'productionQuantity',
-    label: '生产数量',
-    minWidth: '180px',
-  }, {
-    prop: 'deliveryTime',
-    label: '交货时间',
-    minWidth: '180px',
-  }, {
     prop: 'planStartTime',
-    label: '计划开始时间',
+    label: '报工开始时间',
     minWidth: '180px',
   }, {
     prop: 'planEndTime',
-    label: '计划结束时间',
+    label: '报工结束时间',
     minWidth: '180px',
   }, {
-    prop: 'productionStartTime',
-    label: '生产开始时间',
-    minWidth: '180px',
-  }, {
-    prop: 'productionEndTime',
-    label: '生产结束时间',
+    prop: 'actualReportTime',
+    label: '实际报工时间',
     minWidth: '180px',
   }, {
     prop: 'createUserName',
@@ -229,9 +266,7 @@ const tableCols = ref([
 // 表格数据
 const tableData = ref([
   {
-    customerId: '1',
-    customerName: '李总',
-    planNumber: 'PLAN1001',
+    productionNumber: 'PROD1001',
   }
 ])
 // 表格分页
@@ -256,10 +291,6 @@ function handleDetail (operate, data) {
   detailVisible.value = true
   detailOperate.value = operate
   detailData.value = data || null
-}
-// 表格删除
-function handleDelete () {
-
 }
 </script>
 

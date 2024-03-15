@@ -8,27 +8,48 @@
     >
       <!-- 表单项 -->
       <template #FormItems="{ query }">
-        <el-form-item label="客户编号" prop="customerNumber">
+        <el-form-item label="产品编号" prop="productNumber">
           <el-input
-            v-model="query.customerNumber"
-            placeholder="请输入客户编号"
+            v-model="query.productNumber"
+            placeholder="请输入产品编号"
           />
         </el-form-item>
-        <el-form-item label="客户名称" prop="customerName">
+        <el-form-item label="产品名称" prop="productName">
           <el-input
-            v-model="query.customerName"
-            placeholder="请输入客户名称"
+            v-model="query.productName"
+            placeholder="请输入产品名称"
           />
         </el-form-item>
-        <el-form-item label="联系人" prop="contactName">
+        <el-form-item label="产品规格" prop="productSpecification">
           <el-input
-            v-model="query.contactName"
-            placeholder="请输入联系人"
+            v-model="query.productSpecification"
+            placeholder="请输入产品规格"
           />
         </el-form-item>
       </template>
       <!-- 表单折叠项 -->
       <template #FoldedItems="{ query }">
+        <el-form-item label="出入库类型" prop="stockInOutType">
+          <el-cascader
+            v-model="query.stockInOutType"
+            :options="stockInOutOptions"
+          />
+        </el-form-item>
+        <el-form-item label="出入库单号" prop="stockInOutNumber">
+          <el-input
+            v-model="query.stockInOutNumber"
+            placeholder="请输入出入库单号"
+          />
+        </el-form-item>
+        <el-form-item label="实际收发时间" prop="stockInOutTimeArr">
+          <el-date-picker
+            v-model="query.stockInOutTimeArr"
+            type="daterange"
+            value-format="YYYY-MM-DD"
+            start-placeholder="开始日期"
+            end-placeholder="结束日期"
+          />
+        </el-form-item>
         <el-form-item label="创建人" prop="createUserName">
           <el-input
             v-model="query.createUserName"
@@ -50,14 +71,6 @@
     <!-- 数据表格-操作栏 -->
     <div class="data-table-handle">
       <div class="data-table-handle-left">
-        <el-button
-          type="primary"
-          plain
-          @click="handleDetail('add')"
-        >
-          <el-icon><Plus /></el-icon>
-          添加客户
-        </el-button>
         <el-button type="warning" plain>
           <el-icon><Download /></el-icon>
           导出
@@ -89,12 +102,6 @@
         :minWidth="col.minWidth || null"
         :fixed="col.fixed || null"
       />
-      <el-table-column label="操作" width="120" fixed="right">
-        <template v-slot="{ row }">
-          <el-button type="primary" link @click="handleDetail('edit', row)">编辑</el-button>
-          <el-button type="danger" link @click="handleDelete(row.id)">删除</el-button>
-        </template>
-      </el-table-column>
     </el-table>
     <!-- 数据表格-分页 -->
     <el-pagination
@@ -107,32 +114,51 @@
       @current-change="pageCurrentChange"
       @size-change="pageSizeChange"
     />
-
-    <!-- 详情弹窗 -->
-    <DetailDialog
-      v-model:visible="detailVisible"
-      :operate="detailOperate"
-      :data="detailData"
-    />
   </div>
 </template>
 
 <script setup>
 import QueryForm from '@/components/TableView/QueryForm.vue'
-import DetailDialog from './detail.vue'
 import { ref } from 'vue'
 
 /**
  * 查询表单
  */
+// 出入库类型
+const stockInOutOptions = ref([
+  {
+    value: '1',
+    label: '入库',
+    children: [
+      { value: '1', label: '成品入库' },
+      { value: '2', label: '半成品入库' },
+      { value: '3', label: '采购入库' },
+      { value: '4', label: '调拨入库' },
+      { value: '5', label: '销售退货入库' },
+      { value: '6', label: '退料入库' },
+      { value: '7', label: '其他出库' },
+    ]
+  }, {
+    value: '2',
+    label: '出库',
+    children: [
+      { value: '1', label: '普通出库' },
+      { value: '2', label: '生产领料出库' },
+      { value: '3', label: '调拨出库' },
+      { value: '4', label: '采购退货出库' },
+      { value: '5', label: '销售出库' },
+      { value: '6', label: '其他出库' },
+    ]
+  }
+])
 // 表单数据
 const query = ref({
-  customerNumber: null, // 客户编号
-  customerName: null, // 客户名称
-  orderType: null, // 客户类型
-  orderAmountMin: undefined, // 订单金额-最小值
-  orderAmountMax: undefined, // 订单金额-最大值
-  deliveryTimeArr: [], // 交货时间
+  productNumber: null, // 产品编号
+  productName: null, // 产品名称
+  productSpecification: null, // 产品规格
+  stockInOutType: null, // 出入库类型
+  stockInOutTimeArr: [], // 实际收发时间
+  createUserName: null, // 创建人
   createTimeArr: [], // 创建时间
 })
 // 表单搜索
@@ -151,38 +177,42 @@ function queryReset (newQuery) {
 // 表格列数据
 const tableCols = ref([
   {
-    prop: 'customerNumber',
-    label: '客户编号',
+    prop: 'productNumber',
+    label: '产品编号',
     minWidth: '180px',
     fixed: 'left',
   }, {
-    prop: 'customerName',
-    label: '客户名称',
+    prop: 'productName',
+    label: '产品名称',
     minWidth: '180px',
     fixed: 'left',
   }, {
-    prop: 'orderType',
-    label: '客户类型',
+    prop: 'productSpecification',
+    label: '产品规格',
     minWidth: '180px',
   }, {
-    prop: 'customerPosition',
-    label: '客户职位',
+    prop: 'stockroomName',
+    label: '仓库',
     minWidth: '180px',
   }, {
-    prop: 'contactName',
-    label: '联系人',
+    prop: 'changeQuantity',
+    label: '库存变更数量',
     minWidth: '180px',
   }, {
-    prop: 'contactWay',
-    label: '联系方式',
+    prop: 'stockOutTime',
+    label: '实际收发时间',
     minWidth: '180px',
   }, {
-    prop: 'publicAccount',
-    label: '对公账号',
+    prop: 'stockInOutType',
+    label: '出入库类型',
     minWidth: '180px',
   }, {
-    prop: 'address',
-    label: '地址',
+    prop: 'stockInOutNumber',
+    label: '出入库单据编号',
+    minWidth: '180px',
+  }, {
+    prop: 'remark',
+    label: '备注',
     minWidth: '180px',
   }, {
     prop: 'createUserName',
@@ -192,14 +222,13 @@ const tableCols = ref([
     prop: 'createTime',
     label: '创建时间',
     minWidth: '180px',
-  },
+  }
 ])
 // 表格数据
 const tableData = ref([
   {
-    customerId: '1',
-    customerName: '李总',
-    customerNumber: 'CUST1001',
+    stockOutId: '1',
+    productNumber: 'CUST1001',
   }
 ])
 // 表格分页
@@ -213,20 +242,6 @@ function pageCurrentChange () {
 
 }
 function pageSizeChange () {
-
-}
-// 表格详情弹窗
-const detailVisible = ref(false)
-const detailOperate = ref('add')
-const detailData = ref(null)
-// 表格详情
-function handleDetail (operate, data) {
-  detailVisible.value = true
-  detailOperate.value = operate
-  detailData.value = data || null
-}
-// 表格删除
-function handleDelete () {
 
 }
 </script>

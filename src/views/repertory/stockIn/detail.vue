@@ -13,60 +13,52 @@
       label-width="auto"
     >
       <el-form-item
-        label="客户"
-        prop="customerId"
-      >
-        <el-select
-          v-model="formData.customerId"
-          placeholder="请选择客户"
-          clearable
-        >
-          <el-option value="1" label="李总"></el-option>
-          <el-option value="2" label="刘总"></el-option>
-        </el-select>
-      </el-form-item>
-      <el-form-item
-        label="销售编号"
-        prop="orderNumber"
+        label="入库编号"
+        prop="stockInNumber"
       >
         <el-input
-          v-model="formData.orderNumber"
+          v-model="formData.stockInNumber"
           placeholder="可填写，忽略将自动生成"
           clearable
         />
       </el-form-item>
       <el-form-item
-        label="订单类型"
-        prop="orderType"
+        label="入库类型"
+        prop="stockInType"
       >
         <el-select
-          v-model="formData.orderType"
-          placeholder="请选择订单类型"
+          v-model="formData.stockInType"
+          placeholder="请选择入库类型"
           clearable
         >
-          <el-option value="1" label="订单类型1"></el-option>
-          <el-option value="2" label="订单类型2"></el-option>
+          <el-option value="1" label="成品入库"></el-option>
+          <el-option value="2" label="半成品入库"></el-option>
+          <el-option value="3" label="采购入库"></el-option>
+          <el-option value="4" label="调拨入库"></el-option>
+          <el-option value="5" label="销售退货入库"></el-option>
+          <el-option value="6" label="退料入库"></el-option>
+          <el-option value="7" label="其他入库"></el-option>
         </el-select>
       </el-form-item>
       <el-form-item
-        label="订单金额"
-        prop="orderAmount"
+        label="入库时间"
+        prop="stockInTime"
       >
-        <el-input-number
-          v-model="formData.orderAmount"
-          :min="0"
-          controls-position="right"
-          placeholder="请输入订单金额"
-          clearable
+        <el-date-picker
+          v-model="formData.stockInTime"
+          type="datetime"
+          value-format="YYYY-MM-DD HH:mm:ss"
+          placeholder="请选择入库时间"
         />
       </el-form-item>
       <el-form-item
-        label="跟单员"
-        prop="merchandiserId"
+        class="full-item"
+        label="备注"
+        prop="remark"
       >
         <el-input
-          v-model="formData.merchandiserId"
-          placeholder="请输入跟单员"
+          v-model="formData.remark"
+          placeholder="请输入备注"
           clearable
         />
       </el-form-item>
@@ -107,7 +99,7 @@ const props = defineProps({
 })
 
 // 弹窗数据
-const dialogTitle = ref('销售订单信息')
+const dialogTitle = ref('入库单信息')
 const DetailFormRef = ref()
 const formData = ref({})
 watchEffect(() => {

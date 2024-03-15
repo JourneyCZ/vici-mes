@@ -8,22 +8,34 @@
     >
       <!-- 表单项 -->
       <template #FormItems="{ query }">
-        <el-form-item label="客户编号" prop="customerNumber">
+        <el-form-item label="入库编号" prop="stockInNumber">
           <el-input
-            v-model="query.customerNumber"
-            placeholder="请输入客户编号"
+            v-model="query.stockInNumber"
+            placeholder="请输入入库编号"
           />
         </el-form-item>
-        <el-form-item label="客户名称" prop="customerName">
-          <el-input
-            v-model="query.customerName"
-            placeholder="请输入客户名称"
-          />
+        <el-form-item label="入库类型" prop="stockInType">
+          <el-select
+            v-model="query.stockInType"
+            placeholder="请选择入库类型"
+            clearable
+          >
+            <el-option value="1" label="成品入库"></el-option>
+            <el-option value="2" label="半成品入库"></el-option>
+            <el-option value="3" label="采购入库"></el-option>
+            <el-option value="4" label="调拨入库"></el-option>
+            <el-option value="5" label="销售退货入库"></el-option>
+            <el-option value="6" label="退料入库"></el-option>
+            <el-option value="7" label="其他入库"></el-option>
+          </el-select>
         </el-form-item>
-        <el-form-item label="联系人" prop="contactName">
-          <el-input
-            v-model="query.contactName"
-            placeholder="请输入联系人"
+        <el-form-item label="入库时间" prop="stockInTimeArr">
+          <el-date-picker
+            v-model="query.stockInTimeArr"
+            type="daterange"
+            value-format="YYYY-MM-DD"
+            start-placeholder="开始日期"
+            end-placeholder="结束日期"
           />
         </el-form-item>
       </template>
@@ -56,7 +68,7 @@
           @click="handleDetail('add')"
         >
           <el-icon><Plus /></el-icon>
-          添加客户
+          添加入库单
         </el-button>
         <el-button type="warning" plain>
           <el-icon><Download /></el-icon>
@@ -127,12 +139,10 @@ import { ref } from 'vue'
  */
 // 表单数据
 const query = ref({
-  customerNumber: null, // 客户编号
-  customerName: null, // 客户名称
-  orderType: null, // 客户类型
-  orderAmountMin: undefined, // 订单金额-最小值
-  orderAmountMax: undefined, // 订单金额-最大值
-  deliveryTimeArr: [], // 交货时间
+  stockInNumber: null, // 入库编号
+  stockInType: null, // 入库类型
+  stockInTimeArr: [], // 入库时间
+  createUserName: null, // 创建人
   createTimeArr: [], // 创建时间
 })
 // 表单搜索
@@ -151,38 +161,17 @@ function queryReset (newQuery) {
 // 表格列数据
 const tableCols = ref([
   {
-    prop: 'customerNumber',
-    label: '客户编号',
+    prop: 'stockInNumber',
+    label: '入库编号',
     minWidth: '180px',
     fixed: 'left',
   }, {
-    prop: 'customerName',
-    label: '客户名称',
-    minWidth: '180px',
-    fixed: 'left',
-  }, {
-    prop: 'orderType',
-    label: '客户类型',
+    prop: 'stockInType',
+    label: '入库类型',
     minWidth: '180px',
   }, {
-    prop: 'customerPosition',
-    label: '客户职位',
-    minWidth: '180px',
-  }, {
-    prop: 'contactName',
-    label: '联系人',
-    minWidth: '180px',
-  }, {
-    prop: 'contactWay',
-    label: '联系方式',
-    minWidth: '180px',
-  }, {
-    prop: 'publicAccount',
-    label: '对公账号',
-    minWidth: '180px',
-  }, {
-    prop: 'address',
-    label: '地址',
+    prop: 'stockInTime',
+    label: '入库时间',
     minWidth: '180px',
   }, {
     prop: 'createUserName',
@@ -192,14 +181,17 @@ const tableCols = ref([
     prop: 'createTime',
     label: '创建时间',
     minWidth: '180px',
-  },
+  }, {
+    prop: 'remark',
+    label: '备注',
+    minWidth: '180px',
+  }
 ])
 // 表格数据
 const tableData = ref([
   {
-    customerId: '1',
-    customerName: '李总',
-    customerNumber: 'CUST1001',
+    stockInId: '1',
+    stockInNumber: 'CUST1001',
   }
 ])
 // 表格分页

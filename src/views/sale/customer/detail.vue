@@ -14,10 +14,10 @@
     >
       <el-form-item
         label="客户"
-        prop="cusotmerId"
+        prop="customerId"
       >
         <el-select
-          v-model="formData.cusotmerId"
+          v-model="formData.customerId"
           placeholder="请选择客户"
           clearable
         >
@@ -27,10 +27,10 @@
       </el-form-item>
       <el-form-item
         label="客户编号"
-        prop="custumerNumber"
+        prop="customerNumber"
       >
         <el-input
-          v-model="formData.custumerNumber"
+          v-model="formData.customerNumber"
           placeholder="可填写，忽略将自动生成"
           clearable
         />
@@ -50,10 +50,10 @@
       </el-form-item>
       <el-form-item
         label="客户职位"
-        prop="custumerPosition"
+        prop="customerPosition"
       >
         <el-input
-          v-model="formData.custumerPosition"
+          v-model="formData.customerPosition"
           placeholder="请输入客户职位"
           clearable
         />
