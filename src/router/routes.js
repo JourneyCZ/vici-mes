@@ -86,7 +86,8 @@ export default [
       },
       {
         path: '/repertory/balance',
-        name: '仓库余额明细',
+        name: '库存余额明细',
+        component: () => import('@/views/repertory/balance/index.vue'),
       },
       {
         path: '/repertory/purchase',
