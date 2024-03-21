@@ -92,6 +92,7 @@ export default [
       {
         path: '/repertory/purchase',
         name: '采购订单',
+        component: () => import('@/views/repertory/purchase/index.vue'),
       },
     ]
   },

@@ -129,10 +129,8 @@ import { ref } from 'vue'
 const query = ref({
   customerNumber: null, // 客户编号
   customerName: null, // 客户名称
-  orderType: null, // 客户类型
-  orderAmountMin: undefined, // 订单金额-最小值
-  orderAmountMax: undefined, // 订单金额-最大值
-  deliveryTimeArr: [], // 交货时间
+  contactName: null, // 联系人
+  createUserName: null, // 创建人
   createTimeArr: [], // 创建时间
 })
 // 表单搜索
@@ -141,7 +139,6 @@ function querySubmit (newQuery) {
 }
 // 表单重置
 function queryReset (newQuery) {
-  newQuery.orderAmountMax = undefined
   console.log('queryReset', query.value)
 }
 

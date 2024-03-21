@@ -8,31 +8,51 @@
     >
       <!-- 表单项 -->
       <template #FormItems="{ query }">
-        <el-form-item label="仓库名称" prop="stockroomName">
+        <!-- 采购 -->
+        <el-form-item label="采购编号" prop="purchaseNumber">
           <el-input
-            v-model="query.stockroomName"
-            placeholder="请输入仓库名称"
+            v-model="query.purchaseNumber"
+            placeholder="请输入采购编号"
           />
         </el-form-item>
-        <el-form-item label="仓库类型" prop="stockroomType">
-          <el-select
-            v-model="query.stockroomType"
-            placeholder="请选择仓库类型"
-            clearable
-          >
-            <el-option value="1" label="普通仓库"></el-option>
-            <el-option value="2" label="寄售库"></el-option>
-          </el-select>
+        <el-form-item label="产品编号" prop="productNumber">
+          <el-input
+            v-model="query.productNumber"
+            placeholder="请输入产品编号"
+          />
         </el-form-item>
-        <el-form-item label="仓库状态" prop="stockroomStatus">
-          <el-select
-            v-model="query.stockroomStatus"
-            placeholder="请选择仓库状态"
-            clearable
-          >
-            <el-option value="1" label="启用"></el-option>
-            <el-option value="0" label="停用"></el-option>
-          </el-select>
+        <el-form-item label="产品名称" prop="productName">
+          <el-input
+            v-model="query.productName"
+            placeholder="请输入产品名称"
+          />
+        </el-form-item>
+      </template>
+      <!-- 表单折叠项 -->
+      <template #FoldedItems="{ query }">
+        <el-form-item label="供应商" prop="supplierName">
+          <el-input
+            v-model="query.supplierName"
+            placeholder="请输入供应商"
+          />
+        </el-form-item>
+        <el-form-item label="交货日期" prop="deliveryDateArr">
+          <el-date-picker
+            v-model="query.deliveryDateArr"
+            type="daterange"
+            value-format="YYYY-MM-DD"
+            start-placeholder="开始日期"
+            end-placeholder="结束日期"
+          />
+        </el-form-item>
+        <el-form-item label="创建日期" prop="createTimeArr">
+          <el-date-picker
+            v-model="query.createTimeArr"
+            type="daterange"
+            value-format="YYYY-MM-DD"
+            start-placeholder="开始日期"
+            end-placeholder="结束日期"
+          />
         </el-form-item>
       </template>
     </QueryForm>
@@ -40,14 +60,6 @@
     <!-- 数据表格-操作栏 -->
     <div class="data-table-handle">
       <div class="data-table-handle-left">
-        <el-button
-          type="primary"
-          plain
-          @click="handleDetail('add')"
-        >
-          <el-icon><Plus /></el-icon>
-          添加仓库
-        </el-button>
         <el-button type="warning" plain>
           <el-icon><Download /></el-icon>
           导出
@@ -79,12 +91,6 @@
         :minWidth="col.minWidth || null"
         :fixed="col.fixed || null"
       />
-      <el-table-column label="操作" width="120" fixed="right">
-        <template v-slot="{ row }">
-          <el-button type="primary" link @click="handleDetail('edit', row)">编辑</el-button>
-          <el-button type="danger" link @click="handleDelete(row.id)">删除</el-button>
-        </template>
-      </el-table-column>
     </el-table>
     <!-- 数据表格-分页 -->
     <el-pagination
@@ -97,19 +103,11 @@
       @current-change="pageCurrentChange"
       @size-change="pageSizeChange"
     />
-
-    <!-- 详情弹窗 -->
-    <DetailDialog
-      v-model:visible="detailVisible"
-      :operate="detailOperate"
-      :data="detailData"
-    />
   </div>
 </template>
 
 <script setup>
 import QueryForm from '@/components/TableView/QueryForm.vue'
-import DetailDialog from './detail.vue'
 import { ref } from 'vue'
 
 /**
@@ -117,9 +115,12 @@ import { ref } from 'vue'
  */
 // 表单数据
 const query = ref({
-  stockroomName: null, // 仓库名称
-  stockroomType: null, // 仓库类型
-  stockroomStatus: null, // 仓库状态
+  purchaseNumber: null, // 采购编号
+  productNumber: null, // 产品编号
+  productName: null, // 产品名称
+  supplierName: null, // 供应商名称
+  deliveryDateArr: [], // 交货时间
+  createTimeArr: [], // 创建时间
 })
 // 表单搜索
 function querySubmit (newQuery) {
@@ -127,6 +128,7 @@ function querySubmit (newQuery) {
 }
 // 表单重置
 function queryReset (newQuery) {
+  newQuery.stockQuantityMax = undefined
   console.log('queryReset', query.value)
 }
 
@@ -136,30 +138,43 @@ function queryReset (newQuery) {
 // 表格列数据
 const tableCols = ref([
   {
-    prop: 'stockroomNumber',
-    label: '仓库编号',
+    prop: 'purchaseNumber',
+    label: '采购编号',
     minWidth: '180px',
     fixed: 'left',
   }, {
-    prop: 'stockroomName',
-    label: '仓库名称',
+    prop: 'purchaseDate',
+    label: '采购日期',
     minWidth: '180px',
     fixed: 'left',
   }, {
-    prop: 'stockroomType',
-    label: '仓库类型',
+    prop: 'supplierName',
+    label: '供应商',
+    minWidth: '180px',
+    fixed: 'left',
+  }, {
+    prop: 'productNumber',
+    label: '产品编号',
     minWidth: '180px',
   }, {
-    prop: 'stockroomStatus',
-    label: '仓库状态',
+    prop: 'productName',
+    label: '产品名称',
     minWidth: '180px',
   }, {
-    prop: 'stockroomKeeper',
-    label: '仓库管理员',
+    prop: 'productType',
+    label: '产品分类',
     minWidth: '180px',
   }, {
-    prop: 'address',
-    label: '地址',
+    prop: 'productUnit',
+    label: '单位',
+    minWidth: '180px',
+  }, {
+    prop: 'productQuantity',
+    label: '采购数量',
+    minWidth: '180px',
+  }, {
+    prop: 'deliveryDate',
+    label: '交货日期',
     minWidth: '180px',
   }, {
     prop: 'createUserName',
@@ -169,18 +184,12 @@ const tableCols = ref([
     prop: 'createTime',
     label: '创建时间',
     minWidth: '180px',
-  }, {
-    prop: 'remark',
-    label: '备注',
-    minWidth: '180px',
-  }
+  },
 ])
 // 表格数据
 const tableData = ref([
   {
-    stockroomId: '1',
-    stockroomName: '李总',
-    stockroomNumber: 'CUST1001',
+    productNumber: 'PROD1001',
   }
 ])
 // 表格分页
@@ -194,20 +203,6 @@ function pageCurrentChange () {
 
 }
 function pageSizeChange () {
-
-}
-// 表格详情弹窗
-const detailVisible = ref(false)
-const detailOperate = ref('add')
-const detailData = ref(null)
-// 表格详情
-function handleDetail (operate, data) {
-  detailVisible.value = true
-  detailOperate.value = operate
-  detailData.value = data || null
-}
-// 表格删除
-function handleDelete () {
 
 }
 </script>

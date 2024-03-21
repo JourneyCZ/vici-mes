@@ -162,7 +162,6 @@ function querySubmit (newQuery) {
 }
 // 表单重置
 function queryReset (newQuery) {
-  newQuery.orderAmountMax = undefined
   console.log('queryReset', query.value)
 }
 

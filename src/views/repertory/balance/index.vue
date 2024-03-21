@@ -29,40 +29,37 @@
       </template>
       <!-- 表单折叠项 -->
       <template #FoldedItems="{ query }">
-        <el-form-item label="出入库类型" prop="stockInOutType">
-          <el-cascader
-            v-model="query.stockInOutType"
-            :options="stockInOutOptions"
-          />
+        <el-form-item label="产品分类" prop="productType">
+          <el-select
+            v-model="query.productType"
+            placeholder="请选择产品分类"
+            clearable
+          >
+            <el-option value="1" label="产成品"></el-option>
+            <el-option value="2" label="半成品"></el-option>
+            <el-option value="3" label="零部件"></el-option>
+          </el-select>
         </el-form-item>
-        <el-form-item label="出入库单号" prop="stockInOutNumber">
+        <el-form-item label="仓库" prop="stockName">
           <el-input
-            v-model="query.stockInOutNumber"
-            placeholder="请输入出入库单号"
+            v-model="query.stockName"
+            placeholder="请输入仓库"
           />
         </el-form-item>
-        <el-form-item label="实际收发时间" prop="stockInOutTimeArr">
-          <el-date-picker
-            v-model="query.stockInOutTimeArr"
-            type="daterange"
-            value-format="YYYY-MM-DD"
-            start-placeholder="开始日期"
-            end-placeholder="结束日期"
+        <el-form-item label="库存区间" prop="stockQuantityMin">
+          <el-input-number
+            v-model="query.stockQuantityMin"
+            :min="0"
+            :max="query.stockQuantityMax"
+            controls-position="right"
+            placeholder="请输入最小值"
           />
-        </el-form-item>
-        <el-form-item label="创建人" prop="createUserName">
-          <el-input
-            v-model="query.createUserName"
-            placeholder="请输入创建人"
-          />
-        </el-form-item>
-        <el-form-item label="创建时间" prop="createTimeArr">
-          <el-date-picker
-            v-model="query.createTimeArr"
-            type="daterange"
-            value-format="YYYY-MM-DD"
-            start-placeholder="开始日期"
-            end-placeholder="结束日期"
+          <div :span="2" class="query-form-separator">-</div>
+          <el-input-number
+            v-model="query.stockQuantityMax"
+            :min="query.stockQuantityMin"
+            controls-position="right"
+            placeholder="请输入最大值"
           />
         </el-form-item>
       </template>
@@ -124,42 +121,15 @@ import { ref } from 'vue'
 /**
  * 查询表单
  */
-// 出入库类型
-const stockInOutOptions = ref([
-  {
-    value: '1',
-    label: '入库',
-    children: [
-      { value: '1', label: '成品入库' },
-      { value: '2', label: '半成品入库' },
-      { value: '3', label: '采购入库' },
-      { value: '4', label: '调拨入库' },
-      { value: '5', label: '销售退货入库' },
-      { value: '6', label: '退料入库' },
-      { value: '7', label: '其他出库' },
-    ]
-  }, {
-    value: '2',
-    label: '出库',
-    children: [
-      { value: '1', label: '普通出库' },
-      { value: '2', label: '生产领料出库' },
-      { value: '3', label: '调拨出库' },
-      { value: '4', label: '采购退货出库' },
-      { value: '5', label: '销售出库' },
-      { value: '6', label: '其他出库' },
-    ]
-  }
-])
 // 表单数据
 const query = ref({
   productNumber: null, // 产品编号
   productName: null, // 产品名称
   productSpecification: null, // 产品规格
-  stockInOutType: null, // 出入库类型
-  stockInOutTimeArr: [], // 实际收发时间
-  createUserName: null, // 创建人
-  createTimeArr: [], // 创建时间
+  productType: null, // 产品分类
+  stockName: [], // 仓库
+  stockQuantityMin: undefined, // 订单金额-最小值
+  stockQuantityMax: undefined, // 订单金额-最大值
 })
 // 表单搜索
 function querySubmit (newQuery) {
@@ -167,7 +137,7 @@ function querySubmit (newQuery) {
 }
 // 表单重置
 function queryReset (newQuery) {
-  newQuery.orderAmountMax = undefined
+  newQuery.stockQuantityMax = undefined
   console.log('queryReset', query.value)
 }
 
@@ -187,48 +157,43 @@ const tableCols = ref([
     minWidth: '180px',
     fixed: 'left',
   }, {
+    prop: 'productType',
+    label: '产品分类',
+    minWidth: '180px',
+  }, {
     prop: 'productSpecification',
     label: '产品规格',
     minWidth: '180px',
   }, {
+    prop: 'productUnit',
+    label: '单位',
+    minWidth: '180px',
+  }, {
+    prop: 'stockroomNumber',
+    label: '仓库编号',
+    minWidth: '180px',
+  }, {
     prop: 'stockroomName',
-    label: '仓库',
+    label: '仓库名称',
     minWidth: '180px',
   }, {
-    prop: 'changeQuantity',
-    label: '库存变更数量',
+    prop: 'safetyWarningInventory',
+    label: '安全预警库存',
     minWidth: '180px',
   }, {
-    prop: 'stockOutTime',
-    label: '实际收发时间',
+    prop: 'stockQuantity',
+    label: '库存余额',
     minWidth: '180px',
   }, {
-    prop: 'stockInOutType',
-    label: '出入库类型',
-    minWidth: '180px',
-  }, {
-    prop: 'stockInOutNumber',
-    label: '出入库单据编号',
-    minWidth: '180px',
-  }, {
-    prop: 'remark',
-    label: '备注',
-    minWidth: '180px',
-  }, {
-    prop: 'createUserName',
-    label: '创建人',
-    minWidth: '180px',
-  }, {
-    prop: 'createTime',
-    label: '创建时间',
+    prop: 'purchasingAgent',
+    label: '采购人员',
     minWidth: '180px',
   }
 ])
 // 表格数据
 const tableData = ref([
   {
-    stockOutId: '1',
-    productNumber: 'CUST1001',
+    productNumber: 'PROD1001',
   }
 ])
 // 表格分页
