@@ -8,45 +8,43 @@
     >
       <!-- 表单项 -->
       <template #FormItems="{ query }">
-        <el-form-item label="采购编号" prop="purchaseNumber">
+        <el-form-item label="方案编号" prop="schemeNumber">
           <el-input
-            v-model="query.purchaseNumber"
-            placeholder="请输入采购编号"
+            v-model="query.schemeNumber"
+            placeholder="请输入方案编号"
           />
         </el-form-item>
-        <el-form-item label="产品编号" prop="productNumber">
+        <el-form-item label="方案名称" prop="schemeName">
           <el-input
-            v-model="query.productNumber"
-            placeholder="请输入产品编号"
+            v-model="query.schemeNumber"
+            placeholder="请输入方案名称"
           />
         </el-form-item>
-        <el-form-item label="产品名称" prop="productName">
-          <el-input
-            v-model="query.productName"
-            placeholder="请输入产品名称"
-          />
+        <el-form-item label="状态" prop="status">
+          <el-select
+            v-model="query.status"
+            placeholder="请选择状态"
+            clearable
+          >
+            <el-option value="1" label="启用"></el-option>
+            <el-option value="0" label="禁用"></el-option>
+          </el-select>
         </el-form-item>
       </template>
       <!-- 表单折叠项 -->
       <template #FoldedItems="{ query }">
-        <el-form-item label="供应商" prop="supplierName">
-          <el-input
-            v-model="query.supplierName"
-            placeholder="请输入供应商"
-          />
-        </el-form-item>
-        <el-form-item label="交货日期" prop="deliveryDateArr">
+        <el-form-item label="创建日期" prop="createTimeArr">
           <el-date-picker
-            v-model="query.deliveryDateArr"
+            v-model="query.createTimeArr"
             type="daterange"
             value-format="YYYY-MM-DD"
             start-placeholder="开始日期"
             end-placeholder="结束日期"
           />
         </el-form-item>
-        <el-form-item label="创建日期" prop="createTimeArr">
+        <el-form-item label="更新时间" prop="updateDateArr">
           <el-date-picker
-            v-model="query.createTimeArr"
+            v-model="query.updateDateArr"
             type="daterange"
             value-format="YYYY-MM-DD"
             start-placeholder="开始日期"
@@ -59,6 +57,14 @@
     <!-- 数据表格-操作栏 -->
     <div class="data-table-handle">
       <div class="data-table-handle-left">
+        <el-button
+          type="primary"
+          plain
+          @click="handleDetail('add')"
+        >
+          <el-icon><Plus /></el-icon>
+          添加质检方案
+        </el-button>
         <el-button type="warning" plain>
           <el-icon><Download /></el-icon>
           导出
@@ -90,6 +96,12 @@
         :minWidth="col.minWidth || null"
         :fixed="col.fixed || null"
       />
+      <el-table-column label="操作" width="120" fixed="right">
+        <template v-slot="{ row }">
+          <el-button type="primary" link @click="handleDetail('edit', row)">编辑</el-button>
+          <el-button type="danger" link @click="handleDelete(row.id)">删除</el-button>
+        </template>
+      </el-table-column>
     </el-table>
     <!-- 数据表格-分页 -->
     <el-pagination
@@ -102,11 +114,19 @@
       @current-change="pageCurrentChange"
       @size-change="pageSizeChange"
     />
+
+    <!-- 详情弹窗 -->
+    <DetailDialog
+      v-model:visible="detailVisible"
+      :operate="detailOperate"
+      :data="detailData"
+    />
   </div>
 </template>
 
 <script setup>
 import QueryForm from '@/components/TableView/QueryForm.vue'
+import DetailDialog from './detail.vue'
 import { ref } from 'vue'
 
 /**
@@ -114,12 +134,11 @@ import { ref } from 'vue'
  */
 // 表单数据
 const query = ref({
-  purchaseNumber: null, // 采购编号
-  productNumber: null, // 产品编号
-  productName: null, // 产品名称
-  supplierName: null, // 供应商名称
-  deliveryDateArr: [], // 交货时间
+  schemeNumber: null, // 方案编号
+  schemeName: null, // 方案名称
+  status: null, // 状态
   createTimeArr: [], // 创建时间
+  updateDateArr: [], // 更新时间
 })
 // 表单搜索
 function querySubmit (newQuery) {
@@ -136,59 +155,33 @@ function queryReset (newQuery) {
 // 表格列数据
 const tableCols = ref([
   {
-    prop: 'purchaseNumber',
-    label: '采购编号',
+    prop: 'schemeNumber',
+    label: '方案编号',
     minWidth: '180px',
     fixed: 'left',
   }, {
-    prop: 'purchaseDate',
-    label: '采购日期',
+    prop: 'schemeName',
+    label: '方案名称',
     minWidth: '180px',
     fixed: 'left',
   }, {
-    prop: 'supplierName',
-    label: '供应商',
-    minWidth: '180px',
-    fixed: 'left',
-  }, {
-    prop: 'productNumber',
-    label: '产品编号',
-    minWidth: '180px',
-  }, {
-    prop: 'productName',
-    label: '产品名称',
-    minWidth: '180px',
-  }, {
-    prop: 'productType',
-    label: '产品分类',
-    minWidth: '180px',
-  }, {
-    prop: 'productUnit',
-    label: '单位',
-    minWidth: '180px',
-  }, {
-    prop: 'productQuantity',
-    label: '采购数量',
-    minWidth: '180px',
-  }, {
-    prop: 'deliveryDate',
-    label: '交货日期',
-    minWidth: '180px',
-  }, {
-    prop: 'createUserName',
-    label: '创建人',
+    prop: 'status',
+    label: '状态',
     minWidth: '180px',
   }, {
     prop: 'createTime',
     label: '创建时间',
+    minWidth: '180px',
+  }, {
+    prop: 'updateDate',
+    label: '更新时间',
     minWidth: '180px',
   },
 ])
 // 表格数据
 const tableData = ref([
   {
-    purchaseNumber: 'PURC1001',
-    productNumber: 'PROD1001',
+    schemeNumber: 'SCHE1001',
   }
 ])
 // 表格分页
@@ -202,6 +195,20 @@ function pageCurrentChange () {
 
 }
 function pageSizeChange () {
+
+}
+// 表格详情弹窗
+const detailVisible = ref(false)
+const detailOperate = ref('add')
+const detailData = ref(null)
+// 表格详情
+function handleDetail (operate, data) {
+  detailVisible.value = true
+  detailOperate.value = operate
+  detailData.value = data || null
+}
+// 表格删除
+function handleDelete () {
 
 }
 </script>

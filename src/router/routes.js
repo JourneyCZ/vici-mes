@@ -101,12 +101,14 @@ export default [
     name: '质检管理',
     children: [
       {
-        path: '/repertory/scheme',
+        path: '/quality/scheme',
         name: '质检方案',
+        component: () => import('@/views/quality/scheme/index.vue'),
       },
       {
         path: '/repertory/task',
         name: '质检任务',
+        component: () => import('@/views/quality/task/index.vue'),
       },
       {
         path: '/repertory/report',
@@ -115,19 +117,13 @@ export default [
     ]
   },
   {
-    path: '/factory',
-    name: '工厂管理',
-    children: [
-      {
-        path: '/factory/info',
-        name: '工厂信息',
-      },
-    ]
-  },
-  {
     path: '/base',
     name: '基础数据',
     children: [
+      {
+        path: '/base/factory',
+        name: '工厂信息',
+      },
       {
         path: '/base/supplier',
         name: '供应商管理',
