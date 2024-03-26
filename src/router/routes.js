@@ -8,10 +8,10 @@ export default [
     name: '首页',
     component: () => import('@/views/home/index.vue')
   },
-  {
-    path: '/dashboard',
-    name: '智能驾驶舱',
-  },
+  // {
+  //   path: '/dashboard',
+  //   name: '智能驾驶舱',
+  // },
   {
     path: '/sale',
     name: '销售管理',
@@ -110,10 +110,10 @@ export default [
         name: '质检任务',
         component: () => import('@/views/quality/task/index.vue'),
       },
-      {
-        path: '/repertory/report',
-        name: '质检报告',
-      },
+      // {
+      //   path: '/repertory/report',
+      //   name: '质检报告',
+      // },
     ]
   },
   {
@@ -121,12 +121,9 @@ export default [
     name: '基础数据',
     children: [
       {
-        path: '/base/factory',
-        name: '工厂信息',
-      },
-      {
         path: '/base/supplier',
         name: '供应商管理',
+        component: () => import('@/views/base/supplier/index.vue'),
       },
       {
         path: '/base/category',
