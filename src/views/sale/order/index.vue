@@ -8,9 +8,9 @@
     >
       <!-- 表单项 -->
       <template #FormItems="{ query }">
-        <el-form-item label="销售编号" prop="orderNumber">
+        <el-form-item label="销售编号" prop="orderCode">
           <el-input
-            v-model="query.orderNumber"
+            v-model="query.orderCode"
             placeholder="请输入销售编号"
           />
         </el-form-item>
@@ -27,7 +27,7 @@
             <el-option
               v-for="item in orderTypes"
               :key="item.value"
-              :value="Number(item.value)"
+              :value="Code(item.value)"
             >
               {{ item.label }}
             </el-option>
@@ -158,7 +158,7 @@ const orderTypes = ref([
 ])
 // 表单数据
 const query = ref({
-  orderNumber: null, // 销售编号
+  orderCode: null, // 销售编号
   customerName: null, // 客户名称
   orderType: null, // 订单类型
   orderAmountMin: undefined, // 订单金额-最小值

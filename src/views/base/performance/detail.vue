@@ -13,92 +13,86 @@
       label-width="auto"
     >
       <el-form-item
-        label="客户"
-        prop="customerId"
+        label="计价方式"
+        prop="pricingManner"
       >
         <el-select
-          v-model="formData.customerId"
-          placeholder="请选择客户"
+          v-model="formData.pricingManner"
+          placeholder="请选择计价方式"
           clearable
         >
-          <el-option value="1" label="李总"></el-option>
-          <el-option value="2" label="刘总"></el-option>
+          <el-option value="1" label="计件"></el-option>
+          <el-option value="2" label="计时"></el-option>
         </el-select>
       </el-form-item>
       <el-form-item
-        label="客户编号"
-        prop="customerCode"
+        label="产品名称"
+        prop="productName"
       >
         <el-input
-          v-model="formData.customerCode"
-          placeholder="可填写，忽略将自动生成"
+          v-model="formData.productName"
+          placeholder="请输入产品名称"
           clearable
         />
       </el-form-item>
       <el-form-item
-        label="客户类型"
-        prop="orderType"
-      >
-        <el-select
-          v-model="formData.orderType"
-          placeholder="请选择客户类型"
-          clearable
-        >
-          <el-option value="1">客户类型1</el-option>
-          <el-option value="2">客户类型2</el-option>
-        </el-select>
-      </el-form-item>
-      <el-form-item
-        label="客户职位"
-        prop="customerPosition"
+        label="工序名称"
+        prop="processName"
       >
         <el-input
-          v-model="formData.customerPosition"
-          placeholder="请输入客户职位"
+          v-model="formData.processName"
+          placeholder="请输入工序名称"
           clearable
         />
       </el-form-item>
       <el-form-item
-        label="联系人"
-        prop="contactName"
+        label="工资单价"
+        prop="wageUnitPrice"
       >
-        <el-input
-          v-model="formData.contactName"
-          placeholder="请输入联系人"
-          clearable
-        />
-      </el-form-item>
-      <el-form-item
-        label="联系方式"
-        prop="contactWay"
-      >
-        <el-input
-          v-model="formData.contactWay"
-          placeholder="请输入联系方式"
+        <el-input-number
+          v-model="formData.wageUnitPrice"
+          :min="0"
+          controls-position="right"
+          placeholder="请输入工资单价"
           clearable
         />
       </el-form-item>
       <el-form-item
         class="full-item"
-        label="对公账号"
-        prop="publicAccount"
+        label="标准效率"
       >
-        <el-input
-          v-model="formData.publicAccount"
-          placeholder="请输入对公账号"
+        <el-input-number
+          class="quarter-input"
+          v-model="formData.standardOutput"
+          :min="0"
+          controls-position="right"
           clearable
         />
-      </el-form-item>
-      <el-form-item
-        class="full-item"
-        label="地址"
-        prop="address"
-      >
-        <el-input
-          v-model="formData.address"
-          placeholder="请输入地址"
+        <span class="form-separator">/</span>
+        <el-input-number
+          class="quarter-input"
+          v-model="formData.standardHours"
+          :min="0"
+          controls-position="right"
           clearable
         />
+        <span class="form-separator">时</span>
+        <el-input-number
+          class="quarter-input"
+          v-model="formData.standardMinutes"
+          :min="0"
+          controls-position="right"
+          clearable
+        />
+        <span class="form-separator">分</span>
+        <el-input-number
+          class="quarter-input"
+          v-model="formData.standardSeconds"
+          :min="0"
+          controls-position="right"
+          clearable
+        />
+        <span class="form-separator">秒</span>
       </el-form-item>
     </el-form>
     <template #footer>
@@ -137,7 +131,7 @@ const props = defineProps({
 })
 
 // 弹窗数据
-const dialogTitle = ref('客户信息')
+const dialogTitle = ref('物料信息')
 const DetailFormRef = ref()
 const formData = ref({})
 watchEffect(() => {

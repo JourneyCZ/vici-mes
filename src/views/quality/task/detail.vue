@@ -14,20 +14,20 @@
     >
       <el-form-item
         label="任务编号"
-        prop="taskNumber"
+        prop="taskCode"
       >
         <el-input
-          v-model="formData.taskNumber"
+          v-model="formData.taskCode"
           placeholder="可填写，忽略将自动生成"
           clearable
         />
       </el-form-item>
       <el-form-item
         label="产品名称"
-        prop="productNumber"
+        prop="productCode"
       >
         <el-select
-          v-model="formData.productNumber"
+          v-model="formData.productCode"
           placeholder="请选择产品"
           clearable
         >

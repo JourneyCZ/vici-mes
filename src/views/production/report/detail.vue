@@ -14,10 +14,10 @@
     >
       <el-form-item
         label="工单编号"
-        prop="productionNumber"
+        prop="productionCode"
       >
         <el-input
-          v-model="formData.productionNumber"
+          v-model="formData.productionCode"
           placeholder="可填写，忽略将自动生成"
           clearable
         />

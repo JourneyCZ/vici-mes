@@ -8,9 +8,9 @@
     >
       <!-- 表单项 -->
       <template #FormItems="{ query }">
-        <el-form-item label="工单编号" prop="productionNumber">
+        <el-form-item label="工单编号" prop="productionCode">
           <el-input
-            v-model="query.productionNumber"
+            v-model="query.productionCode"
             placeholder="请输入工单编号"
           />
         </el-form-item>
@@ -36,9 +36,9 @@
       </template>
       <!-- 表单折叠项 -->
       <template #FoldedItems="{ query }">
-        <el-form-item label="计划编号" prop="planNumber">
+        <el-form-item label="计划编号" prop="planCode">
           <el-input
-            v-model="query.planNumber"
+            v-model="query.planCode"
             placeholder="请输入计划编号"
           />
         </el-form-item>
@@ -143,10 +143,10 @@ import { ref } from 'vue'
  */
 // 表单数据
 const query = ref({
-  productionNumber: null, // 工单编号
+  productionCode: null, // 工单编号
   productName: null, // 产品名称
   status: null, // 状态
-  planNumber: null, // 计划编号
+  planCode: null, // 计划编号
   planStartTimeArr: [], // 计划开始时间
   planEndTimeArr: [], // 计划结束时间
 })
@@ -165,16 +165,16 @@ function queryReset (newQuery) {
 // 表格列数据
 const tableCols = ref([
   {
-    prop: 'productionNumber',
+    prop: 'productionCode',
     label: '工单编号',
     minWidth: '180px',
     fixed: 'left',
   }, {
-    prop: 'planNumber',
+    prop: 'planCode',
     label: '计划编号',
     minWidth: '180px',
   }, {
-    prop: 'productNumber',
+    prop: 'productCode',
     label: '产品编号',
     minWidth: '180px',
   }, {
@@ -242,7 +242,7 @@ const tableCols = ref([
 // 表格数据
 const tableData = ref([
   {
-    productionNumber: 'PROD1001',
+    productionCode: 'PROD1001',
   }
 ])
 // 表格分页

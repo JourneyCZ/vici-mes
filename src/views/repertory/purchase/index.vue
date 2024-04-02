@@ -8,15 +8,15 @@
     >
       <!-- 表单项 -->
       <template #FormItems="{ query }">
-        <el-form-item label="采购编号" prop="purchaseNumber">
+        <el-form-item label="采购编号" prop="purchaseCode">
           <el-input
-            v-model="query.purchaseNumber"
+            v-model="query.purchaseCode"
             placeholder="请输入采购编号"
           />
         </el-form-item>
-        <el-form-item label="产品编号" prop="productNumber">
+        <el-form-item label="产品编号" prop="productCode">
           <el-input
-            v-model="query.productNumber"
+            v-model="query.productCode"
             placeholder="请输入产品编号"
           />
         </el-form-item>
@@ -114,8 +114,8 @@ import { ref } from 'vue'
  */
 // 表单数据
 const query = ref({
-  purchaseNumber: null, // 采购编号
-  productNumber: null, // 产品编号
+  purchaseCode: null, // 采购编号
+  productCode: null, // 产品编号
   productName: null, // 产品名称
   supplierName: null, // 供应商名称
   deliveryDateArr: [], // 交货时间
@@ -136,7 +136,7 @@ function queryReset (newQuery) {
 // 表格列数据
 const tableCols = ref([
   {
-    prop: 'purchaseNumber',
+    prop: 'purchaseCode',
     label: '采购编号',
     minWidth: '180px',
     fixed: 'left',
@@ -151,7 +151,7 @@ const tableCols = ref([
     minWidth: '180px',
     fixed: 'left',
   }, {
-    prop: 'productNumber',
+    prop: 'productCode',
     label: '产品编号',
     minWidth: '180px',
   }, {
@@ -187,8 +187,8 @@ const tableCols = ref([
 // 表格数据
 const tableData = ref([
   {
-    purchaseNumber: 'PURC1001',
-    productNumber: 'PROD1001',
+    purchaseCode: 'PURC1001',
+    productCode: 'PROD1001',
   }
 ])
 // 表格分页

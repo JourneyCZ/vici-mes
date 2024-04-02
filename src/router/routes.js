@@ -128,26 +128,32 @@ export default [
       {
         path: '/base/category',
         name: '产品分类',
+        component: () => import('@/views/base/category/index.vue'),
       },
       {
         path: '/base/product',
         name: '产品',
+        component: () => import('@/views/base/product/index.vue'),
       },
       {
         path: '/base/process',
         name: '工序',
+        component: () => import('@/views/base/process/index.vue'),
       },
       {
         path: '/base/craft',
         name: '工艺路线',
+        component: () => import('@/views/base/craft/index.vue'),
       },
       {
         path: '/base/bom',
-        name: 'BOM清单',
+        name: 'BOM物料清单',
+        component: () => import('@/views/base/bom/index.vue'),
       },
       {
         path: '/base/performance',
         name: '绩效工资配置',
+        component: () => import('@/views/base/performance/index.vue'),
       },
     ]
   },

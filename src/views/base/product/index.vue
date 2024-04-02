@@ -8,31 +8,55 @@
     >
       <!-- 表单项 -->
       <template #FormItems="{ query }">
-        <el-form-item label="方案编号" prop="schemeCode">
+        <el-form-item label="产品编号" prop="productCode">
           <el-input
-            v-model="query.schemeCode"
-            placeholder="请输入方案编号"
+            v-model="query.productCode"
+            placeholder="请输入产品编号"
           />
         </el-form-item>
-        <el-form-item label="方案名称" prop="schemeName">
+        <el-form-item label="产品名称" prop="productName">
           <el-input
-            v-model="query.schemeCode"
-            placeholder="请输入方案名称"
+            v-model="query.productName"
+            placeholder="请输入产品名称"
           />
         </el-form-item>
-        <el-form-item label="状态" prop="status">
-          <el-select
-            v-model="query.status"
-            placeholder="请选择状态"
-            clearable
-          >
-            <el-option value="1" label="启用"></el-option>
-            <el-option value="0" label="禁用"></el-option>
-          </el-select>
+        <el-form-item label="产品规格" prop="productSpecification">
+          <el-input
+            v-model="query.productSpecification"
+            placeholder="请输入产品规格"
+          />
         </el-form-item>
       </template>
       <!-- 表单折叠项 -->
       <template #FoldedItems="{ query }">
+        <el-form-item label="产品分类" prop="productType">
+          <el-select
+            v-model="query.productType"
+            placeholder="请选择产品分类"
+            clearable
+          >
+            <el-option :value="null">全部</el-option>
+            <el-option value="1">产成品</el-option>
+            <el-option value="2">半成品</el-option>
+            <el-option value="3">零部件</el-option>
+          </el-select>
+        </el-form-item>
+        <el-form-item label="业务范围" prop="businessScope">
+          <el-input
+            v-model="query.businessScope"
+            placeholder="请输入业务范围"
+          />
+        </el-form-item>
+        <el-form-item label="工艺路线" prop="processRoute">
+          <el-select
+            v-model="query.processRoute"
+            placeholder="请选择工艺路线"
+            clearable
+          >
+            <el-option value="1" label="工艺一"></el-option>
+            <el-option value="2" label="工艺二"></el-option>
+          </el-select>
+        </el-form-item>
         <el-form-item label="创建日期" prop="createTimeArr">
           <el-date-picker
             v-model="query.createTimeArr"
@@ -42,14 +66,15 @@
             end-placeholder="结束日期"
           />
         </el-form-item>
-        <el-form-item label="更新时间" prop="updateDateArr">
-          <el-date-picker
-            v-model="query.updateDateArr"
-            type="daterange"
-            value-format="YYYY-MM-DD"
-            start-placeholder="开始日期"
-            end-placeholder="结束日期"
-          />
+        <el-form-item label="产品状态" prop="productStatus">
+          <el-select
+            v-model="query.productStatus"
+            placeholder="请选择产品状态"
+            clearable
+          >
+            <el-option value="1" label="启用"></el-option>
+            <el-option value="0" label="停用"></el-option>
+          </el-select>
         </el-form-item>
       </template>
     </QueryForm>
@@ -63,11 +88,7 @@
           @click="handleDetail('add')"
         >
           <el-icon><Plus /></el-icon>
-          添加质检方案
-        </el-button>
-        <el-button type="warning" plain>
-          <el-icon><Download /></el-icon>
-          导出
+          添加产品
         </el-button>
       </div>
       <div class="data-table-handle-right">
@@ -134,11 +155,10 @@ import { ref } from 'vue'
  */
 // 表单数据
 const query = ref({
-  schemeCode: null, // 方案编号
-  schemeName: null, // 方案名称
-  status: null, // 状态
+  productName: null, // 产品名称
+  productType: null, // 产品分类
   createTimeArr: [], // 创建时间
-  updateDateArr: [], // 更新时间
+  productStatus: null, // 产品状态
 })
 // 表单搜索
 function querySubmit (newQuery) {
@@ -155,33 +175,59 @@ function queryReset (newQuery) {
 // 表格列数据
 const tableCols = ref([
   {
-    prop: 'schemeCode',
-    label: '方案编号',
+    prop: 'productCode',
+    label: '产品编号',
     minWidth: '180px',
     fixed: 'left',
   }, {
-    prop: 'schemeName',
-    label: '方案名称',
+    prop: 'productName',
+    label: '产品名称',
     minWidth: '180px',
     fixed: 'left',
   }, {
-    prop: 'status',
-    label: '状态',
+    prop: 'processRoute',
+    label: '工艺路线',
+    minWidth: '180px',
+  }, {
+    prop: 'productUnit',
+    label: '单位',
+    minWidth: '180px',
+  }, {
+    prop: 'stockroomName',
+    label: '所在仓库',
+    minWidth: '180px',
+  }, {
+    prop: 'businessScope',
+    label: '业务范围',
+    minWidth: '180px',
+  }, {
+    prop: 'productType',
+    label: '产品分类',
+    minWidth: '180px',
+  }, {
+    prop: 'productStatus',
+    label: '产品状态',
+    minWidth: '180px',
+  }, {
+    prop: 'purchasStaff',
+    label: '采购人员',
+    minWidth: '180px',
+  }, {
+    prop: 'createUserName',
+    label: '创建人',
     minWidth: '180px',
   }, {
     prop: 'createTime',
     label: '创建时间',
     minWidth: '180px',
-  }, {
-    prop: 'updateDate',
-    label: '更新时间',
-    minWidth: '180px',
-  },
+  }
 ])
 // 表格数据
 const tableData = ref([
   {
-    schemeCode: 'SCHE1001',
+    productId: '1',
+    productName: '水杯',
+    productCode: 'PROD1001',
   }
 ])
 // 表格分页

@@ -136,7 +136,7 @@ function queryReset (newQuery) {
 // 表格列数据
 const tableCols = ref([
   {
-    prop: 'stockroomNumber',
+    prop: 'stockroomCode',
     label: '仓库编号',
     minWidth: '180px',
     fixed: 'left',
@@ -180,7 +180,7 @@ const tableData = ref([
   {
     stockroomId: '1',
     stockroomName: '李总',
-    stockroomNumber: 'CUST1001',
+    stockroomCode: 'CUST1001',
   }
 ])
 // 表格分页

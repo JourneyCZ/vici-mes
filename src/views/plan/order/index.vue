@@ -8,9 +8,9 @@
     >
       <!-- 表单项 -->
       <template #FormItems="{ query }">
-        <el-form-item label="计划编号" prop="planNumber">
+        <el-form-item label="计划编号" prop="planCode">
           <el-input
-            v-model="query.planNumber"
+            v-model="query.planCode"
             placeholder="请输入计划编号"
           />
         </el-form-item>
@@ -41,9 +41,9 @@
             placeholder="请输入产品名称"
           />
         </el-form-item>
-        <el-form-item label="销售编号" prop="orderNumber">
+        <el-form-item label="销售编号" prop="orderCode">
           <el-input
-            v-model="query.orderNumber"
+            v-model="query.orderCode"
             placeholder="请输入销售编号"
           />
         </el-form-item>
@@ -130,11 +130,11 @@ import { ref } from 'vue'
  */
 // 表单数据
 const query = ref({
-  planNumber: null, // 计划编号
+  planCode: null, // 计划编号
   planStartTimeArr: [], // 计划开始时间
   planEndTimeArr: [], // 计划结束时间
   productName: null, // 产品名称
-  orderNumber: null, // 销售编号
+  orderCode: null, // 销售编号
 })
 // 表单搜索
 function querySubmit (newQuery) {
@@ -156,15 +156,15 @@ const tableCols = ref([
     minWidth: '180px',
     fixed: 'left',
   }, {
-    prop: 'planNumber',
+    prop: 'planCode',
     label: '计划编号',
     minWidth: '180px',
   }, {
-    prop: 'orderNumber',
+    prop: 'orderCode',
     label: '销售编号',
     minWidth: '180px',
   }, {
-    prop: 'productNumber',
+    prop: 'productCode',
     label: '产品编号',
     minWidth: '180px',
   }, {
@@ -230,7 +230,7 @@ const tableData = ref([
   {
     customerId: '1',
     customerName: '李总',
-    planNumber: 'PLAN1001',
+    planCode: 'PLAN1001',
   }
 ])
 // 表格分页

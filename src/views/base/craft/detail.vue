@@ -13,54 +13,52 @@
       label-width="auto"
     >
       <el-form-item
-        label="入库编号"
-        prop="stockInCode"
+        label="工艺路线编号"
+        prop="craftCode"
       >
         <el-input
-          v-model="formData.stockInCode"
+          v-model="formData.craftCode"
           placeholder="可填写，忽略将自动生成"
           clearable
         />
       </el-form-item>
       <el-form-item
-        label="入库类型"
-        prop="stockInType"
+        label="工艺路线名称"
+        prop="craftName"
       >
-        <el-select
-          v-model="formData.stockInType"
-          placeholder="请选择入库类型"
+        <el-input
+          v-model="formData.craftName"
+          placeholder="请输入工艺路线名称"
           clearable
-        >
-          <el-option value="1" label="成品入库"></el-option>
-          <el-option value="2" label="半成品入库"></el-option>
-          <el-option value="3" label="采购入库"></el-option>
-          <el-option value="4" label="调拨入库"></el-option>
-          <el-option value="5" label="销售退货入库"></el-option>
-          <el-option value="6" label="退料入库"></el-option>
-          <el-option value="7" label="其他入库"></el-option>
-        </el-select>
-      </el-form-item>
-      <el-form-item
-        label="入库时间"
-        prop="stockInTime"
-      >
-        <el-date-picker
-          v-model="formData.stockInTime"
-          type="datetime"
-          value-format="YYYY-MM-DD HH:mm:ss"
-          placeholder="请选择入库时间"
         />
       </el-form-item>
       <el-form-item
         class="full-item"
-        label="备注"
-        prop="remark"
+        label="工序列表"
+        prop="processName"
       >
-        <el-input
-          v-model="formData.remark"
-          placeholder="请输入备注"
+        <el-select
+          v-model="formData.processName"
+          placeholder="请选择工序"
           clearable
-        />
+        >
+          <el-option value="工序1">工序1</el-option>
+          <el-option value="工序2">工序2</el-option>
+        </el-select>
+      </el-form-item>
+      <el-form-item
+        class="full-item"
+        label="最后一道工序"
+        prop="lastProcessName"
+      >
+        <el-select
+          v-model="formData.lastProcessName"
+          placeholder="请选择最后一道工序"
+          clearable
+        >
+          <el-option value="工序1">工序1</el-option>
+          <el-option value="工序2">工序2</el-option>
+        </el-select>
       </el-form-item>
     </el-form>
     <template #footer>
@@ -99,7 +97,7 @@ const props = defineProps({
 })
 
 // 弹窗数据
-const dialogTitle = ref('入库单信息')
+const dialogTitle = ref('工艺路线信息')
 const DetailFormRef = ref()
 const formData = ref({})
 watchEffect(() => {

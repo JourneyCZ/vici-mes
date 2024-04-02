@@ -13,92 +13,101 @@
       label-width="auto"
     >
       <el-form-item
-        label="客户"
-        prop="customerId"
-      >
-        <el-select
-          v-model="formData.customerId"
-          placeholder="请选择客户"
-          clearable
-        >
-          <el-option value="1" label="李总"></el-option>
-          <el-option value="2" label="刘总"></el-option>
-        </el-select>
-      </el-form-item>
-      <el-form-item
-        label="客户编号"
-        prop="customerCode"
+        label="物料编号"
+        prop="materialCode"
       >
         <el-input
-          v-model="formData.customerCode"
+          v-model="formData.materialCode"
           placeholder="可填写，忽略将自动生成"
           clearable
         />
       </el-form-item>
       <el-form-item
-        label="客户类型"
-        prop="orderType"
+        label="物料名称"
+        prop="materialName"
+      >
+        <el-input
+          v-model="formData.materialName"
+          placeholder="请输入物料名称"
+          clearable
+        />
+      </el-form-item>
+      <el-form-item
+        label="物料分类"
+        prop="materialType"
       >
         <el-select
-          v-model="formData.orderType"
-          placeholder="请选择客户类型"
+          v-model="formData.materialType"
+          placeholder="请选择物料分类"
           clearable
         >
-          <el-option value="1">客户类型1</el-option>
-          <el-option value="2">客户类型2</el-option>
+          <el-option value="1">普通物料</el-option>
+          <el-option value="2">易燃物料</el-option>
         </el-select>
       </el-form-item>
       <el-form-item
-        label="客户职位"
-        prop="customerPosition"
+        label="规格"
+        prop="materialSpecification"
       >
         <el-input
-          v-model="formData.customerPosition"
-          placeholder="请输入客户职位"
+          v-model="formData.materialSpecification"
+          placeholder="请输入规格"
           clearable
         />
       </el-form-item>
       <el-form-item
-        label="联系人"
-        prop="contactName"
+        label="单位"
+        prop="materialUnit"
       >
-        <el-input
-          v-model="formData.contactName"
-          placeholder="请输入联系人"
+        <el-select
+          v-model="formData.materialUnit"
+          placeholder="请选择单位"
           clearable
-        />
+        >
+          <el-option value="个">个</el-option>
+          <el-option value="吨">吨</el-option>
+          <el-option value="升">升</el-option>
+        </el-select>
       </el-form-item>
       <el-form-item
-        label="联系方式"
-        prop="contactWay"
+        label="基础数量"
+        prop="baseQuantity"
       >
-        <el-input
-          v-model="formData.contactWay"
-          placeholder="请输入联系方式"
-          clearable
-        />
-      </el-form-item>
-      <el-form-item
-        class="full-item"
-        label="对公账号"
-        prop="publicAccount"
-      >
-        <el-input
-          v-model="formData.publicAccount"
-          placeholder="请输入对公账号"
+        <el-input-number
+          v-model="formData.baseQuantity"
+          :min="0"
+          controls-position="right"
+          placeholder="请输入基础数量"
           clearable
         />
       </el-form-item>
       <el-form-item
         class="full-item"
-        label="地址"
-        prop="address"
+        label="备注"
+        prop="remark"
       >
         <el-input
-          v-model="formData.address"
-          placeholder="请输入地址"
+          v-model="formData.remark"
+          placeholder="请输入备注"
           clearable
         />
+      </el-form-item>
+      <el-form-item
+        class="full-item"
+        label="物料图片"
+        prop="materialImage"
+      >
+        <el-upload
+          list-type="picture-card"
+          v-model:file-list="formData.imageList"
+        >
+          <el-icon><Plus /></el-icon>
+          <template #tip>
+            <div class="el-upload__tip">
+              请上传 大小不超过 <span class="red-tip">30MB</span> 格式为 <span class="red-tip">png/jpg/jpeg</span> 的文件
+            </div>
+          </template>
+        </el-upload>
       </el-form-item>
     </el-form>
     <template #footer>
@@ -117,6 +126,7 @@
 
 <script setup>
 import { ref, computed, watchEffect, defineProps, defineEmits } from 'vue'
+import { Plus } from '@element-plus/icons-vue'
 
 // 弹窗属性
 const props = defineProps({
@@ -137,7 +147,7 @@ const props = defineProps({
 })
 
 // 弹窗数据
-const dialogTitle = ref('客户信息')
+const dialogTitle = ref('物料信息')
 const DetailFormRef = ref()
 const formData = ref({})
 watchEffect(() => {

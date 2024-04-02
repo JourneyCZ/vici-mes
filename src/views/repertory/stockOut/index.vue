@@ -8,9 +8,9 @@
     >
       <!-- 表单项 -->
       <template #FormItems="{ query }">
-        <el-form-item label="出库编号" prop="stockOutNumber">
+        <el-form-item label="出库编号" prop="stockOutCode">
           <el-input
-            v-model="query.stockOutNumber"
+            v-model="query.stockOutCode"
             placeholder="请输入出库编号"
           />
         </el-form-item>
@@ -138,7 +138,7 @@ import { ref } from 'vue'
  */
 // 表单数据
 const query = ref({
-  stockOutNumber: null, // 出库编号
+  stockOutCode: null, // 出库编号
   stockOutType: null, // 出库类型
   stockOutTimeArr: [], // 出库时间
   createUserName: null, // 创建人
@@ -159,7 +159,7 @@ function queryReset (newQuery) {
 // 表格列数据
 const tableCols = ref([
   {
-    prop: 'stockOutNumber',
+    prop: 'stockOutCode',
     label: '出库编号',
     minWidth: '180px',
     fixed: 'left',
@@ -189,7 +189,7 @@ const tableCols = ref([
 const tableData = ref([
   {
     stockOutId: '1',
-    stockOutNumber: 'CUST1001',
+    stockOutCode: 'CUST1001',
   }
 ])
 // 表格分页

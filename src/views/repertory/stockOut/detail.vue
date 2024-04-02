@@ -14,10 +14,10 @@
     >
       <el-form-item
         label="出库编号"
-        prop="stockOutNumber"
+        prop="stockOutCode"
       >
         <el-input
-          v-model="formData.stockOutNumber"
+          v-model="formData.stockOutCode"
           placeholder="可填写，忽略将自动生成"
           clearable
         />

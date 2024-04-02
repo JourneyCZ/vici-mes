@@ -8,9 +8,9 @@
     >
       <!-- 表单项 -->
       <template #FormItems="{ query }">
-        <el-form-item label="产品编号" prop="productNumber">
+        <el-form-item label="产品编号" prop="productCode">
           <el-input
-            v-model="query.productNumber"
+            v-model="query.productCode"
             placeholder="请输入产品编号"
           />
         </el-form-item>
@@ -35,9 +35,9 @@
             :options="stockInOutOptions"
           />
         </el-form-item>
-        <el-form-item label="出入库单号" prop="stockInOutNumber">
+        <el-form-item label="出入库单号" prop="stockInOutCode">
           <el-input
-            v-model="query.stockInOutNumber"
+            v-model="query.stockInOutCode"
             placeholder="请输入出入库单号"
           />
         </el-form-item>
@@ -153,7 +153,7 @@ const stockInOutOptions = ref([
 ])
 // 表单数据
 const query = ref({
-  productNumber: null, // 产品编号
+  productCode: null, // 产品编号
   productName: null, // 产品名称
   productSpecification: null, // 产品规格
   stockInOutType: null, // 出入库类型
@@ -176,7 +176,7 @@ function queryReset (newQuery) {
 // 表格列数据
 const tableCols = ref([
   {
-    prop: 'productNumber',
+    prop: 'productCode',
     label: '产品编号',
     minWidth: '180px',
     fixed: 'left',
@@ -206,7 +206,7 @@ const tableCols = ref([
     label: '出入库类型',
     minWidth: '180px',
   }, {
-    prop: 'stockInOutNumber',
+    prop: 'stockInOutCode',
     label: '出入库单据编号',
     minWidth: '180px',
   }, {
@@ -227,7 +227,7 @@ const tableCols = ref([
 const tableData = ref([
   {
     stockOutId: '1',
-    productNumber: 'CUST1001',
+    productCode: 'CUST1001',
   }
 ])
 // 表格分页

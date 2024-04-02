@@ -8,47 +8,26 @@
     >
       <!-- 表单项 -->
       <template #FormItems="{ query }">
-        <el-form-item label="方案编号" prop="schemeCode">
-          <el-input
-            v-model="query.schemeCode"
-            placeholder="请输入方案编号"
-          />
-        </el-form-item>
-        <el-form-item label="方案名称" prop="schemeName">
-          <el-input
-            v-model="query.schemeCode"
-            placeholder="请输入方案名称"
-          />
-        </el-form-item>
-        <el-form-item label="状态" prop="status">
+        <el-form-item label="计价方式" prop="pricingManner">
           <el-select
-            v-model="query.status"
-            placeholder="请选择状态"
+            v-model="query.pricingManner"
+            placeholder="请选择计价方式"
             clearable
           >
-            <el-option value="1" label="启用"></el-option>
-            <el-option value="0" label="禁用"></el-option>
+            <el-option value="1" label="计件"></el-option>
+            <el-option value="2" label="计时"></el-option>
           </el-select>
         </el-form-item>
-      </template>
-      <!-- 表单折叠项 -->
-      <template #FoldedItems="{ query }">
-        <el-form-item label="创建日期" prop="createTimeArr">
-          <el-date-picker
-            v-model="query.createTimeArr"
-            type="daterange"
-            value-format="YYYY-MM-DD"
-            start-placeholder="开始日期"
-            end-placeholder="结束日期"
+        <el-form-item label="产品名称" prop="productName">
+          <el-input
+            v-model="query.productName"
+            placeholder="请输入产品名称"
           />
         </el-form-item>
-        <el-form-item label="更新时间" prop="updateDateArr">
-          <el-date-picker
-            v-model="query.updateDateArr"
-            type="daterange"
-            value-format="YYYY-MM-DD"
-            start-placeholder="开始日期"
-            end-placeholder="结束日期"
+        <el-form-item label="工序名称" prop="processName">
+          <el-input
+            v-model="query.processName"
+            placeholder="请输入工序名称"
           />
         </el-form-item>
       </template>
@@ -63,11 +42,7 @@
           @click="handleDetail('add')"
         >
           <el-icon><Plus /></el-icon>
-          添加质检方案
-        </el-button>
-        <el-button type="warning" plain>
-          <el-icon><Download /></el-icon>
-          导出
+          添加绩效工资配置
         </el-button>
       </div>
       <div class="data-table-handle-right">
@@ -133,13 +108,7 @@ import { ref } from 'vue'
  * 查询表单
  */
 // 表单数据
-const query = ref({
-  schemeCode: null, // 方案编号
-  schemeName: null, // 方案名称
-  status: null, // 状态
-  createTimeArr: [], // 创建时间
-  updateDateArr: [], // 更新时间
-})
+const query = ref({})
 // 表单搜索
 function querySubmit (newQuery) {
   console.log('querySubmit', query.value)
@@ -155,33 +124,44 @@ function queryReset (newQuery) {
 // 表格列数据
 const tableCols = ref([
   {
-    prop: 'schemeCode',
-    label: '方案编号',
+    prop: 'pricingManner',
+    label: '计价方式',
     minWidth: '180px',
     fixed: 'left',
   }, {
-    prop: 'schemeName',
-    label: '方案名称',
+    prop: 'productName',
+    label: '产品名称',
     minWidth: '180px',
-    fixed: 'left',
   }, {
-    prop: 'status',
-    label: '状态',
+    prop: 'processName',
+    label: '工序名称',
+    minWidth: '180px',
+  }, {
+    prop: 'wageUnitPrice',
+    label: '工资单价',
+    minWidth: '180px',
+  }, {
+    prop: 'standardOutput',
+    label: '标准产出',
+    minWidth: '180px',
+  }, {
+    prop: 'standardTime',
+    label: '标准工时',
+    minWidth: '180px',
+  }, {
+    prop: 'createUserName',
+    label: '创建人',
     minWidth: '180px',
   }, {
     prop: 'createTime',
     label: '创建时间',
-    minWidth: '180px',
-  }, {
-    prop: 'updateDate',
-    label: '更新时间',
     minWidth: '180px',
   },
 ])
 // 表格数据
 const tableData = ref([
   {
-    schemeCode: 'SCHE1001',
+    pricingManner: '计件',
   }
 ])
 // 表格分页

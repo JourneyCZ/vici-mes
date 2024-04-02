@@ -8,9 +8,9 @@
     >
       <!-- 表单项 -->
       <template #FormItems="{ query }">
-        <el-form-item label="产品编号" prop="productNumber">
+        <el-form-item label="产品编号" prop="productCode">
           <el-input
-            v-model="query.productNumber"
+            v-model="query.productCode"
             placeholder="请输入产品编号"
           />
         </el-form-item>
@@ -123,7 +123,7 @@ import { ref } from 'vue'
  */
 // 表单数据
 const query = ref({
-  productNumber: null, // 产品编号
+  productCode: null, // 产品编号
   productName: null, // 产品名称
   productSpecification: null, // 产品规格
   productType: null, // 产品分类
@@ -147,7 +147,7 @@ function queryReset (newQuery) {
 // 表格列数据
 const tableCols = ref([
   {
-    prop: 'productNumber',
+    prop: 'productCode',
     label: '产品编号',
     minWidth: '180px',
     fixed: 'left',
@@ -169,7 +169,7 @@ const tableCols = ref([
     label: '单位',
     minWidth: '180px',
   }, {
-    prop: 'stockroomNumber',
+    prop: 'stockroomCode',
     label: '仓库编号',
     minWidth: '180px',
   }, {
@@ -193,7 +193,7 @@ const tableCols = ref([
 // 表格数据
 const tableData = ref([
   {
-    productNumber: 'PROD1001',
+    productCode: 'PROD1001',
   }
 ])
 // 表格分页

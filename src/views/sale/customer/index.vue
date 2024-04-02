@@ -8,9 +8,9 @@
     >
       <!-- 表单项 -->
       <template #FormItems="{ query }">
-        <el-form-item label="客户编号" prop="customerNumber">
+        <el-form-item label="客户编号" prop="customerCode">
           <el-input
-            v-model="query.customerNumber"
+            v-model="query.customerCode"
             placeholder="请输入客户编号"
           />
         </el-form-item>
@@ -127,7 +127,7 @@ import { ref } from 'vue'
  */
 // 表单数据
 const query = ref({
-  customerNumber: null, // 客户编号
+  customerCode: null, // 客户编号
   customerName: null, // 客户名称
   contactName: null, // 联系人
   createUserName: null, // 创建人
@@ -148,7 +148,7 @@ function queryReset (newQuery) {
 // 表格列数据
 const tableCols = ref([
   {
-    prop: 'customerNumber',
+    prop: 'customerCode',
     label: '客户编号',
     minWidth: '180px',
     fixed: 'left',
@@ -196,7 +196,7 @@ const tableData = ref([
   {
     customerId: '1',
     customerName: '李总',
-    customerNumber: 'CUST1001',
+    customerCode: 'CUST1001',
   }
 ])
 // 表格分页

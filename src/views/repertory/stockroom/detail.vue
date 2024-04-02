@@ -24,10 +24,10 @@
       </el-form-item>
       <el-form-item
         label="仓库编号"
-        prop="stockroomNumber"
+        prop="stockroomCode"
       >
         <el-input
-          v-model="formData.stockroomNumber"
+          v-model="formData.stockroomCode"
           placeholder="可填写，忽略将自动生成"
           clearable
         />

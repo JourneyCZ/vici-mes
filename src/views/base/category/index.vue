@@ -14,6 +14,17 @@
             placeholder="请输入分类名称"
           />
         </el-form-item>
+        <el-form-item label="存货计价方法" prop="valuationMethod">
+          <el-select
+            v-model="query.valuationMethod"
+            placeholder="请选择存货计价方法"
+            clearable
+          >
+            <el-option :value="null" label="全部"></el-option>
+            <el-option value="1" label="加权平均法"></el-option>
+            <el-option value="2" label="个别计价法"></el-option>
+          </el-select>
+        </el-form-item>
       </template>
     </QueryForm>
 
@@ -94,6 +105,7 @@ import { ref } from 'vue'
 // 表单数据
 const query = ref({
   supplierName: null, // 分类名称
+  valuationMethod: null, // 存货计价方法
 })
 // 表单搜索
 function querySubmit (newQuery) {
@@ -115,36 +127,19 @@ const tableCols = ref([
     minWidth: '180px',
     fixed: 'left',
   }, {
-    prop: 'contactName',
+    prop: 'valuationMethod',
     label: '存货计价方法',
     minWidth: '180px',
   }, {
-    prop: 'contactWay',
-    label: '联系方式',
-    minWidth: '180px',
-  }, {
-    prop: 'address',
-    label: '地址',
-    minWidth: '180px',
-  }, {
-    prop: 'remark',
-    label: '备注',
-    minWidth: '180px',
-  }, {
-    prop: 'createUserName',
-    label: '创建人',
-    minWidth: '180px',
-  }, {
-    prop: 'createTime',
-    label: '创建时间',
+    prop: 'turnaroundTime',
+    label: '库存周转期限',
     minWidth: '180px',
   },
 ])
 // 表格数据
 const tableData = ref([
   {
-    supplierId: '1',
-    supplierName: '李四',
+    supplierName: '产成品',
   }
 ])
 // 表格分页

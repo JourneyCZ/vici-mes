@@ -14,10 +14,10 @@
     >
       <el-form-item
         label="方案编号"
-        prop="schemeNumber"
+        prop="schemeCode"
       >
         <el-input
-          v-model="formData.schemeNumber"
+          v-model="formData.schemeCode"
           placeholder="可填写，忽略将自动生成"
           clearable
         />

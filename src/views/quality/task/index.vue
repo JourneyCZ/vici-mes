@@ -8,9 +8,9 @@
     >
       <!-- 表单项 -->
       <template #FormItems="{ query }">
-        <el-form-item label="任务编号" prop="taskNumber">
+        <el-form-item label="任务编号" prop="taskCode">
           <el-input
-            v-model="query.taskNumber"
+            v-model="query.taskCode"
             placeholder="请输入任务编号"
           />
         </el-form-item>
@@ -45,9 +45,9 @@
             <el-option value="0" label="不合格"></el-option>
           </el-select>
         </el-form-item>
-        <el-form-item label="工序编号" prop="processNumber">
+        <el-form-item label="工序编号" prop="processCode">
           <el-input
-            v-model="query.processNumber"
+            v-model="query.processCode"
             placeholder="请输入工序编号"
           />
         </el-form-item>
@@ -57,9 +57,9 @@
             placeholder="请输入工序名称"
           />
         </el-form-item>
-        <el-form-item label="产品编号" prop="productNumber">
+        <el-form-item label="产品编号" prop="productCode">
           <el-input
-            v-model="query.productNumber"
+            v-model="query.productCode"
             placeholder="请输入产品编号"
           />
         </el-form-item>
@@ -182,7 +182,7 @@ function queryReset (newQuery) {
 // 表格列数据
 const tableCols = ref([
   {
-    prop: 'taskNumber',
+    prop: 'taskCode',
     label: '任务编号',
     minWidth: '180px',
     fixed: 'left',
@@ -199,22 +199,18 @@ const tableCols = ref([
     prop: 'inspectionStatus',
     label: '质检状态',
     minWidth: '180px',
-    fixed: 'left',
   }, {
     prop: 'schemeName',
     label: '质检方案',
     minWidth: '180px',
-    fixed: 'left',
   }, {
     prop: 'inspectionType',
     label: '检验类型',
     minWidth: '180px',
-    fixed: 'left',
   }, {
     prop: 'inspectionResult',
     label: '检验结果',
     minWidth: '180px',
-    fixed: 'left',
   }, {
     prop: 'inspectionStartTime',
     label: '质检开始时间',
@@ -224,7 +220,7 @@ const tableCols = ref([
     label: '质检结束时间',
     minWidth: '180px',
   }, {
-    prop: 'productNumber',
+    prop: 'productCode',
     label: '产品编号',
     minWidth: '180px',
   }, {
@@ -244,12 +240,11 @@ const tableCols = ref([
     label: '单位',
     minWidth: '180px',
   }, {
-    prop: 'productionNumber',
+    prop: 'productionCode',
     label: '工单编号',
     minWidth: '180px',
-    fixed: 'left',
   }, {
-    prop: 'processNumber',
+    prop: 'processCode',
     label: '工序编号',
     minWidth: '180px',
   }, {
@@ -261,7 +256,7 @@ const tableCols = ref([
 // 表格数据
 const tableData = ref([
   {
-    taskNumber: 'SCHE1001',
+    taskCode: 'SCHE1001',
   }
 ])
 // 表格分页

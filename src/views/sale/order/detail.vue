@@ -27,10 +27,10 @@
       </el-form-item>
       <el-form-item
         label="销售编号"
-        prop="orderNumber"
+        prop="orderCode"
       >
         <el-input
-          v-model="formData.orderNumber"
+          v-model="formData.orderCode"
           placeholder="可填写，忽略将自动生成"
           clearable
         />

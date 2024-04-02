@@ -13,6 +13,7 @@
       label-width="auto"
     >
       <el-form-item
+        class="full-item"
         label="供应商名称"
         prop="supplierName"
       >
@@ -23,44 +24,27 @@
         />
       </el-form-item>
       <el-form-item
+        class="full-item"
         label="存货计价方法"
-        prop="contactName"
+        prop="valuationMethod"
       >
-        <el-input
-          v-model="formData.contactName"
-          placeholder="请输入存货计价方法"
+        <el-select
+          v-model="formData.valuationMethod"
+          placeholder="请选择存货计价方法"
           clearable
-        />
-      </el-form-item>
-      <el-form-item
-        label="联系方式"
-        prop="contactWay"
-      >
-        <el-input
-          v-model="formData.contactWay"
-          placeholder="请输入联系方式"
-          clearable
-        />
+        >
+          <el-option value="1" label="加权平均法"></el-option>
+          <el-option value="2" label="个别计价法"></el-option>
+        </el-select>
       </el-form-item>
       <el-form-item
         class="full-item"
-        label="地址"
-        prop="address"
+        label="库存周转期限"
+        prop="turnaroundTime"
       >
         <el-input
-          v-model="formData.address"
-          placeholder="请输入地址"
-          clearable
-        />
-      </el-form-item>
-      <el-form-item
-        class="full-item"
-        label="备注"
-        prop="remark"
-      >
-        <el-input
-          v-model="formData.remark"
-          placeholder="请输入备注"
+          v-model="formData.turnaroundTime"
+          placeholder="请输入库存周转期限"
           clearable
         />
       </el-form-item>
@@ -101,7 +85,7 @@ const props = defineProps({
 })
 
 // 弹窗数据
-const dialogTitle = ref('供应商信息')
+const dialogTitle = ref('产品分类')
 const DetailFormRef = ref()
 const formData = ref({})
 watchEffect(() => {

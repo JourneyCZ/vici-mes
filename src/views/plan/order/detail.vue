@@ -27,10 +27,10 @@
       </el-form-item>
       <el-form-item
         label="计划编号"
-        prop="planNumber"
+        prop="planCode"
       >
         <el-input
-          v-model="formData.planNumber"
+          v-model="formData.planCode"
           placeholder="可填写，忽略将自动生成"
           clearable
         />
