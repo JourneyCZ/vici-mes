@@ -1,0 +1,29 @@
+{
+  "saleOrder": [
+    {
+      
+    }
+  ],
+  "saleCustomer": [
+    {
+      "customerCode": "CUST20240206001",
+      "customerName": "李总",
+      "customerPosition": null,
+      "orderType": null,
+      "contactName": null,
+      "contactWay": null,
+      "address": null,
+      "publicAccount": null
+    },
+    {
+      "customerCode": "CUST20240206002",
+      "customerName": "刘总",
+      "customerPosition": null,
+      "orderType": null,
+      "contactName": null,
+      "contactWay": null,
+      "address": null,
+      "publicAccount": null
+    }
+  ]
+}

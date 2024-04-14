@@ -3,8 +3,8 @@
     <!-- 查询表单 -->
     <QueryForm
       :query="query"
-      @submit="querySubmit"
-      @reset="queryReset"
+      @search="search"
+      @reset="reset"
     >
       <!-- 表单项 -->
       <template #FormItems="{ query }">
@@ -113,6 +113,7 @@
       v-model:visible="detailVisible"
       :operate="detailOperate"
       :data="detailData"
+      @reload="loadTableData"
     />
   </div>
 </template>
@@ -121,6 +122,7 @@
 import QueryForm from '@/components/TableView/QueryForm.vue'
 import DetailDialog from './detail.vue'
 import { ref } from 'vue'
+import { getStorageItem } from '@/utils/LocalStorageManage.js' // , deleteStorageItem
 
 /**
  * 查询表单
@@ -134,12 +136,20 @@ const query = ref({
   createTimeArr: [], // 创建时间
 })
 // 表单搜索
-function querySubmit (newQuery) {
-  console.log('querySubmit', query.value)
+function search () {
+  page.value.current = 1
+  loadTableData()
 }
 // 表单重置
-function queryReset (newQuery) {
-  console.log('queryReset', query.value)
+function reset () {
+  query.value = {
+    customerCode: null, // 客户编号
+    customerName: null, // 客户名称
+    contactName: null, // 联系人
+    createUserName: null, // 创建人
+    createTimeArr: [], // 创建时间
+  }
+  search()
 }
 
 /**
@@ -192,13 +202,12 @@ const tableCols = ref([
   },
 ])
 // 表格数据
-const tableData = ref([
-  {
-    customerId: '1',
-    customerName: '李总',
-    customerCode: 'CUST1001',
-  }
-])
+const tableData = ref({})
+loadTableData()
+function loadTableData () {
+  const saleCustomer = getStorageItem('saleCustomer')
+  tableData.value = saleCustomer
+}
 // 表格分页
 const page = ref({
   current: 1,

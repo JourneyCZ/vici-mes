@@ -3,21 +3,45 @@
     <!-- 查询表单 -->
     <QueryForm
       :query="query"
-      @submit="search"
+      @search="search"
       @reset="reset"
     >
       <!-- 表单项 -->
       <template #FormItems="{ query }">
-        <el-form-item label="工序编号" prop="processCode">
+        <el-form-item label="客户编号" prop="customerCode">
           <el-input
-            v-model="query.processCode"
-            placeholder="请输入工序编号"
+            v-model="query.customerCode"
+            placeholder="请输入客户编号"
           />
         </el-form-item>
-        <el-form-item label="工序名称" prop="processName">
+        <el-form-item label="客户名称" prop="customerName">
           <el-input
-            v-model="query.processName"
-            placeholder="请输入工序名称"
+            v-model="query.customerName"
+            placeholder="请输入客户名称"
+          />
+        </el-form-item>
+        <el-form-item label="联系人" prop="contactName">
+          <el-input
+            v-model="query.contactName"
+            placeholder="请输入联系人"
+          />
+        </el-form-item>
+      </template>
+      <!-- 表单折叠项 -->
+      <template #FoldedItems="{ query }">
+        <el-form-item label="创建人" prop="createUserName">
+          <el-input
+            v-model="query.createUserName"
+            placeholder="请输入创建人"
+          />
+        </el-form-item>
+        <el-form-item label="创建时间" prop="createTimeArr">
+          <el-date-picker
+            v-model="query.createTimeArr"
+            type="daterange"
+            value-format="YYYY-MM-DD"
+            start-placeholder="开始日期"
+            end-placeholder="结束日期"
           />
         </el-form-item>
       </template>
@@ -32,7 +56,11 @@
           @click="handleDetail('add')"
         >
           <el-icon><Plus /></el-icon>
-          添加工序
+          添加客户
+        </el-button>
+        <el-button type="warning" plain>
+          <el-icon><Download /></el-icon>
+          导出
         </el-button>
       </div>
       <div class="data-table-handle-right">
@@ -85,6 +113,7 @@
       v-model:visible="detailVisible"
       :operate="detailOperate"
       :data="detailData"
+      @reload="loadTableData"
     />
   </div>
 </template>
@@ -92,63 +121,75 @@
 <script setup>
 import QueryForm from '@/components/TableView/QueryForm.vue'
 import DetailDialog from './detail.vue'
-import { ref } from 'vue'
+import { ref, reactive } from 'vue'
+import { getStorageItem } from '@/utils/LocalStorageManage.js' // , deleteStorageItem
 
 /**
  * 查询表单
  */
 // 表单数据
-const query = ref({
-  processName: null, // 工序名称
-  processCode: null, // 工序编号
+let query = reactive({
+  customerCode: null, // 客户编号
+  customerName: null, // 客户名称
+  contactName: null, // 联系人
+  createUserName: null, // 创建人
+  createTimeArr: [], // 创建时间
 })
 // 表单搜索
 function search (newQuery) {
-  console.log('search', query.value)
+  page.current = 1
+  loadTableData()
 }
 // 表单重置
 function reset (newQuery) {
-  console.log('reset', query.value)
+  query = {
+    customerCode: null, // 客户编号
+    customerName: null, // 客户名称
+    contactName: null, // 联系人
+    createUserName: null, // 创建人
+    createTimeArr: [], // 创建时间
+  }
+  loadTableData()
 }
 
 /**
  * 数据表格
  */
 // 表格列数据
-const tableCols = ref([
+const tableCols = reactive([
   {
-    prop: 'processCode',
-    label: '工序编号',
+    prop: 'customerCode',
+    label: '客户编号',
     minWidth: '180px',
     fixed: 'left',
   }, {
-    prop: 'processName',
-    label: '工序名称',
+    prop: 'customerName',
+    label: '客户名称',
     minWidth: '180px',
     fixed: 'left',
   }, {
-    prop: 'reportAuthority',
-    label: '报工权限',
+    prop: 'orderType',
+    label: '客户类型',
     minWidth: '180px',
   }, {
-    prop: 'reportRatio',
-    label: '报工数配比',
+    prop: 'customerPosition',
+    label: '客户职位',
     minWidth: '180px',
   }, {
-    prop: 'rejectsList',
-    label: '不良品项列表',
+    prop: 'contactName',
+    label: '联系人',
     minWidth: '180px',
   }, {
-    prop: 'equipmentGroup',
-    label: '设备组列表',
+    prop: 'contactWay',
+    label: '联系方式',
     minWidth: '180px',
   }, {
-    prop: 'processFile',
-    label: '工序附件',
+    prop: 'publicAccount',
+    label: '对公账号',
     minWidth: '180px',
   }, {
-    prop: 'processImage',
-    label: '工序图片',
+    prop: 'address',
+    label: '地址',
     minWidth: '180px',
   }, {
     prop: 'createUserName',
@@ -158,22 +199,21 @@ const tableCols = ref([
     prop: 'createTime',
     label: '创建时间',
     minWidth: '180px',
-  }
+  },
 ])
 // 表格数据
-const tableData = ref([
-  {
-    processId: '1',
-    processName: '喷漆',
-    processCode: 'PROC1001',
-  }
-])
+let tableData = reactive({})
+loadTableData()
+function loadTableData () {
+  const saleCustomer = getStorageItem('saleCustomer')
+  tableData = saleCustomer
+}
 // 表格分页
-const page = ref({
+const page = reactive({
   current: 1,
   size: 10,
   sizes: [10, 20, 30, 40, 50],
-  total: tableData.value?.length || 0,
+  total: tableData?.length || 0,
 })
 function pageCurrentChange () {
 
@@ -184,12 +224,12 @@ function pageSizeChange () {
 // 表格详情弹窗
 const detailVisible = ref(false)
 const detailOperate = ref('add')
-const detailData = ref(null)
+let detailData = reactive({})
 // 表格详情
 function handleDetail (operate, data) {
   detailVisible.value = true
   detailOperate.value = operate
-  detailData.value = data || null
+  detailData = data || {}
 }
 // 表格删除
 function handleDelete () {

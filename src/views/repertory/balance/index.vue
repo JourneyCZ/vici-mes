@@ -3,8 +3,8 @@
     <!-- 查询表单 -->
     <QueryForm
       :query="query"
-      @submit="querySubmit"
-      @reset="queryReset"
+      @submit="search"
+      @reset="reset"
     >
       <!-- 表单项 -->
       <template #FormItems="{ query }">
@@ -132,13 +132,13 @@ const query = ref({
   stockQuantityMax: undefined, // 订单金额-最大值
 })
 // 表单搜索
-function querySubmit (newQuery) {
-  console.log('querySubmit', query.value)
+function search (newQuery) {
+  console.log('search', query.value)
 }
 // 表单重置
-function queryReset (newQuery) {
+function reset (newQuery) {
   newQuery.stockQuantityMax = undefined
-  console.log('queryReset', query.value)
+  console.log('reset', query.value)
 }
 
 /**

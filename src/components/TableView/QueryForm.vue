@@ -17,7 +17,7 @@
       </div>
       <!-- 表单按钮 -->
       <div class="query-form-buttons">
-        <el-button type="primary" @click="submit">搜索</el-button>
+        <el-button type="primary" @click="search">搜索</el-button>
         <el-button @click="reset">重置</el-button>
       </div>
     </el-form>
@@ -35,7 +35,7 @@
 </template>
 
 <script setup>
-import { ref, defineProps, defineEmits } from 'vue'
+import { ref, defineEmits } from 'vue'
 
 const { query } = defineProps({
   query: {
@@ -49,14 +49,14 @@ const { query } = defineProps({
     default: 'auto'
   }
 })
-const emits = defineEmits('submit', 'reset')
+const emits = defineEmits('search', 'reset')
 
 // 表单折叠
 const folded = ref(true)
 
 // 表单搜索
-function submit () {
-  emits('submit', query)
+function search () {
+  emits('search', query)
 }
 
 // 表单重置

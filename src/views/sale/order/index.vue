@@ -3,8 +3,8 @@
     <!-- 查询表单 -->
     <QueryForm
       :query="query"
-      @submit="querySubmit"
-      @reset="queryReset"
+      @submit="search"
+      @reset="reset"
     >
       <!-- 表单项 -->
       <template #FormItems="{ query }">
@@ -27,7 +27,7 @@
             <el-option
               v-for="item in orderTypes"
               :key="item.value"
-              :value="Code(item.value)"
+              :value="item.label"
             >
               {{ item.label }}
             </el-option>
@@ -167,13 +167,13 @@ const query = ref({
   createTimeArr: [], // 创建时间
 })
 // 表单搜索
-function querySubmit (newQuery) {
-  console.log('querySubmit', query.value)
+function search (newQuery) {
+  console.log('search', query.value)
 }
 // 表单重置
-function queryReset (newQuery) {
+function reset (newQuery) {
   newQuery.orderAmountMax = undefined
-  console.log('queryReset', query.value)
+  console.log('reset', query.value)
 }
 
 /**

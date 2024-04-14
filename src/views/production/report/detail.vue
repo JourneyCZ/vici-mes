@@ -122,7 +122,7 @@
 </template>
 
 <script setup>
-import { ref, computed, watchEffect, defineProps, defineEmits } from 'vue'
+import { ref, computed, watchEffect, defineEmits } from 'vue'
 
 // 弹窗属性
 const props = defineProps({

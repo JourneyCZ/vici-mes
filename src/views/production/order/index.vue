@@ -3,8 +3,8 @@
     <!-- 查询表单 -->
     <QueryForm
       :query="query"
-      @submit="querySubmit"
-      @reset="queryReset"
+      @submit="search"
+      @reset="reset"
     >
       <!-- 表单项 -->
       <template #FormItems="{ query }">
@@ -151,12 +151,12 @@ const query = ref({
   planEndTimeArr: [], // 计划结束时间
 })
 // 表单搜索
-function querySubmit (newQuery) {
-  console.log('querySubmit', query.value)
+function search (newQuery) {
+  console.log('search', query.value)
 }
 // 表单重置
-function queryReset (newQuery) {
-  console.log('queryReset', query.value)
+function reset (newQuery) {
+  console.log('reset', query.value)
 }
 
 /**

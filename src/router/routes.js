@@ -157,34 +157,34 @@ export default [
       },
     ]
   },
-  {
-    path: '/report',
-    name: '报表管理',
-    children: [
-      {
-        path: '/report/yield',
-        name: '产量统计',
-      },
-      {
-        path: '/report/performance',
-        name: '员工绩效',
-      },
-      {
-        path: '/report/wages',
-        name: '工资报表',
-      },
-      {
-        path: '/report/rejectDistribution',
-        name: '不良品分布',
-      },
-      {
-        path: '/report/rejectSummary',
-        name: '不良品汇总',
-      },
-      {
-        path: '/report/produce',
-        name: '生产报表',
-      },
-    ]
-  },
+  // {
+  //   path: '/report',
+  //   name: '报表管理',
+  //   children: [
+  //     {
+  //       path: '/report/yield',
+  //       name: '产量统计',
+  //     },
+  //     {
+  //       path: '/report/performance',
+  //       name: '员工绩效',
+  //     },
+  //     {
+  //       path: '/report/wages',
+  //       name: '工资报表',
+  //     },
+  //     {
+  //       path: '/report/rejectDistribution',
+  //       name: '不良品分布',
+  //     },
+  //     {
+  //       path: '/report/rejectSummary',
+  //       name: '不良品汇总',
+  //     },
+  //     {
+  //       path: '/report/produce',
+  //       name: '生产报表',
+  //     },
+  //   ]
+  // },
 ]
