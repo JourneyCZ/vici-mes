@@ -114,6 +114,7 @@
 </template>
 
 <script setup>
+import { cloneDeep } from 'lodash-es'
 import { ref, computed, watchEffect, defineEmits } from 'vue'
 import { addStorageItem, editStorageItem } from '@/utils/LocalStorageManage.js'
 
@@ -135,12 +136,15 @@ const props = defineProps({
   }
 })
 
+// 弹窗事件
+const emits = defineEmits(['update:visible', 'save'])
+
 // 弹窗数据
 const dialogTitle = ref('客户信息')
 const DetailFormRef = ref()
 const formData = ref({})
 watchEffect(() => {
-  formData.value = props.data || {}
+  formData.value = props.data ? cloneDeep(props.data) : {}
 })
 const operate = computed({
   get: () => props.operate
@@ -148,11 +152,12 @@ const operate = computed({
 function detailSave () {
   const saveFunc = operate.value === 'add' ? addStorageItem : editStorageItem
   saveFunc('saleCustomer', formData.value, 'customerCode')
+  console.log('saveSaleCustomer', formData.value)
+  emits('save')
   dialogClose()
 }
 
 // 弹窗开关
-const emits = defineEmits(['update:visible'])
 const dialogVisible = computed({
   get: () => props.visible,
   set: (val) => {

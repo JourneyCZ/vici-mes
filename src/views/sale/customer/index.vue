@@ -113,7 +113,7 @@
       v-model:visible="detailVisible"
       :operate="detailOperate"
       :data="detailData"
-      @reload="loadTableData"
+      @save="loadTableData"
     />
   </div>
 </template>
@@ -206,6 +206,7 @@ const tableData = ref({})
 loadTableData()
 function loadTableData () {
   const saleCustomer = getStorageItem('saleCustomer')
+  console.log('loadTableData', saleCustomer)
   tableData.value = saleCustomer
 }
 // 表格分页
