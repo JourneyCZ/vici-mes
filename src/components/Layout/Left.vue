@@ -1,5 +1,8 @@
 <template>
-  <div :class="['left-container', { 'left-collapsed': Collapsed }]">
+  <div
+    v-if="menus?.length > 0"
+    :class="['left-container', { 'left-collapsed': Collapsed }]"
+  >
     <el-menu
       class="left-menu"
       :default-active="current"
@@ -36,7 +39,6 @@
 import { ref, computed, watchEffect } from 'vue'
 import { useStore } from 'vuex'
 import { useRoute } from 'vue-router'
-import routes from '@/router/routes.js'
 
 // 获取状态管理仓库
 const store = useStore()
@@ -56,7 +58,7 @@ watchEffect(() => {
 })
 
 // 菜单数据
-const menus = ref(routes)
+const menus = computed(() => store.state.base.submenu)
 </script>
 
 <style lang="scss" scoped>

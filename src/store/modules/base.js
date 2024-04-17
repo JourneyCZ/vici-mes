@@ -1,7 +1,8 @@
 const base = {
   state: () => ({
     theme: 'light',
-    collapsed: false
+    collapsed: false,
+    submenu: []
   }),
   mutations: {
     setTheme (state, value) {
@@ -9,6 +10,9 @@ const base = {
     },
     setCollapsed (state, value) {
       state.collapsed = value
+    },
+    setSubmenu (state, value) {
+      state.submenu = value
     }
   }
 }

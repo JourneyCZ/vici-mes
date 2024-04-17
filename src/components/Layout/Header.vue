@@ -64,7 +64,7 @@ const menus = ref(routes)
 
 // 菜单点击事件
 function menuClick (menu) {
-  console.log('menu', menu)
+  store.commit('setSubmenu', menu?.children || [])
 }
 </script>
 
