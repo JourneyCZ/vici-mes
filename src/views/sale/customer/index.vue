@@ -206,7 +206,6 @@ const tableData = ref({})
 loadTableData()
 function loadTableData () {
   const saleCustomer = getStorageItem('saleCustomer')
-  console.log('loadTableData', saleCustomer)
   tableData.value = saleCustomer
 }
 // 表格分页

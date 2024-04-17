@@ -1,5 +1,9 @@
 <template>
   <div :class="['left-container', { 'left-collapsed': Collapsed }]">
+    <div class="left-logo-title">
+      <div class="left-logo"></div>
+      <div class="left-title">轻云制造执行系统</div>
+    </div>
     <el-menu
       class="left-menu"
       :default-active="current"
@@ -44,7 +48,7 @@ const store = useStore()
 // 菜单折叠
 const Collapsed = computed(() => store.state.base.collapsed)
 
-// 监听菜单变化
+// 菜单
 const current = ref()
 const route = useRoute()
 watchEffect(() => {
@@ -55,7 +59,7 @@ watchEffect(() => {
   }
 })
 
-// 菜单数据
+// 从路由中获取菜单
 const menus = ref(routes)
 </script>
 
@@ -65,6 +69,27 @@ const menus = ref(routes)
     display: flex;
     flex-direction: column;
     background: url('@/assets/images/left-bg.png') no-repeat center/100% 100%;
+
+    .left-logo-title {
+      flex: none;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      padding: 16px 20px;
+
+      .left-logo {
+        width: 26px;
+        height: 26px;
+        background: url('@/assets/images/logo.svg') no-repeat center/100% 100%;
+        margin-right: 8px;
+      }
+
+      .left-title {
+        font-size: 20px;
+        line-height: 26px;
+        color: #fff;
+      }
+    }
 
     :deep(.left-menu) {
       flex: auto;

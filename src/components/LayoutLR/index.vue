@@ -2,14 +2,11 @@
   <div :class="['theme-base', themeClass]">
     <el-config-provider :locale="zhCn">
       <div class="page-container">
-        <Header class="page-header" @themeChange="themeChange" />
-        <div class="page-body">
-          <Left class="page-left" />
-          <div class="page-main">
-            <NavTab class="page-nav" />
-            <div class="page-view">
-              <router-view />
-            </div>
+        <Left class="page-left" />
+        <div class="page-main">
+          <Header class="page-header" @themeChange="themeChange" />
+          <div class="page-body">
+            <router-view />
           </div>
         </div>
       </div>
@@ -22,7 +19,6 @@ import { computed } from 'vue'
 import { useStore } from 'vuex'
 import Header from './Header.vue'
 import Left from './Left.vue'
-import NavTab from './NavTab.vue'
 import zhCn from 'element-plus/dist/locale/zh-cn.mjs'
 
 // 获取状态管理仓库
@@ -45,7 +41,6 @@ function themeChange (value) {
 @include themeMixin {
   .page-container {
     display: flex;
-    flex-direction: column;
     width: 100%;
     height: 100%;
     color: theme('colorTextBase');
@@ -53,46 +48,35 @@ function themeChange (value) {
     transition-property: background-color;
     transition: background-color 0.6s;
 
-    .page-header {
-      box-sizing: border-box;
-      width: 100%;
-      height: 50px;
-      background-color: theme('colorBgElevated');
+    .page-left {
+      flex: none;
+      width: 250px;
+      overflow: hidden;
     }
 
-    .page-body {
+    .page-main {
       flex: auto;
       display: flex;
+      flex-direction: column;
+      background-color: theme('colorBgLayout');
       overflow: hidden;
 
-      .page-left {
-        flex: none;
-        width: 250px;
-        background-color: theme('colorBgElevated');
-        overflow: hidden;
-      }
-
-      .page-main {
-        flex: auto;
-        display: flex;
-        flex-direction: column;
+      .page-header {
         box-sizing: border-box;
         width: 100%;
-        height: 100%;
+        height: 46px;
+        background-color: theme('colorBgElevated');
+        padding: 0 20px;
+      }
+
+      .page-body {
+        flex: auto;
+        box-sizing: border-box;
+        width: 100%;
+        height: 10%;
         overflow-x: hidden;
         overflow-y: auto;
-
-        .page-nav {
-          box-sizing: border-box;
-          width: 100%;
-          padding: 10px 20px 0;
-        }
-
-        .page-view {
-          flex: auto;
-          background-color: theme('colorBgLayout');
-          padding: 20px;
-        }
+        padding: 20px;
       }
     }
   }

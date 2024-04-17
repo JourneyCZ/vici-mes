@@ -6,6 +6,7 @@ export default [
   {
     path: '/home',
     name: '首页',
+    icon: 'HomeFilled',
     component: () => import('@/views/home/index.vue')
   },
   // {
@@ -15,6 +16,7 @@ export default [
   {
     path: '/sale',
     name: '销售管理',
+    icon: 'CreditCard',
     children: [
       {
         path: '/sale/order',
@@ -42,6 +44,7 @@ export default [
   {
     path: '/production',
     name: '生产管理',
+    icon: 'Cpu',
     children: [
       {
         path: '/production/order',
@@ -63,6 +66,7 @@ export default [
   {
     path: '/repertory',
     name: '库存管理',
+    icon: 'Coin',
     children: [
       {
         path: '/repertory/stockroom',
@@ -99,6 +103,7 @@ export default [
   {
     path: '/quality',
     name: '质检管理',
+    icon: 'WarnTriangleFilled',
     children: [
       {
         path: '/quality/scheme',
@@ -119,6 +124,7 @@ export default [
   {
     path: '/base',
     name: '基础数据',
+    icon: 'InfoFilled',
     children: [
       {
         path: '/base/supplier',

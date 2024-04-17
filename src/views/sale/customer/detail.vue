@@ -42,8 +42,8 @@
           placeholder="请选择客户类型"
           clearable
         >
-          <el-option value="1">客户类型1</el-option>
-          <el-option value="2">客户类型2</el-option>
+          <el-option value="客户类型1">客户类型1</el-option>
+          <el-option value="客户类型2">客户类型2</el-option>
         </el-select>
       </el-form-item>
       <el-form-item
@@ -152,7 +152,6 @@ const operate = computed({
 function detailSave () {
   const saveFunc = operate.value === 'add' ? addStorageItem : editStorageItem
   saveFunc('saleCustomer', formData.value, 'customerCode')
-  console.log('saveSaleCustomer', formData.value)
   emits('save')
   dialogClose()
 }

@@ -1,5 +1,31 @@
 <template>
   <div class="header-container">
+    <!-- 标题栏 -->
+    <div class="header-logo-title">
+      <div class="header-logo"></div>
+      <div class="header-title">轻云制造执行系统</div>
+    </div>
+    <!-- 菜单栏 -->
+    <el-menu
+      class="header-menu"
+      mode="horizontal"
+    >
+      <!-- :default-active="current" -->
+      <template
+        v-for="menu in menus"
+        :key="menu.path"
+      >
+        <el-menu-item
+          v-if="menu.name"
+          :index="menu.path"
+          @click="menuClick(menu)"
+        >
+          <el-icon v-if="menu.icon">
+            <component v-bind:is="menu.icon"></component>
+          </el-icon>{{ menu.name }}
+        </el-menu-item>
+      </template>
+    </el-menu>
     <!-- 信息栏 -->
     <div class="header-info">
       <el-switch
@@ -11,33 +37,16 @@
         @change="themeChange"
       />
     </div>
-    <!-- 标签页 -->
-    <el-tabs
-      v-model="activeTab"
-      class="header-tabs"
-      type="card"
-      @tab-change="tabChange"
-      @tab-remove="tabRemove"
-    >
-      <el-tab-pane
-        v-for="item in tabs"
-        :key="item.path"
-        :name="item.path"
-        :label="item.name"
-        :closable="item.path !== '/home'"
-      >
-        {{ item.content }}
-      </el-tab-pane>
-    </el-tabs>
   </div>
 </template>
 
 <script setup>
-import { ref, watch, computed } from 'vue'
+import { ref, computed } from 'vue'
 import { useStore } from 'vuex'
-import { useRoute, useRouter } from 'vue-router'
+import routes from '@/router/routes.js'
 import { Sunny, MoonNight } from '@element-plus/icons-vue'
 
+// 定义事件
 const emit = defineEmits(['themeChange'])
 
 // 获取状态管理仓库
@@ -50,35 +59,74 @@ function themeChange (checked) {
   emit('themeChange', checked ? 'dark' : 'light')
 }
 
-// 标签页
-const route = useRoute()
-const router = useRouter()
-const activeTab = ref(route.path)
-watch(() => route.path, newPath => {
-  activeTab.value = newPath
-})
-const tabs = computed(() => store.state.navTab.tabs)
-// 标签页-切换
-function tabChange (path) {
-  router.push(path)
-}
-// 标签页-移除
-function tabRemove (path) {
-  const newTabs = tabs.value.filter(item => item.path !== path)
-  store.commit('setTabs', newTabs)
-  if (path === route.path) {
-    // 移除当前标签页，则跳转到最后一个标签页
-    router.push(newTabs?.slice(-1)[0]?.path)
-  }
+// 菜单数据
+const menus = ref(routes)
+
+// 菜单点击事件
+function menuClick (menu) {
+  console.log('menu', menu)
 }
 </script>
 
 <style lang="scss" scoped>
 .header-container {
   display: flex;
-  flex-direction: column;
   justify-content: space-between;
-  background: rgba($color: #000000, $alpha: 0);
+  background: url('@/assets/images/header-bg.png') no-repeat center/100% 100%;
+
+  .header-logo-title {
+    flex: none;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    padding: 10px 20px;
+
+    .header-logo {
+      width: 60px;
+      height: 30px;
+      background: url('@/assets/images/logo.png') no-repeat center/100% 100%;
+      margin-right: 8px;
+    }
+
+    .header-title {
+      font-size: 20px;
+      line-height: 30px;
+      color: #fff;
+    }
+  }
+
+  .header-menu {
+    flex: auto;
+    display: flex;
+    justify-content: center;
+    height: 50px;
+    background: rgba($color: #000000, $alpha: 0);
+    border: none;
+
+    .el-menu-item {
+      height: 100%;
+      font-size: 16px;
+      line-height: 16px;
+      color: #fff;
+      border: none;
+      border-radius: 5px 5px 0 0;
+
+      &:hover {
+        color: #1677ff;
+      }
+
+      &.is-active {
+        color: #1677ff;
+        background-color: #fff;
+      }
+
+      .el-icon {
+        width: 16px;
+        font-size: 16px;
+        margin-top: -2px;
+      }
+    }
+  }
 
   .header-info {
     display: flex;
@@ -86,15 +134,6 @@ function tabRemove (path) {
 
     .header-theme-check {
       display: none;
-    }
-  }
-
-  :deep(.header-tabs) {
-    width: 100%;
-
-    .el-tabs__header {
-      border: none;
-      margin: 0;
     }
   }
 }
