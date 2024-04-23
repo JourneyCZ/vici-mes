@@ -85,13 +85,11 @@ function themeChange (value) {
         .page-nav {
           box-sizing: border-box;
           width: 100%;
-          padding: 10px 20px 0;
+          padding: 20px 20px 0;
         }
 
         .page-view {
           flex: auto;
-          background-color: theme('colorBgLayout');
-          padding: 20px;
         }
       }
     }

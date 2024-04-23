@@ -107,7 +107,7 @@ const props = defineProps({
 })
 
 // 弹窗数据
-const dialogTitle = ref('计划订单信息')
+const dialogTitle = ref('生产计划信息')
 const DetailFormRef = ref()
 const formData = ref({})
 watchEffect(() => {

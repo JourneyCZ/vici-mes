@@ -59,7 +59,7 @@
           @click="handleDetail('add')"
         >
           <el-icon><Plus /></el-icon>
-          添加计划订单
+          添加生产计划
         </el-button>
         <el-button type="warning" plain>
           <el-icon><Download /></el-icon>

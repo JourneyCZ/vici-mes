@@ -22,7 +22,7 @@
 </template>
 
 <script setup>
-import { ref, watch, computed } from 'vue'
+import { ref, watchEffect, computed } from 'vue'
 import { useStore } from 'vuex'
 import { useRoute, useRouter } from 'vue-router'
 
@@ -31,17 +31,17 @@ const store = useStore()
 
 // 标签页
 const route = useRoute()
-const router = useRouter()
-const activeTab = ref(route.path)
-watch(() => route.path, newPath => {
-  activeTab.value = newPath
+const activeTab = ref()
+watchEffect(() => {
+  activeTab.value = route.path
 })
-const tabs = computed(() => store.state.navTab.tabs)
 // 标签页-切换
+const router = useRouter()
 function tabChange (path) {
   router.push(path)
 }
 // 标签页-移除
+const tabs = computed(() => store.state.navTab.tabs)
 function tabRemove (path) {
   const newTabs = tabs.value.filter(item => item.path !== path)
   store.commit('setTabs', newTabs)
@@ -61,6 +61,7 @@ function tabRemove (path) {
 
   :deep(.nav-tabs) {
     width: 100%;
+    border-bottom: 1px solid #E4E7ED;
 
     .el-tabs__header {
       border: none;

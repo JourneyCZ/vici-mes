@@ -31,21 +31,15 @@ export default [
     ]
   },
   {
-    path: '/plan',
-    name: '计划管理',
-    children: [
-      {
-        path: '/plan/order',
-        name: '计划订单',
-        component: () => import('@/views/plan/order/index.vue'),
-      },
-    ]
-  },
-  {
     path: '/production',
     name: '生产管理',
     icon: 'Cpu',
     children: [
+      {
+        path: '/production/plan',
+        name: '生产计划',
+        component: () => import('@/views/production/plan/index.vue'),
+      },
       {
         path: '/production/order',
         name: '生产工单',

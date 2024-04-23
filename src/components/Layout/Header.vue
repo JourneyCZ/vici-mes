@@ -9,8 +9,8 @@
     <el-menu
       class="header-menu"
       mode="horizontal"
+      :default-active="current"
     >
-      <!-- :default-active="current" -->
       <template
         v-for="menu in menus"
         :key="menu.path"
@@ -41,9 +41,10 @@
 </template>
 
 <script setup>
-import { ref, computed } from 'vue'
+import { ref, watchEffect, computed } from 'vue'
 import { useStore } from 'vuex'
 import routes from '@/router/routes.js'
+import { useRoute, useRouter } from 'vue-router'
 import { Sunny, MoonNight } from '@element-plus/icons-vue'
 
 // 定义事件
@@ -63,9 +64,21 @@ function themeChange (checked) {
 const menus = ref(routes)
 
 // 菜单点击事件
+const router = useRouter()
 function menuClick (menu) {
-  store.commit('setSubmenu', menu?.children || [])
+  const children = menu?.children
+  store.commit('setSubmenu', children || [])
+  const path = children ? children[0].path : menu.path
+  router.push(path)
 }
+
+// 默认激活菜单
+const current = ref()
+const route = useRoute()
+watchEffect(() => {
+  const currentArr = route.path.match(/^\/\w+/)
+  current.value = currentArr ? currentArr[0] : ''
+})
 </script>
 
 <style lang="scss" scoped>
