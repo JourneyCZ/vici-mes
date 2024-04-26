@@ -61,7 +61,7 @@
       stripe
       border
     >
-      <el-table-column type="index" label="序号" width="120" fixed="left" />
+      <el-table-column type="index" label="序号" width="80" fixed="left" />
       <el-table-column
         v-for="col in tableCols"
         :key="col.prop"

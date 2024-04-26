@@ -8,22 +8,26 @@
     {
       "customerCode": "CUST20240206001",
       "customerName": "李总",
-      "customerPosition": null,
-      "orderType": null,
-      "contactName": null,
-      "contactWay": null,
-      "address": null,
-      "publicAccount": null
+      "customerPosition": "经理",
+      "customerType": "客户类型1",
+      "contactName": "李斯",
+      "contactWay": "13100001111",
+      "address": "安徽省合肥市蜀山区",
+      "publicAccount": "9021XXXXXX0201",
+      "createUserName": "管理员",
+      "createTime": "2024-04-02 08:25:08"
     },
     {
       "customerCode": "CUST20240206002",
       "customerName": "刘总",
-      "customerPosition": null,
-      "orderType": null,
-      "contactName": null,
-      "contactWay": null,
-      "address": null,
-      "publicAccount": null
+      "customerPosition": "经理",
+      "customerType": "客户类型2",
+      "contactName": "刘伍",
+      "contactWay": "13100001111",
+      "address": "安徽省合肥市蜀山区",
+      "publicAccount": "8265XXXXXX0668",
+      "createUserName": "管理员",
+      "createTime": "2024-04-06 14:16:18"
     }
   ]
 }

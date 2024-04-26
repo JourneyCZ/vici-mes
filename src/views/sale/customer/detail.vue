@@ -35,10 +35,10 @@
       </el-form-item>
       <el-form-item
         label="客户类型"
-        prop="orderType"
+        prop="customerType"
       >
         <el-select
-          v-model="formData.orderType"
+          v-model="formData.customerType"
           placeholder="请选择客户类型"
           clearable
         >
@@ -149,8 +149,10 @@ watchEffect(() => {
 const operate = computed({
   get: () => props.operate
 })
+// 弹窗数据保存
 function detailSave () {
   const saveFunc = operate.value === 'add' ? addStorageItem : editStorageItem
+  formData.value.customerCode = formData.value.customerCode || `CUST${new Date().getTime()}`
   saveFunc('saleCustomer', formData.value, 'customerCode')
   emits('save')
   dialogClose()
