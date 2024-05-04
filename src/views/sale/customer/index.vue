@@ -205,8 +205,8 @@ const tableCols = ref([
 const tableData = ref({})
 loadTableData()
 function loadTableData () {
-  const saleCustomer = getStorageItem('saleCustomer')
-  tableData.value = saleCustomer
+  const DATA = getStorageItem('saleCustomer')
+  tableData.value = DATA
 }
 // 表格分页
 const page = ref({

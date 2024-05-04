@@ -78,6 +78,10 @@ const route = useRoute()
 watchEffect(() => {
   const currentArr = route.path.match(/^\/\w+/)
   current.value = currentArr ? currentArr[0] : ''
+  const menu = menus.value.filter(item => item.path === current.value)
+  if (menu && menu.length > 0) {
+    menuClick(menu[0])
+  }
 })
 </script>
 

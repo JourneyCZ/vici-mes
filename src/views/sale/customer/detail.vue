@@ -146,10 +146,10 @@ const formData = ref({})
 watchEffect(() => {
   formData.value = props.data ? cloneDeep(props.data) : {}
 })
+// 弹窗数据保存
 const operate = computed({
   get: () => props.operate
 })
-// 弹窗数据保存
 function detailSave () {
   const saveFunc = operate.value === 'add' ? addStorageItem : editStorageItem
   formData.value.customerCode = formData.value.customerCode || `CUST${new Date().getTime()}`

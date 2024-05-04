@@ -1,7 +1,14 @@
 {
-  "saleOrder": [
+  "baseSupplier": [
     {
-      
+      "supplierId": "SUPP20240206001",
+      "supplierName": "原材料A供应商",
+      "contactName": "张叁",
+      "contactWay": "13100001111",
+      "address": "安徽省合肥市蜀山区",
+      "remark": "一级供应商",
+      "createUserName": "管理员",
+      "createTime": "2024-04-02 08:25:08"
     }
   ],
   "saleCustomer": [

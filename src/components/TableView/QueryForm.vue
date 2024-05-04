@@ -76,7 +76,6 @@ function reset () {
     // 查询表单
     :deep(.query-form) {
       display: flex;
-      flex-wrap: wrap;
       width: 100%;
 
       // 表单项

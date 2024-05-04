@@ -69,7 +69,7 @@
       <div class="dialog-footer">
         <el-button
           type="primary"
-          @click="dialogClose"
+          @click="detailSave"
         >
           保存
         </el-button>
@@ -81,6 +81,7 @@
 
 <script setup>
 import { ref, computed, watchEffect, defineEmits } from 'vue'
+import { addStorageItem, editStorageItem } from '@/utils/LocalStorageManage.js'
 
 // 弹窗属性
 const props = defineProps({
@@ -107,6 +108,17 @@ const formData = ref({})
 watchEffect(() => {
   formData.value = props.data || {}
 })
+// 弹窗数据保存
+const operate = computed({
+  get: () => props.operate
+})
+function detailSave () {
+  const saveFunc = operate.value === 'add' ? addStorageItem : editStorageItem
+  formData.value.supplierId = formData.value.supplierId || `SUPP${new Date().getTime()}`
+  saveFunc('baseSupplier', formData.value, 'supplierId')
+  emits('save')
+  dialogClose()
+}
 
 // 弹窗开关
 const emits = defineEmits(['update:visible'])
