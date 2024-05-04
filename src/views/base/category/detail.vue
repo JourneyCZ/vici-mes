@@ -14,12 +14,12 @@
     >
       <el-form-item
         class="full-item"
-        label="供应商名称"
-        prop="supplierName"
+        label="分类名称"
+        prop="categoryName"
       >
         <el-input
-          v-model="formData.supplierName"
-          placeholder="请输入供应商名称"
+          v-model="formData.categoryName"
+          placeholder="请输入分类名称"
           clearable
         />
       </el-form-item>
@@ -33,8 +33,8 @@
           placeholder="请选择存货计价方法"
           clearable
         >
-          <el-option value="1" label="加权平均法"></el-option>
-          <el-option value="2" label="个别计价法"></el-option>
+          <el-option value="加权平均法" label="加权平均法"></el-option>
+          <el-option value="个别计价法" label="个别计价法"></el-option>
         </el-select>
       </el-form-item>
       <el-form-item
@@ -53,7 +53,7 @@
       <div class="dialog-footer">
         <el-button
           type="primary"
-          @click="dialogClose"
+          @click="detailSave"
         >
           保存
         </el-button>
@@ -64,7 +64,8 @@
 </template>
 
 <script setup>
-import { ref, computed, watchEffect, defineEmits } from 'vue'
+import { ref, computed, watchEffect } from 'vue'
+import { addStorageItem, editStorageItem } from '@/utils/LocalStorageManage.js'
 
 // 弹窗属性
 const props = defineProps({
@@ -91,6 +92,17 @@ const formData = ref({})
 watchEffect(() => {
   formData.value = props.data || {}
 })
+// 弹窗数据保存
+const operate = computed({
+  get: () => props.operate
+})
+function detailSave () {
+  const saveFunc = operate.value === 'add' ? addStorageItem : editStorageItem
+  formData.value.categoryId = formData.value.categoryId || `SUPP${new Date().getTime()}`
+  saveFunc('baseCategory', formData.value, 'categoryId')
+  emits('save')
+  dialogClose()
+}
 
 // 弹窗开关
 const emits = defineEmits(['update:visible'])

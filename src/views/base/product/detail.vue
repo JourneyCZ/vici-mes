@@ -41,8 +41,8 @@
           placeholder="请选择产品分类"
           clearable
         >
-          <el-option value="1">普通产品</el-option>
-          <el-option value="2">寄售库</el-option>
+          <el-option value="普通产品">普通产品</el-option>
+          <el-option value="寄售库">寄售库</el-option>
         </el-select>
       </el-form-item>
       <el-form-item
@@ -55,6 +55,7 @@
           clearable
         >
           <el-option value="个">个</el-option>
+          <el-option value="米">米</el-option>
           <el-option value="吨">吨</el-option>
           <el-option value="升">升</el-option>
         </el-select>
@@ -116,20 +117,10 @@
         prop="warningInventory"
       >
         <el-input-number
-          v-model="formData.purchasStaff"
+          v-model="formData.warningInventory"
           :min="0"
           controls-position="right"
           placeholder="请输入安全预警库存"
-          clearable
-        />
-      </el-form-item>
-      <el-form-item
-        label="采购人员"
-        prop="purchasStaff"
-      >
-        <el-input
-          v-model="formData.purchasStaff"
-          placeholder="请输入采购人员"
           clearable
         />
       </el-form-item>
@@ -171,7 +162,7 @@
       <div class="dialog-footer">
         <el-button
           type="primary"
-          @click="dialogClose"
+          @click="detailSave"
         >
           保存
         </el-button>
@@ -182,8 +173,9 @@
 </template>
 
 <script setup>
-import { ref, computed, watchEffect, defineEmits } from 'vue'
+import { ref, computed, watchEffect } from 'vue'
 import { Plus } from '@element-plus/icons-vue'
+import { addStorageItem, editStorageItem } from '@/utils/LocalStorageManage.js'
 
 // 弹窗属性
 const props = defineProps({
@@ -210,6 +202,17 @@ const formData = ref({})
 watchEffect(() => {
   formData.value = props.data || {}
 })
+// 弹窗数据保存
+const operate = computed({
+  get: () => props.operate
+})
+function detailSave () {
+  const saveFunc = operate.value === 'add' ? addStorageItem : editStorageItem
+  formData.value.productId = formData.value.productId || `SUPP${new Date().getTime()}`
+  saveFunc('baseProduct', formData.value, 'productId')
+  emits('save')
+  dialogClose()
+}
 
 // 弹窗开关
 const emits = defineEmits(['update:visible'])

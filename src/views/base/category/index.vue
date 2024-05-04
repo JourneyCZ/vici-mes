@@ -8,9 +8,9 @@
     >
       <!-- 表单项 -->
       <template #FormItems="{ query }">
-        <el-form-item label="分类名称" prop="supplierName">
+        <el-form-item label="分类名称" prop="categoryName">
           <el-input
-            v-model="query.supplierName"
+            v-model="query.categoryName"
             placeholder="请输入分类名称"
           />
         </el-form-item>
@@ -21,8 +21,8 @@
             clearable
           >
             <el-option :value="null" label="全部"></el-option>
-            <el-option value="1" label="加权平均法"></el-option>
-            <el-option value="2" label="个别计价法"></el-option>
+            <el-option value="加权平均法" label="加权平均法"></el-option>
+            <el-option value="个别计价法" label="个别计价法"></el-option>
           </el-select>
         </el-form-item>
       </template>
@@ -90,6 +90,7 @@
       v-model:visible="detailVisible"
       :operate="detailOperate"
       :data="detailData"
+      @save="loadTableData"
     />
   </div>
 </template>
@@ -98,13 +99,14 @@
 import QueryForm from '@/components/TableView/QueryForm.vue'
 import DetailDialog from './detail.vue'
 import { ref } from 'vue'
+import { getStorageItem } from '@/utils/LocalStorageManage.js'
 
 /**
  * 查询表单
  */
 // 表单数据
 const query = ref({
-  supplierName: null, // 分类名称
+  categoryName: null, // 分类名称
   valuationMethod: null, // 存货计价方法
 })
 // 表单搜索
@@ -122,7 +124,7 @@ function reset (newQuery) {
 // 表格列数据
 const tableCols = ref([
   {
-    prop: 'supplierName',
+    prop: 'categoryName',
     label: '分类名称',
     minWidth: '180px',
     fixed: 'left',
@@ -137,11 +139,13 @@ const tableCols = ref([
   },
 ])
 // 表格数据
-const tableData = ref([
-  {
-    supplierName: '产成品',
-  }
-])
+const tableData = ref({})
+loadTableData()
+function loadTableData () {
+  const DATA = getStorageItem('baseCategory')
+  console.log('DATA', DATA)
+  tableData.value = DATA
+}
 // 表格分页
 const page = ref({
   current: 1,

@@ -36,9 +36,9 @@
             clearable
           >
             <el-option :value="null">全部</el-option>
-            <el-option value="1">产成品</el-option>
-            <el-option value="2">半成品</el-option>
-            <el-option value="3">零部件</el-option>
+            <el-option value="产成品">产成品</el-option>
+            <el-option value="半成品">半成品</el-option>
+            <el-option value="零部件">零部件</el-option>
           </el-select>
         </el-form-item>
         <el-form-item label="业务范围" prop="businessScope">
@@ -53,8 +53,8 @@
             placeholder="请选择工艺路线"
             clearable
           >
-            <el-option value="1" label="工艺一"></el-option>
-            <el-option value="2" label="工艺二"></el-option>
+            <el-option value="工艺一" label="工艺一"></el-option>
+            <el-option value="工艺二" label="工艺二"></el-option>
           </el-select>
         </el-form-item>
         <el-form-item label="创建日期" prop="createTimeArr">
@@ -72,8 +72,8 @@
             placeholder="请选择产品状态"
             clearable
           >
-            <el-option value="1" label="启用"></el-option>
-            <el-option value="0" label="停用"></el-option>
+            <el-option value="启用" label="启用"></el-option>
+            <el-option value="停用" label="停用"></el-option>
           </el-select>
         </el-form-item>
       </template>
@@ -141,6 +141,7 @@
       v-model:visible="detailVisible"
       :operate="detailOperate"
       :data="detailData"
+      @save="loadTableData"
     />
   </div>
 </template>
@@ -149,6 +150,7 @@
 import QueryForm from '@/components/TableView/QueryForm.vue'
 import DetailDialog from './detail.vue'
 import { ref } from 'vue'
+import { getStorageItem } from '@/utils/LocalStorageManage.js'
 
 /**
  * 查询表单
@@ -209,10 +211,6 @@ const tableCols = ref([
     label: '产品状态',
     minWidth: '180px',
   }, {
-    prop: 'purchasStaff',
-    label: '采购人员',
-    minWidth: '180px',
-  }, {
     prop: 'createUserName',
     label: '创建人',
     minWidth: '180px',
@@ -223,13 +221,12 @@ const tableCols = ref([
   }
 ])
 // 表格数据
-const tableData = ref([
-  {
-    productId: '1',
-    productName: '水杯',
-    productCode: 'PROD1001',
-  }
-])
+const tableData = ref({})
+loadTableData()
+function loadTableData () {
+  const DATA = getStorageItem('baseProduct')
+  tableData.value = DATA
+}
 // 表格分页
 const page = ref({
   current: 1,

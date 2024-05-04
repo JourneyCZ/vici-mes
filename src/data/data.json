@@ -11,6 +11,41 @@
       "createTime": "2024-04-02 08:25:08"
     }
   ],
+  "baseProduct": [
+    {
+      "productId": "PROD1001",
+      "productName": "水管",
+      "productCode": "PROD1001",
+      "productType": "普通产品",
+      "productUnit": "米",
+      "businessScope": "排污",
+      "productStatus": "启用",
+      "productSpecification": "",
+      "processRoute": "",
+      "stockroomName": "",
+      "warningInventory": ""
+    }
+  ],
+  "baseCategory": [
+    {
+      "categoryId": "CATE1001",
+      "categoryName": "产成品",
+      "valuationMethod": "加权平均法",
+      "turnaroundTime": "10"
+    },
+    {
+      "categoryId": "CATE1002",
+      "categoryName": "半成品",
+      "valuationMethod": "加权平均法",
+      "turnaroundTime": "10"
+    },
+    {
+      "categoryId": "CATE1003",
+      "categoryName": "零部件",
+      "valuationMethod": "个别计价法",
+      "turnaroundTime": "30"
+    }
+  ],
   "saleCustomer": [
     {
       "customerCode": "CUST20240206001",
