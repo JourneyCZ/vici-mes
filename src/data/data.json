@@ -11,6 +11,32 @@
       "createTime": "2024-04-02 08:25:08"
     }
   ],
+  "baseCategory": [
+    {
+      "categoryId": "CATE1001",
+      "categoryName": "产成品",
+      "valuationMethod": "加权平均法",
+      "turnaroundTime": "10",
+      "createUserName": "管理员",
+      "createTime": "2024-04-02 08:26:12"
+    },
+    {
+      "categoryId": "CATE1002",
+      "categoryName": "半成品",
+      "valuationMethod": "加权平均法",
+      "turnaroundTime": "10",
+      "createUserName": "管理员",
+      "createTime": "2024-04-02 08:26:23"
+    },
+    {
+      "categoryId": "CATE1003",
+      "categoryName": "零部件",
+      "valuationMethod": "个别计价法",
+      "turnaroundTime": "30",
+      "createUserName": "管理员",
+      "createTime": "2024-04-02 08:27:11"
+    }
+  ],
   "baseProduct": [
     {
       "productId": "PROD1001",
@@ -23,27 +49,33 @@
       "productSpecification": "",
       "processRoute": "",
       "stockroomName": "",
-      "warningInventory": ""
+      "warningInventory": "",
+      "createUserName": "管理员",
+      "createTime": "2024-04-02 08:32:12"
     }
   ],
-  "baseCategory": [
+  "baseProcess": [
     {
-      "categoryId": "CATE1001",
-      "categoryName": "产成品",
-      "valuationMethod": "加权平均法",
-      "turnaroundTime": "10"
-    },
+      "processId": "PROC1001",
+      "processName": "工序1",
+      "processCode": "PROC1001",
+      "reportAuthority": "",
+      "reportRatio": "1",
+      "rejectsList": "不良品1",
+      "qualityScheme": "质检方案1",
+      "createUserName": "管理员",
+      "createTime": "2024-04-02 08:35:15"
+    }
+  ],
+  "baseCraft": [
     {
-      "categoryId": "CATE1002",
-      "categoryName": "半成品",
-      "valuationMethod": "加权平均法",
-      "turnaroundTime": "10"
-    },
-    {
-      "categoryId": "CATE1003",
-      "categoryName": "零部件",
-      "valuationMethod": "个别计价法",
-      "turnaroundTime": "30"
+      "craftId": "CRAF1001",
+      "craftName": "工艺1",
+      "craftCode": "CRAF1001",
+      "processName": "工序1",
+      "lastProcessName": "工序2",
+      "createUserName": "管理员",
+      "createTime": "2024-04-02 08:38:25"
     }
   ],
   "saleCustomer": [
@@ -57,7 +89,7 @@
       "address": "安徽省合肥市蜀山区",
       "publicAccount": "9021XXXXXX0201",
       "createUserName": "管理员",
-      "createTime": "2024-04-02 08:25:08"
+      "createTime": "2024-04-02 08:41:28"
     },
     {
       "customerCode": "CUST20240206002",

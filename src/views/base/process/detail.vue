@@ -115,7 +115,7 @@
           <el-option value="质检方案2">质检方案2</el-option>
         </el-select>
       </el-form-item>
-      <el-form-item
+      <!-- <el-form-item
         class="full-item"
         label="设备组列表"
         prop="equipmentGroup"
@@ -128,13 +128,13 @@
           <el-option value="设备组1">设备组1</el-option>
           <el-option value="设备组2">设备组2</el-option>
         </el-select>
-      </el-form-item>
+      </el-form-item> -->
     </el-form>
     <template #footer>
       <div class="dialog-footer">
         <el-button
           type="primary"
-          @click="dialogClose"
+          @click="detailSave"
         >
           保存
         </el-button>
@@ -147,6 +147,7 @@
 <script setup>
 import { ref, computed, watchEffect } from 'vue'
 import { Plus } from '@element-plus/icons-vue'
+import { addStorageItem, editStorageItem } from '@/utils/LocalStorageManage.js'
 
 // 弹窗属性
 const props = defineProps({
@@ -173,6 +174,17 @@ const formData = ref({})
 watchEffect(() => {
   formData.value = props.data || {}
 })
+// 弹窗数据保存
+const operate = computed({
+  get: () => props.operate
+})
+function detailSave () {
+  const saveFunc = operate.value === 'add' ? addStorageItem : editStorageItem
+  formData.value.processId = formData.value.processId || `SUPP${new Date().getTime()}`
+  saveFunc('baseProcess', formData.value, 'processId')
+  emits('save')
+  dialogClose()
+}
 
 // 弹窗开关
 const emits = defineEmits(['update:visible'])

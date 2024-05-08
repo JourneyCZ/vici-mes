@@ -85,6 +85,7 @@
       v-model:visible="detailVisible"
       :operate="detailOperate"
       :data="detailData"
+      @save="loadTableData"
     />
   </div>
 </template>
@@ -93,6 +94,7 @@
 import QueryForm from '@/components/TableView/QueryForm.vue'
 import DetailDialog from './detail.vue'
 import { ref } from 'vue'
+import { getStorageItem } from '@/utils/LocalStorageManage.js'
 
 /**
  * 查询表单
@@ -141,13 +143,12 @@ const tableCols = ref([
   }
 ])
 // 表格数据
-const tableData = ref([
-  {
-    craftId: '1',
-    craftName: '工艺路线一',
-    craftCode: 'CRAFT1001',
-  }
-])
+const tableData = ref({})
+loadTableData()
+function loadTableData () {
+  const DATA = getStorageItem('baseCraft')
+  tableData.value = DATA
+}
 // 表格分页
 const page = ref({
   current: 1,
