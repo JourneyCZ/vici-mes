@@ -31,12 +31,12 @@
           placeholder="请选择出库类型"
           clearable
         >
-          <el-option value="1" label="普通出库"></el-option>
-          <el-option value="2" label="生产领料出库"></el-option>
-          <el-option value="3" label="调拨出库"></el-option>
-          <el-option value="4" label="采购退货出库"></el-option>
-          <el-option value="5" label="销售出库"></el-option>
-          <el-option value="6" label="其他出库"></el-option>
+          <el-option value="普通出库" label="普通出库"></el-option>
+          <el-option value="生产领料出库2" label="生产领料出库"></el-option>
+          <el-option value="调拨出库" label="调拨出库"></el-option>
+          <el-option value="采购退货出库" label="采购退货出库"></el-option>
+          <el-option value="销售出库" label="销售出库"></el-option>
+          <el-option value="其他出库" label="其他出库"></el-option>
         </el-select>
       </el-form-item>
       <el-form-item
@@ -66,7 +66,7 @@
       <div class="dialog-footer">
         <el-button
           type="primary"
-          @click="dialogClose"
+          @click="detailSave"
         >
           保存
         </el-button>

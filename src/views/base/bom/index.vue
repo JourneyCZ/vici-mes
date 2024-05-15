@@ -85,6 +85,7 @@
       v-model:visible="detailVisible"
       :operate="detailOperate"
       :data="detailData"
+      @save="loadTableData"
     />
   </div>
 </template>
@@ -93,6 +94,7 @@
 import QueryForm from '@/components/TableView/QueryForm.vue'
 import DetailDialog from './detail.vue'
 import { ref } from 'vue'
+import { getStorageItem } from '@/utils/LocalStorageManage.js'
 
 /**
  * 查询表单
@@ -149,13 +151,12 @@ const tableCols = ref([
   }
 ])
 // 表格数据
-const tableData = ref([
-  {
-    materialId: '1',
-    materialName: '水杯',
-    materialCode: 'PROD1001',
-  }
-])
+const tableData = ref({})
+loadTableData()
+function loadTableData () {
+  const DATA = getStorageItem('baseBom')
+  tableData.value = DATA
+}
 // 表格分页
 const page = ref({
   current: 1,

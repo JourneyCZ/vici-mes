@@ -41,8 +41,8 @@
           placeholder="请选择物料分类"
           clearable
         >
-          <el-option value="1">普通物料</el-option>
-          <el-option value="2">易燃物料</el-option>
+          <el-option value="普通物料">普通物料</el-option>
+          <el-option value="易燃物料">易燃物料</el-option>
         </el-select>
       </el-form-item>
       <el-form-item
@@ -114,7 +114,7 @@
       <div class="dialog-footer">
         <el-button
           type="primary"
-          @click="dialogClose"
+          @click="detailSave"
         >
           保存
         </el-button>
@@ -127,6 +127,7 @@
 <script setup>
 import { ref, computed, watchEffect } from 'vue'
 import { Plus } from '@element-plus/icons-vue'
+import { addStorageItem, editStorageItem } from '@/utils/LocalStorageManage.js'
 
 // 弹窗属性
 const props = defineProps({
@@ -153,6 +154,17 @@ const formData = ref({})
 watchEffect(() => {
   formData.value = props.data || {}
 })
+// 弹窗数据保存
+const operate = computed({
+  get: () => props.operate
+})
+function detailSave () {
+  const saveFunc = operate.value === 'add' ? addStorageItem : editStorageItem
+  formData.value.materialCode = formData.value.materialCode || `MATE${new Date().getTime()}`
+  saveFunc('baseBom', formData.value, 'materialCode')
+  emits('save')
+  dialogClose()
+}
 
 // 弹窗开关
 const emits = defineEmits(['update:visible'])

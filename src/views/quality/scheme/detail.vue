@@ -41,9 +41,9 @@
           placeholder="请选择检验类型"
           clearable
         >
-          <el-option value="1" label="开工检验"></el-option>
-          <el-option value="2" label="过程检验"></el-option>
-          <el-option value="3" label="最终检验"></el-option>
+          <el-option value="开工检验" label="开工检验"></el-option>
+          <el-option value="过程检验" label="过程检验"></el-option>
+          <el-option value="最终检验" label="最终检验"></el-option>
         </el-select>
       </el-form-item>
       <el-form-item
@@ -55,8 +55,8 @@
           placeholder="请选择抽样类型"
           clearable
         >
-          <el-option value="1" label="定时"></el-option>
-          <el-option value="2" label="定量"></el-option>
+          <el-option value="定时" label="定时"></el-option>
+          <el-option value="定量" label="定量"></el-option>
         </el-select>
       </el-form-item>
     </el-form>
@@ -64,7 +64,7 @@
       <div class="dialog-footer">
         <el-button
           type="primary"
-          @click="dialogClose"
+          @click="detailSave"
         >
           保存
         </el-button>

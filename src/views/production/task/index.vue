@@ -59,11 +59,11 @@
             placeholder="请选择状态"
             clearable
           >
-            <el-option value="0" label="未创建"></el-option>
-            <el-option value="1" label="未开始"></el-option>
-            <el-option value="2" label="执行中"></el-option>
-            <el-option value="3" label="已完成"></el-option>
-            <el-option value="4" label="已暂停"></el-option>
+            <el-option value="未创建" label="未创建"></el-option>
+            <el-option value="未开始" label="未开始"></el-option>
+            <el-option value="执行中" label="执行中"></el-option>
+            <el-option value="已完成" label="已完成"></el-option>
+            <el-option value="已暂停" label="已暂停"></el-option>
           </el-select>
         </el-form-item>
       </template>
@@ -134,6 +134,7 @@
       v-model:visible="detailVisible"
       :operate="detailOperate"
       :data="detailData"
+      @save="loadTableData"
     />
   </div>
 </template>
@@ -142,6 +143,7 @@
 import QueryForm from '@/components/TableView/QueryForm.vue'
 import DetailDialog from './detail.vue'
 import { ref } from 'vue'
+import { getStorageItem } from '@/utils/LocalStorageManage.js'
 
 /**
  * 查询表单
@@ -278,11 +280,12 @@ const tableCols = ref([
   },
 ])
 // 表格数据
-const tableData = ref([
-  {
-    productionCode: 'PROD1001',
-  }
-])
+const tableData = ref({})
+loadTableData()
+function loadTableData () {
+  const DATA = getStorageItem('productionTask')
+  tableData.value = DATA
+}
 // 表格分页
 const page = ref({
   current: 1,

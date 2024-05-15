@@ -41,8 +41,8 @@
           placeholder="请选择仓库类型"
           clearable
         >
-          <el-option value="1">普通仓库</el-option>
-          <el-option value="2">寄售库</el-option>
+          <el-option value="普通仓库">普通仓库</el-option>
+          <el-option value="寄售库">寄售库</el-option>
         </el-select>
       </el-form-item>
       <el-form-item
@@ -70,8 +70,8 @@
         prop="stockroomStatus"
       >
         <el-radio-group v-model="formData.stockroomStatus">
-          <el-radio value="1">启用</el-radio>
-          <el-radio value="0">停用</el-radio>
+          <el-radio value="启用">启用</el-radio>
+          <el-radio value="停用">停用</el-radio>
         </el-radio-group>
       </el-form-item>
       <el-form-item
@@ -90,7 +90,7 @@
       <div class="dialog-footer">
         <el-button
           type="primary"
-          @click="dialogClose"
+          @click="detailSave"
         >
           保存
         </el-button>

@@ -139,6 +139,7 @@
       v-model:visible="detailVisible"
       :operate="detailOperate"
       :data="detailData"
+      @save="loadTableData"
     />
   </div>
 </template>
@@ -147,6 +148,7 @@
 import QueryForm from '@/components/TableView/QueryForm.vue'
 import DetailDialog from './detail.vue'
 import { ref } from 'vue'
+import { getStorageItem } from '@/utils/LocalStorageManage.js'
 
 /**
  * 查询表单
@@ -182,14 +184,15 @@ function reset (newQuery) {
 // 表格列数据
 const tableCols = ref([
   {
+    prop: 'orderCode',
+    label: '销售编号',
+    minWidth: '180px',
+    fixed: 'left',
+  }, {
     prop: 'customerName',
     label: '客户',
     minWidth: '180px',
     fixed: 'left',
-  }, {
-    prop: 'saleNum',
-    label: '销售编号',
-    minWidth: '180px',
   }, {
     prop: 'productList',
     label: '产品清单',
@@ -257,14 +260,12 @@ const tableCols = ref([
   },
 ])
 // 表格数据
-const tableData = ref([
-  {
-    customerId: '1',
-    customerName: '李总',
-    saleNum: 'ORDER1001',
-    productList: '阀门',
-  }
-])
+const tableData = ref({})
+loadTableData()
+function loadTableData () {
+  const DATA = getStorageItem('saleOrder')
+  tableData.value = DATA
+}
 // 表格分页
 const page = ref({
   current: 1,

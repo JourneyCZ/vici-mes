@@ -31,8 +31,8 @@
           placeholder="请选择产品"
           clearable
         >
-          <el-option value="1" label="产品1"></el-option>
-          <el-option value="2" label="产品2"></el-option>
+          <el-option value="产品1" label="产品1"></el-option>
+          <el-option value="产品2" label="产品2"></el-option>
           <el-option value="3" label="产品3"></el-option>
         </el-select>
       </el-form-item>
@@ -76,7 +76,7 @@
       <div class="dialog-footer">
         <el-button
           type="primary"
-          @click="dialogClose"
+          @click="detailSave"
         >
           保存
         </el-button>

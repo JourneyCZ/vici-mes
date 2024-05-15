@@ -26,8 +26,8 @@
             placeholder="请选择状态"
             clearable
           >
-            <el-option value="1" label="启用"></el-option>
-            <el-option value="0" label="禁用"></el-option>
+            <el-option value="启用" label="启用"></el-option>
+            <el-option value="禁用" label="禁用"></el-option>
           </el-select>
         </el-form-item>
       </template>
@@ -120,6 +120,7 @@
       v-model:visible="detailVisible"
       :operate="detailOperate"
       :data="detailData"
+      @save="loadTableData"
     />
   </div>
 </template>

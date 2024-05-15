@@ -75,8 +75,8 @@
         prop="productStatus"
       >
         <el-radio-group v-model="formData.productStatus">
-          <el-radio value="1">启用</el-radio>
-          <el-radio value="0">停用</el-radio>
+          <el-radio value="启用">启用</el-radio>
+          <el-radio value="停用">停用</el-radio>
         </el-radio-group>
       </el-form-item>
       <el-form-item
@@ -208,8 +208,8 @@ const operate = computed({
 })
 function detailSave () {
   const saveFunc = operate.value === 'add' ? addStorageItem : editStorageItem
-  formData.value.productId = formData.value.productId || `SUPP${new Date().getTime()}`
-  saveFunc('baseProduct', formData.value, 'productId')
+  formData.value.productCode = formData.value.productCode || `PROD${new Date().getTime()}`
+  saveFunc('baseProduct', formData.value, 'productCode')
   emits('save')
   dialogClose()
 }

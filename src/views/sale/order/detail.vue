@@ -13,19 +13,6 @@
       label-width="auto"
     >
       <el-form-item
-        label="客户"
-        prop="customerId"
-      >
-        <el-select
-          v-model="formData.customerId"
-          placeholder="请选择客户"
-          clearable
-        >
-          <el-option value="1" label="李总"></el-option>
-          <el-option value="2" label="刘总"></el-option>
-        </el-select>
-      </el-form-item>
-      <el-form-item
         label="销售编号"
         prop="orderCode"
       >
@@ -36,6 +23,19 @@
         />
       </el-form-item>
       <el-form-item
+        label="客户"
+        prop="customerName"
+      >
+        <el-select
+          v-model="formData.customerName"
+          placeholder="请选择客户"
+          clearable
+        >
+          <el-option value="李总" label="李总"></el-option>
+          <el-option value="刘总" label="刘总"></el-option>
+        </el-select>
+      </el-form-item>
+      <el-form-item
         label="订单类型"
         prop="orderType"
       >
@@ -44,8 +44,8 @@
           placeholder="请选择订单类型"
           clearable
         >
-          <el-option value="1" label="订单类型1"></el-option>
-          <el-option value="2" label="订单类型2"></el-option>
+          <el-option value="订单类型1" label="订单类型1"></el-option>
+          <el-option value="订单类型2" label="订单类型2"></el-option>
         </el-select>
       </el-form-item>
       <el-form-item
@@ -62,10 +62,10 @@
       </el-form-item>
       <el-form-item
         label="跟单员"
-        prop="merchandiserId"
+        prop="merchandiser"
       >
         <el-input
-          v-model="formData.merchandiserId"
+          v-model="formData.merchandiser"
           placeholder="请输入跟单员"
           clearable
         />
@@ -75,7 +75,7 @@
       <div class="dialog-footer">
         <el-button
           type="primary"
-          @click="dialogClose"
+          @click="detailSave"
         >
           保存
         </el-button>
@@ -87,6 +87,7 @@
 
 <script setup>
 import { ref, computed, watchEffect } from 'vue'
+import { addStorageItem, editStorageItem } from '@/utils/LocalStorageManage.js'
 
 // 弹窗属性
 const props = defineProps({
@@ -113,6 +114,17 @@ const formData = ref({})
 watchEffect(() => {
   formData.value = props.data || {}
 })
+// 弹窗数据保存
+const operate = computed({
+  get: () => props.operate
+})
+function detailSave () {
+  const saveFunc = operate.value === 'add' ? addStorageItem : editStorageItem
+  formData.value.orderCode = formData.value.orderCode || `ORDE${new Date().getTime()}`
+  saveFunc('saleOrder', formData.value, 'orderCode')
+  emits('save')
+  dialogClose()
+}
 
 // 弹窗开关
 const emits = defineEmits(['update:visible'])

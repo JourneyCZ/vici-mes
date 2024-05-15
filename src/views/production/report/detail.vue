@@ -14,25 +14,25 @@
     >
       <el-form-item
         label="工单编号"
-        prop="productionCode"
+        prop="reportCode"
       >
         <el-input
-          v-model="formData.productionCode"
+          v-model="formData.reportCode"
           placeholder="可填写，忽略将自动生成"
           clearable
         />
       </el-form-item>
       <el-form-item
         label="产品"
-        prop="productId"
+        prop="productCode"
       >
         <el-select
-          v-model="formData.productId"
+          v-model="formData.productCode"
           placeholder="请选择产品"
           clearable
         >
-          <el-option value="1" label="产品1"></el-option>
-          <el-option value="2" label="产品2"></el-option>
+          <el-option value="产品1" label="产品1"></el-option>
+          <el-option value="产品2" label="产品2"></el-option>
         </el-select>
       </el-form-item>
       <el-form-item
@@ -111,7 +111,7 @@
       <div class="dialog-footer">
         <el-button
           type="primary"
-          @click="dialogClose"
+          @click="detailSave"
         >
           保存
         </el-button>
@@ -123,6 +123,7 @@
 
 <script setup>
 import { ref, computed, watchEffect } from 'vue'
+import { addStorageItem, editStorageItem } from '@/utils/LocalStorageManage.js'
 
 // 弹窗属性
 const props = defineProps({
@@ -149,6 +150,17 @@ const formData = ref({})
 watchEffect(() => {
   formData.value = props.data || {}
 })
+// 弹窗数据保存
+const operate = computed({
+  get: () => props.operate
+})
+function detailSave () {
+  const saveFunc = operate.value === 'add' ? addStorageItem : editStorageItem
+  formData.value.reportCode = formData.value.reportCode || `REPO${new Date().getTime()}`
+  saveFunc('productionReport', formData.value, 'reportCode')
+  emits('save')
+  dialogClose()
+}
 
 // 弹窗开关
 const emits = defineEmits(['update:visible'])

@@ -39,9 +39,8 @@
   ],
   "baseProduct": [
     {
-      "productId": "PROD1001",
-      "productName": "水管",
       "productCode": "PROD1001",
+      "productName": "水管",
       "productType": "普通产品",
       "productUnit": "米",
       "businessScope": "排污",
@@ -78,6 +77,34 @@
       "createTime": "2024-04-02 08:38:25"
     }
   ],
+  "baseBom": [
+    {
+      "materialCode": "CRAF1001",
+      "materialName": "物料1",
+      "materialType": "普通物料",
+      "baseQuantity": "1000",
+      "materialUnit": "个",
+      "materialSpecification": "10*10",
+      "remark": "",
+      "createUserName": "管理员",
+      "createTime": "2024-04-02 08:38:25"
+    }
+  ],
+  "basePerformance": [
+    {
+      "performanceCode": "PERF1001",
+      "pricingManner": "计件",
+      "productName": "水管",
+      "processName": "工序1",
+      "wageUnitPrice": "10",
+      "standardOutput": "3",
+      "standardHours": "1",
+      "standardMinutes": "",
+      "standardSeconds": "",
+      "createUserName": "管理员",
+      "createTime": "2024-04-02 08:38:25"
+    }
+  ],
   "saleCustomer": [
     {
       "customerCode": "CUST20240206001",
@@ -100,6 +127,95 @@
       "contactWay": "13100001111",
       "address": "安徽省合肥市蜀山区",
       "publicAccount": "8265XXXXXX0668",
+      "createUserName": "管理员",
+      "createTime": "2024-04-06 14:16:18"
+    }
+  ],
+  "saleOrder": [
+    {
+      "orderCode": "ORDE1001",
+      "customerName": "李总",
+      "orderType": "订单类型1",
+      "orderAmount": "100000",
+      "merchandiser": "",
+      "createUserName": "管理员",
+      "createTime": "2024-04-06 14:16:18"
+    }
+  ],
+  "productionPlan": [
+    {
+      "planCode": "PLAN1001",
+      "customerName": "李总",
+      "orderType": "订单类型1",
+      "orderAmount": "100000",
+      "merchandiser": "",
+      "createUserName": "管理员",
+      "createTime": "2024-04-06 14:16:18"
+    }
+  ],
+  "productionOrder": [
+    {
+      "orderCode": "ORDE1001",
+      "productName": "产品1",
+      "planQuantity": "100",
+      "productionQuantity": "100",
+      "deliveryTime": "2024-06-01 00:00:00",
+      "planStartTime": "2024-05-01 00:00:00",
+      "planEndTime": "2024-05-10 00:00:00",
+      "remark": "",
+      "createUserName": "管理员",
+      "createTime": "2024-04-06 14:16:18"
+    }
+  ],
+  "productionTask": [
+    {
+      "taskCode": "TASK1001",
+      "productionCode": "ORDE1001",
+      "planCode": "PLAN1001",
+      "productCode": "PROD1001",
+      "productName": "产品1",
+      "productSpecification": "",
+      "productUnit": "",
+      "processCode": "",
+      "processName": "",
+      "processStatus": "",
+      "reportPermission": "",
+      "assignList": "",
+      "equipmentGroup": "",
+      "reportRatio": "",
+      "planQuantity": "",
+      "productionQuantity": "",
+      "goodProductQuantity": "",
+      "defectiveProductQuantity": "",
+      "process": "",
+      "planStartTime": "",
+      "planEndTime": "",
+      "productionStartTime": "",
+      "productionEndTime": "",
+      "createUserName": "管理员",
+      "createTime": "2024-04-06 14:16:18"
+    }
+  ],
+  "productionReport": [
+    {
+      "reportCode": "ORDE1001",
+      "productionCode": "PROD1001",
+      "productCode": "PROD1001",
+      "productName": "产品1",
+      "productSpecification": "",
+      "processName": "",
+      "processCode": "",
+      "processStatus": "",
+      "reportQuantity": "",
+      "pricingManner": "",
+      "wagePrice": "",
+      "predictWage": "",
+      "goodProductQuantity": "",
+      "defectiveProductQuantity": "",
+      "process": "",
+      "planStartTime": "",
+      "planEndTime": "",
+      "actualReportTime": "",
       "createUserName": "管理员",
       "createTime": "2024-04-06 14:16:18"
     }

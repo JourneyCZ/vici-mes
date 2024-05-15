@@ -26,10 +26,10 @@
             placeholder="请选择状态"
             clearable
           >
-            <el-option value="0" label="未开始"></el-option>
-            <el-option value="1" label="执行中"></el-option>
-            <el-option value="2" label="已完成"></el-option>
-            <el-option value="3" label="已暂停"></el-option>
+            <el-option value="未开始" label="未开始"></el-option>
+            <el-option value="执行中" label="执行中"></el-option>
+            <el-option value="已完成" label="已完成"></el-option>
+            <el-option value="已暂停" label="已暂停"></el-option>
           </el-select>
         </el-form-item>
       </template>
@@ -41,8 +41,8 @@
             placeholder="请选择检验结果"
             clearable
           >
-            <el-option value="1" label="合格"></el-option>
-            <el-option value="0" label="不合格"></el-option>
+            <el-option value="合格" label="合格"></el-option>
+            <el-option value="不合格" label="不合格"></el-option>
           </el-select>
         </el-form-item>
         <el-form-item label="工序编号" prop="processCode">
@@ -150,6 +150,7 @@
       v-model:visible="detailVisible"
       :operate="detailOperate"
       :data="detailData"
+      @save="loadTableData"
     />
   </div>
 </template>

@@ -110,7 +110,7 @@ const operate = computed({
 })
 function detailSave () {
   const saveFunc = operate.value === 'add' ? addStorageItem : editStorageItem
-  formData.value.craftId = formData.value.craftId || `SUPP${new Date().getTime()}`
+  formData.value.craftId = formData.value.craftId || `CRAF${new Date().getTime()}`
   saveFunc('baseCraft', formData.value, 'craftId')
   emits('save')
   dialogClose()

@@ -35,9 +35,9 @@
             placeholder="请选择产品分类"
             clearable
           >
-            <el-option value="1" label="产成品"></el-option>
-            <el-option value="2" label="半成品"></el-option>
-            <el-option value="3" label="零部件"></el-option>
+            <el-option value="产成品" label="产成品"></el-option>
+            <el-option value="半成品" label="半成品"></el-option>
+            <el-option value="零部件" label="零部件"></el-option>
           </el-select>
         </el-form-item>
         <el-form-item label="仓库" prop="stockName">

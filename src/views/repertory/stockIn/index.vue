@@ -20,13 +20,13 @@
             placeholder="请选择入库类型"
             clearable
           >
-            <el-option value="1" label="成品入库"></el-option>
-            <el-option value="2" label="半成品入库"></el-option>
-            <el-option value="3" label="采购入库"></el-option>
-            <el-option value="4" label="调拨入库"></el-option>
-            <el-option value="5" label="销售退货入库"></el-option>
-            <el-option value="6" label="退料入库"></el-option>
-            <el-option value="7" label="其他入库"></el-option>
+            <el-option value="成品入库" label="成品入库"></el-option>
+            <el-option value="半成品入库" label="半成品入库"></el-option>
+            <el-option value="采购入库" label="采购入库"></el-option>
+            <el-option value="调拨入库" label="调拨入库"></el-option>
+            <el-option value="销售退货入库" label="销售退货入库"></el-option>
+            <el-option value="退料入库" label="退料入库"></el-option>
+            <el-option value="其他入库" label="其他入库"></el-option>
           </el-select>
         </el-form-item>
         <el-form-item label="入库时间" prop="stockInTimeArr">
@@ -125,6 +125,7 @@
       v-model:visible="detailVisible"
       :operate="detailOperate"
       :data="detailData"
+      @save="loadTableData"
     />
   </div>
 </template>

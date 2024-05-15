@@ -20,8 +20,8 @@
             placeholder="请选择仓库类型"
             clearable
           >
-            <el-option value="1" label="普通仓库"></el-option>
-            <el-option value="2" label="寄售库"></el-option>
+            <el-option value="普通仓库" label="普通仓库"></el-option>
+            <el-option value="寄售库" label="寄售库"></el-option>
           </el-select>
         </el-form-item>
         <el-form-item label="仓库状态" prop="stockroomStatus">
@@ -30,7 +30,7 @@
             placeholder="请选择仓库状态"
             clearable
           >
-            <el-option value="1" label="启用"></el-option>
+            <el-option value="启用" label="启用"></el-option>
             <el-option value="0" label="停用"></el-option>
           </el-select>
         </el-form-item>
@@ -103,6 +103,7 @@
       v-model:visible="detailVisible"
       :operate="detailOperate"
       :data="detailData"
+      @save="loadTableData"
     />
   </div>
 </template>

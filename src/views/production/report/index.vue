@@ -68,8 +68,8 @@
             placeholder="请选择计价方式"
             clearable
           >
-            <el-option value="1" label="计件"></el-option>
-            <el-option value="2" label="计时"></el-option>
+            <el-option value="计件" label="计件"></el-option>
+            <el-option value="计时" label="计时"></el-option>
           </el-select>
         </el-form-item>
         <el-form-item label="工序状态" prop="processStatus">
@@ -145,6 +145,7 @@
       v-model:visible="detailVisible"
       :operate="detailOperate"
       :data="detailData"
+      @save="loadTableData"
     />
   </div>
 </template>
@@ -153,6 +154,7 @@
 import QueryForm from '@/components/TableView/QueryForm.vue'
 import DetailDialog from './detail.vue'
 import { ref } from 'vue'
+import { getStorageItem } from '@/utils/LocalStorageManage.js'
 
 /**
  * 查询表单
@@ -263,11 +265,12 @@ const tableCols = ref([
   },
 ])
 // 表格数据
-const tableData = ref([
-  {
-    productionCode: 'PROD1001',
-  }
-])
+const tableData = ref({})
+loadTableData()
+function loadTableData () {
+  const DATA = getStorageItem('productionReport')
+  tableData.value = DATA
+}
 // 表格分页
 const page = ref({
   current: 1,

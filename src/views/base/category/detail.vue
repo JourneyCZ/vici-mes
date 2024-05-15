@@ -98,7 +98,7 @@ const operate = computed({
 })
 function detailSave () {
   const saveFunc = operate.value === 'add' ? addStorageItem : editStorageItem
-  formData.value.categoryId = formData.value.categoryId || `SUPP${new Date().getTime()}`
+  formData.value.categoryId = formData.value.categoryId || `CATE${new Date().getTime()}`
   saveFunc('baseCategory', formData.value, 'categoryId')
   emits('save')
   dialogClose()

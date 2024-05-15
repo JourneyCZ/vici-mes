@@ -180,7 +180,7 @@ const operate = computed({
 })
 function detailSave () {
   const saveFunc = operate.value === 'add' ? addStorageItem : editStorageItem
-  formData.value.processId = formData.value.processId || `SUPP${new Date().getTime()}`
+  formData.value.processId = formData.value.processId || `PROC${new Date().getTime()}`
   saveFunc('baseProcess', formData.value, 'processId')
   emits('save')
   dialogClose()
