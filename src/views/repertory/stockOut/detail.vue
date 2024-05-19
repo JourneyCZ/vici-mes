@@ -78,6 +78,7 @@
 
 <script setup>
 import { ref, computed, watchEffect } from 'vue'
+import { addStorageItem, editStorageItem } from '@/utils/LocalStorageManage.js'
 
 // 弹窗属性
 const props = defineProps({
@@ -104,6 +105,17 @@ const formData = ref({})
 watchEffect(() => {
   formData.value = props.data || {}
 })
+// 弹窗数据保存
+const operate = computed({
+  get: () => props.operate
+})
+function detailSave () {
+  const saveFunc = operate.value === 'add' ? addStorageItem : editStorageItem
+  formData.value.stockOutCode = formData.value.stockOutCode || `STOU${new Date().getTime()}`
+  saveFunc('repertoryStockOut', formData.value, 'stockOutCode')
+  emits('save')
+  dialogClose()
+}
 
 // 弹窗开关
 const emits = defineEmits(['update:visible'])

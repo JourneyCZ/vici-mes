@@ -58,16 +58,16 @@
           <el-icon><Plus /></el-icon>
           添加客户
         </el-button>
-        <el-button type="warning" plain>
+        <!-- <el-button type="warning" plain>
           <el-icon><Download /></el-icon>
           导出
-        </el-button>
+        </el-button> -->
       </div>
       <div class="data-table-handle-right">
-        <el-button type="primary" plain>
+        <!-- <el-button type="primary" plain>
           <el-icon><Setting /></el-icon>
           列配置
-        </el-button>
+        </el-button> -->
       </div>
     </div>
     <!-- 数据表格 -->

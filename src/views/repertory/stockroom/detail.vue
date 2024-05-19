@@ -13,22 +13,22 @@
       label-width="auto"
     >
       <el-form-item
-        label="仓库名称"
-        prop="stockroomName"
-      >
-        <el-input
-          v-model="formData.stockroomName"
-          placeholder="请输入仓库名称"
-          clearable
-        />
-      </el-form-item>
-      <el-form-item
         label="仓库编号"
         prop="stockroomCode"
       >
         <el-input
           v-model="formData.stockroomCode"
           placeholder="可填写，忽略将自动生成"
+          clearable
+        />
+      </el-form-item>
+      <el-form-item
+        label="仓库名称"
+        prop="stockroomName"
+      >
+        <el-input
+          v-model="formData.stockroomName"
+          placeholder="请输入仓库名称"
           clearable
         />
       </el-form-item>
@@ -102,6 +102,7 @@
 
 <script setup>
 import { ref, computed, watchEffect } from 'vue'
+import { addStorageItem, editStorageItem } from '@/utils/LocalStorageManage.js'
 
 // 弹窗属性
 const props = defineProps({
@@ -128,6 +129,17 @@ const formData = ref({})
 watchEffect(() => {
   formData.value = props.data || {}
 })
+// 弹窗数据保存
+const operate = computed({
+  get: () => props.operate
+})
+function detailSave () {
+  const saveFunc = operate.value === 'add' ? addStorageItem : editStorageItem
+  formData.value.stockroomCode = formData.value.stockroomCode || `STOC${new Date().getTime()}`
+  saveFunc('repertoryStockroom', formData.value, 'stockroomCode')
+  emits('save')
+  dialogClose()
+}
 
 // 弹窗开关
 const emits = defineEmits(['update:visible'])

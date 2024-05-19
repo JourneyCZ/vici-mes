@@ -24,16 +24,16 @@
       </el-form-item>
       <el-form-item
         label="产品名称"
-        prop="productCode"
+        prop="productName"
       >
         <el-select
-          v-model="formData.productCode"
+          v-model="formData.productName"
           placeholder="请选择产品"
           clearable
         >
           <el-option value="产品1" label="产品1"></el-option>
           <el-option value="产品2" label="产品2"></el-option>
-          <el-option value="3" label="产品3"></el-option>
+          <el-option value="产品3" label="产品3"></el-option>
         </el-select>
       </el-form-item>
       <el-form-item
@@ -88,6 +88,7 @@
 
 <script setup>
 import { ref, computed, watchEffect } from 'vue'
+import { addStorageItem, editStorageItem } from '@/utils/LocalStorageManage.js'
 
 // 弹窗属性
 const props = defineProps({
@@ -114,6 +115,17 @@ const formData = ref({})
 watchEffect(() => {
   formData.value = props.data || {}
 })
+// 弹窗数据保存
+const operate = computed({
+  get: () => props.operate
+})
+function detailSave () {
+  const saveFunc = operate.value === 'add' ? addStorageItem : editStorageItem
+  formData.value.supplierId = formData.value.supplierId || `SUPP${new Date().getTime()}`
+  saveFunc('qualityTask', formData.value, 'supplierId')
+  emits('save')
+  dialogClose()
+}
 
 // 弹窗开关
 const emits = defineEmits(['update:visible'])

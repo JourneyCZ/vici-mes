@@ -79,7 +79,7 @@
   ],
   "baseBom": [
     {
-      "materialCode": "CRAF1001",
+      "materialCode": "BOM1001",
       "materialName": "物料1",
       "materialType": "普通物料",
       "baseQuantity": "1000",
@@ -198,7 +198,7 @@
   ],
   "productionReport": [
     {
-      "reportCode": "ORDE1001",
+      "reportCode": "REPO1001",
       "productionCode": "PROD1001",
       "productCode": "PROD1001",
       "productName": "产品1",
@@ -216,6 +216,66 @@
       "planStartTime": "",
       "planEndTime": "",
       "actualReportTime": "",
+      "createUserName": "管理员",
+      "createTime": "2024-04-06 14:16:18"
+    }
+  ],
+  "repertoryStockroom": [
+    {
+      "stockroomCode": "STOC1001",
+      "stockroomName": "仓库1",
+      "stockroomType": "普通仓库",
+      "stockroomKeeper": "",
+      "contactName": "",
+      "stockroomStatus": "启用",
+      "remark": "",
+      "createUserName": "管理员",
+      "createTime": "2024-04-06 14:16:18"
+    }
+  ],
+  "repertoryStockIn": [
+    {
+      "stockInCode": "STIN1001",
+      "stockInType": "成品入库",
+      "stockInTime": "2024-04-08 11:26:18",
+      "remark": "",
+      "createUserName": "管理员",
+      "createTime": "2024-04-06 14:16:18"
+    }
+  ],
+  "repertoryStockOut": [
+    {
+      "stockOutCode": "STOU1001",
+      "stockOutType": "普通出库",
+      "stockOutTime": "2024-04-09 08:30:18",
+      "remark": "",
+      "createUserName": "管理员",
+      "createTime": "2024-04-06 14:16:18"
+    }
+  ],
+  "repertorySendReceive": [
+  ],
+  "repertoryBalance": [
+  ],
+  "repertoryPurchase": [
+  ],
+  "qualityScheme": [
+    {
+      "schemeCode": "SCHE1001",
+      "schemeName": "质检方案1",
+      "inspectionType": "开工检验",
+      "sampleType": "定时",
+      "createUserName": "管理员",
+      "createTime": "2024-04-06 14:16:18"
+    }
+  ],
+  "qualityTask": [
+    {
+      "taskCode": "TASK1001",
+      "productName": "产品1",
+      "planStartTime": "2024-04-10 08:30:00",
+      "planEndTime": "2024-04-10 17:30:00",
+      "remark": "",
       "createUserName": "管理员",
       "createTime": "2024-04-06 14:16:18"
     }

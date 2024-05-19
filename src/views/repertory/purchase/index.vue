@@ -59,16 +59,16 @@
     <!-- 数据表格-操作栏 -->
     <div class="data-table-handle">
       <div class="data-table-handle-left">
-        <el-button type="warning" plain>
+        <!-- <el-button type="warning" plain>
           <el-icon><Download /></el-icon>
           导出
-        </el-button>
+        </el-button> -->
       </div>
       <div class="data-table-handle-right">
-        <el-button type="primary" plain>
+        <!-- <el-button type="primary" plain>
           <el-icon><Setting /></el-icon>
           列配置
-        </el-button>
+        </el-button> -->
       </div>
     </div>
     <!-- 数据表格 -->
@@ -108,6 +108,7 @@
 <script setup>
 import QueryForm from '@/components/TableView/QueryForm.vue'
 import { ref } from 'vue'
+import { getStorageItem } from '@/utils/LocalStorageManage.js' // , deleteStorageItem
 
 /**
  * 查询表单
@@ -185,12 +186,12 @@ const tableCols = ref([
   },
 ])
 // 表格数据
-const tableData = ref([
-  {
-    purchaseCode: 'PURC1001',
-    productCode: 'PROD1001',
-  }
-])
+const tableData = ref({})
+loadTableData()
+function loadTableData () {
+  const DATA = getStorageItem('repertoryPurchase')
+  tableData.value = DATA
+}
 // 表格分页
 const page = ref({
   current: 1,

@@ -95,16 +95,16 @@
           <el-icon><Plus /></el-icon>
           添加质检任务
         </el-button>
-        <el-button type="warning" plain>
+        <!-- <el-button type="warning" plain>
           <el-icon><Download /></el-icon>
           导出
-        </el-button>
+        </el-button> -->
       </div>
       <div class="data-table-handle-right">
-        <el-button type="primary" plain>
+        <!-- <el-button type="primary" plain>
           <el-icon><Setting /></el-icon>
           列配置
-        </el-button>
+        </el-button> -->
       </div>
     </div>
     <!-- 数据表格 -->
@@ -159,6 +159,7 @@
 import QueryForm from '@/components/TableView/QueryForm.vue'
 import DetailDialog from './detail.vue'
 import { ref } from 'vue'
+import { getStorageItem } from '@/utils/LocalStorageManage.js' // , deleteStorageItem
 
 /**
  * 查询表单
@@ -255,11 +256,12 @@ const tableCols = ref([
   },
 ])
 // 表格数据
-const tableData = ref([
-  {
-    taskCode: 'SCHE1001',
-  }
-])
+const tableData = ref({})
+loadTableData()
+function loadTableData () {
+  const DATA = getStorageItem('qualityTask')
+  tableData.value = DATA
+}
 // 表格分页
 const page = ref({
   current: 1,

@@ -65,16 +65,16 @@
           <el-icon><Plus /></el-icon>
           添加质检方案
         </el-button>
-        <el-button type="warning" plain>
+        <!-- <el-button type="warning" plain>
           <el-icon><Download /></el-icon>
           导出
-        </el-button>
+        </el-button> -->
       </div>
       <div class="data-table-handle-right">
-        <el-button type="primary" plain>
+        <!-- <el-button type="primary" plain>
           <el-icon><Setting /></el-icon>
           列配置
-        </el-button>
+        </el-button> -->
       </div>
     </div>
     <!-- 数据表格 -->
@@ -129,6 +129,7 @@
 import QueryForm from '@/components/TableView/QueryForm.vue'
 import DetailDialog from './detail.vue'
 import { ref } from 'vue'
+import { getStorageItem } from '@/utils/LocalStorageManage.js' // , deleteStorageItem
 
 /**
  * 查询表单
@@ -166,25 +167,26 @@ const tableCols = ref([
     minWidth: '180px',
     fixed: 'left',
   }, {
-    prop: 'status',
-    label: '状态',
+    prop: 'inspectionType',
+    label: '检验类型',
+    minWidth: '180px',
+  }, {
+    prop: 'createUserName',
+    label: '创建人',
     minWidth: '180px',
   }, {
     prop: 'createTime',
     label: '创建时间',
     minWidth: '180px',
-  }, {
-    prop: 'updateDate',
-    label: '更新时间',
-    minWidth: '180px',
-  },
-])
-// 表格数据
-const tableData = ref([
-  {
-    schemeCode: 'SCHE1001',
   }
 ])
+// 表格数据
+const tableData = ref({})
+loadTableData()
+function loadTableData () {
+  const DATA = getStorageItem('qualityScheme')
+  tableData.value = DATA
+}
 // 表格分页
 const page = ref({
   current: 1,

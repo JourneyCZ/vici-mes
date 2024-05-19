@@ -48,16 +48,16 @@
           <el-icon><Plus /></el-icon>
           添加仓库
         </el-button>
-        <el-button type="warning" plain>
+        <!-- <el-button type="warning" plain>
           <el-icon><Download /></el-icon>
           导出
-        </el-button>
+        </el-button> -->
       </div>
       <div class="data-table-handle-right">
-        <el-button type="primary" plain>
+        <!-- <el-button type="primary" plain>
           <el-icon><Setting /></el-icon>
           列配置
-        </el-button>
+        </el-button> -->
       </div>
     </div>
     <!-- 数据表格 -->
@@ -112,6 +112,7 @@
 import QueryForm from '@/components/TableView/QueryForm.vue'
 import DetailDialog from './detail.vue'
 import { ref } from 'vue'
+import { getStorageItem } from '@/utils/LocalStorageManage.js' // , deleteStorageItem
 
 /**
  * 查询表单
@@ -163,6 +164,10 @@ const tableCols = ref([
     label: '地址',
     minWidth: '180px',
   }, {
+    prop: 'remark',
+    label: '备注',
+    minWidth: '180px',
+  }, {
     prop: 'createUserName',
     label: '创建人',
     minWidth: '180px',
@@ -170,20 +175,15 @@ const tableCols = ref([
     prop: 'createTime',
     label: '创建时间',
     minWidth: '180px',
-  }, {
-    prop: 'remark',
-    label: '备注',
-    minWidth: '180px',
   }
 ])
 // 表格数据
-const tableData = ref([
-  {
-    stockroomId: '1',
-    stockroomName: '李总',
-    stockroomCode: 'CUST1001',
-  }
-])
+const tableData = ref({})
+loadTableData()
+function loadTableData () {
+  const DATA = getStorageItem('repertoryStockroom')
+  tableData.value = DATA
+}
 // 表格分页
 const page = ref({
   current: 1,

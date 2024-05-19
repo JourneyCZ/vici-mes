@@ -74,16 +74,16 @@
           <el-icon><Plus /></el-icon>
           添加生产工单
         </el-button>
-        <el-button type="warning" plain>
+        <!-- <el-button type="warning" plain>
           <el-icon><Download /></el-icon>
           导出
-        </el-button>
+        </el-button> -->
       </div>
       <div class="data-table-handle-right">
-        <el-button type="primary" plain>
+        <!-- <el-button type="primary" plain>
           <el-icon><Setting /></el-icon>
           列配置
-        </el-button>
+        </el-button> -->
       </div>
     </div>
     <!-- 数据表格 -->
@@ -138,7 +138,7 @@
 import QueryForm from '@/components/TableView/QueryForm.vue'
 import DetailDialog from './detail.vue'
 import { ref } from 'vue'
-import { getStorageItem } from '@/utils/LocalStorageManage.js'
+import { getStorageItem } from '@/utils/LocalStorageManage.js' // , deleteStorageItem
 
 /**
  * 查询表单
