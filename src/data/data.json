@@ -138,6 +138,7 @@
       "orderType": "订单类型1",
       "orderAmount": "100000",
       "merchandiser": "",
+      "remark": "",
       "createUserName": "管理员",
       "createTime": "2024-04-06 14:16:18"
     }

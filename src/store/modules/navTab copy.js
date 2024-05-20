@@ -19,20 +19,20 @@ const navTab = {
   mutations: {
     setTabKey (state, key) {
       state.tabKey = key
-      if (!state.allTabs[key]) {
-        state.allTabs[key] = []
-      }
-      state.activeTabs = state.allTabs[key]
+      state.activeTabs = state.allTabs[key] || []
     },
     setTabs (state, tabs) {
-      const key = state.tabKey
-      state.allTabs[key] = tabs
-      state.activeTabs = state.allTabs[key]
+      const tabKey = state.tabKey
+      state.activeTabs = tabs
+      state.allTabs[tabKey] = tabs
     },
     addTab (state, tab) {
+      const tabKey = state.tabKey
       const activeTabs = state.activeTabs
+      const allTabs = state.allTabs[tabKey]
       if (activeTabs.findIndex(item => item.path === tab.path) === -1) {
         activeTabs.push(tab)
+        allTabs.push(tab)
       }
     },
   }

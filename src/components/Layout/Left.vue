@@ -38,7 +38,7 @@
 <script setup>
 import { ref, computed, watchEffect } from 'vue'
 import { useStore } from 'vuex'
-import { useRoute } from 'vue-router'
+import { useRoute, useRouter } from 'vue-router'
 
 // 获取状态管理仓库
 const store = useStore()
@@ -49,11 +49,13 @@ const Collapsed = computed(() => store.state.base.collapsed)
 // 监听菜单变化
 const current = ref()
 const route = useRoute()
+const router = useRouter()
 watchEffect(() => {
   const { path, name } = route
   if (path !== current.value && path !== '/') {
     current.value = path
     store.commit('addTab', { path, name })
+    router.push(path)
   }
 })
 

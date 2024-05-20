@@ -17,6 +17,12 @@ import { onMounted, ref } from 'vue'
 import * as echarts from 'echarts'
 import moment from 'moment'
 
+onMounted(() => {
+  initSaleOrderChart()
+  initProductionOrderChart()
+  initProductionReportChart()
+})
+
 // 最近七天日期数据
 const dateList = ref([
   moment().subtract(6, 'days').format('YYYY-MM-DD'),
@@ -31,7 +37,7 @@ const dateList = ref([
 // 销售订单图表
 const SaleOrderChartRef = ref()
 const SaleOrderChart = ref()
-onMounted(() => {
+function initSaleOrderChart () {
   SaleOrderChart.value = initChart(SaleOrderChartRef.value)
   SaleOrderChart.value.setOption({
     color: ['#67C23A', '#409EFF', '#0FCED3'],
@@ -68,13 +74,13 @@ onMounted(() => {
       }
     ]
   })
-})
+}
 
 // 生产订单图表
 const ProductionOrderChartRef = ref()
 const ProductionOrderChart = ref()
 const ProductionOrderList = ref(['订单1', '订单2', '订单3', '订单4', '订单5'])
-onMounted(() => {
+function initProductionOrderChart () {
   ProductionOrderChart.value = initChart(ProductionOrderChartRef.value)
   ProductionOrderChart.value.setOption({
     color: ['#409EFF', '#E5EAF3'],
@@ -112,12 +118,12 @@ onMounted(() => {
       }
     ]
   })
-})
+}
 
 // 生产报工图表
 const ProductionReportChartRef = ref()
 const ProductionReportChart = ref()
-onMounted(() => {
+function initProductionReportChart () {
   ProductionReportChart.value = initChart(ProductionReportChartRef.value)
   ProductionReportChart.value.setOption({
     color: ['#67C23A', '#409EFF', '#0FCED3'],
@@ -140,7 +146,7 @@ onMounted(() => {
       }
     ]
   })
-})
+}
 
 // 图表-初始化
 function initChart (ref) {
@@ -165,7 +171,7 @@ function initChart (ref) {
     tooltip: {
       trigger: 'axis',
       axisPointer: {
-        type: 'shadow',
+        type: 'line',
         axis: 'x'
       },
       showContent: true,
@@ -204,9 +210,11 @@ window.onresize = function () {
 
   .view-item {
     flex: auto;
-    width: 30%;
+    width: 25%;
     height: 50%;
-    box-shadow: 3px 3px 5px 5px #eee;
+    background-color: rgba($color: #fff, $alpha: 0.6);
+    border-radius: 5px;
+    box-shadow: 2px 2px 10px 3px #eee;
     margin: 0 20px 20px 0;
 
     .chart-container {

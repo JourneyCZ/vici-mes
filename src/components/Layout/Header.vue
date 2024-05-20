@@ -44,7 +44,7 @@
 import { ref, watchEffect, computed } from 'vue'
 import { useStore } from 'vuex'
 import routes from '@/router/routes.js'
-import { useRoute } from 'vue-router' // , useRouter
+import { useRoute, useRouter } from 'vue-router'
 import { Sunny, MoonNight } from '@element-plus/icons-vue'
 
 // 定义事件
@@ -64,12 +64,13 @@ function themeChange (checked) {
 const menus = ref(routes)
 
 // 菜单点击事件
-// const router = useRouter()
+const router = useRouter()
 function menuClick (menu) {
+  store.commit('setTabKey', menu.path)
   const children = menu?.children
   store.commit('setSubmenu', children || [])
-  // const path = children ? children[0].path : menu.path
-  // router.push(path)
+  const path = children ? children[0].path : menu.path
+  router.push(path)
 }
 
 // 默认激活菜单

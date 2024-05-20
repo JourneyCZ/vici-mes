@@ -30,6 +30,7 @@ import { useRoute, useRouter } from 'vue-router'
 const store = useStore()
 
 // 标签页
+const tabs = computed(() => store.state.navTab.activeTabs)
 const route = useRoute()
 const activeTab = ref()
 watchEffect(() => {
@@ -41,7 +42,6 @@ function tabChange (path) {
   router.push(path)
 }
 // 标签页-移除
-const tabs = computed(() => store.state.navTab.tabs)
 function tabRemove (path) {
   const newTabs = tabs.value.filter(item => item.path !== path)
   store.commit('setTabs', newTabs)

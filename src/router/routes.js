@@ -105,7 +105,7 @@ export default [
         component: () => import('@/views/quality/scheme/index.vue'),
       },
       {
-        path: '/repertory/task',
+        path: '/quality/task',
         name: '质检任务',
         component: () => import('@/views/quality/task/index.vue'),
       },
