@@ -88,6 +88,8 @@
       >
         <el-input
           v-model="formData.remark"
+          type="textarea"
+          :rows="2"
           placeholder="请输入备注"
           clearable
         />

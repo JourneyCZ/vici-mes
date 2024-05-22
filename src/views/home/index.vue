@@ -25,21 +25,21 @@ onMounted(() => {
 
 // 最近七天日期数据
 const dateList = ref([
-  moment().subtract(6, 'days').format('YYYY-MM-DD'),
-  moment().subtract(5, 'days').format('YYYY-MM-DD'),
-  moment().subtract(4, 'days').format('YYYY-MM-DD'),
-  moment().subtract(3, 'days').format('YYYY-MM-DD'),
-  moment().subtract(2, 'days').format('YYYY-MM-DD'),
-  moment().subtract(1, 'days').format('YYYY-MM-DD'),
-  moment().format('YYYY-MM-DD')
+  moment().subtract(6, 'days').format('MM-DD'),
+  moment().subtract(5, 'days').format('MM-DD'),
+  moment().subtract(4, 'days').format('MM-DD'),
+  moment().subtract(3, 'days').format('MM-DD'),
+  moment().subtract(2, 'days').format('MM-DD'),
+  moment().subtract(1, 'days').format('MM-DD'),
+  moment().format('MM-DD')
 ])
 
 // 销售订单图表
 const SaleOrderChartRef = ref()
-const SaleOrderChart = ref()
+let SaleOrderChart = null
 function initSaleOrderChart () {
-  SaleOrderChart.value = initChart(SaleOrderChartRef.value)
-  SaleOrderChart.value.setOption({
+  SaleOrderChart = initChart(SaleOrderChartRef.value)
+  SaleOrderChart.setOption({
     color: ['#67C23A', '#409EFF', '#0FCED3'],
     title: {
       text: '销售订单统计',
@@ -78,11 +78,11 @@ function initSaleOrderChart () {
 
 // 生产订单图表
 const ProductionOrderChartRef = ref()
-const ProductionOrderChart = ref()
+let ProductionOrderChart = null
 const ProductionOrderList = ref(['订单1', '订单2', '订单3', '订单4', '订单5'])
 function initProductionOrderChart () {
-  ProductionOrderChart.value = initChart(ProductionOrderChartRef.value)
-  ProductionOrderChart.value.setOption({
+  ProductionOrderChart = initChart(ProductionOrderChartRef.value)
+  ProductionOrderChart.setOption({
     color: ['#409EFF', '#E5EAF3'],
     title: {
       text: '生产订单进度',
@@ -122,10 +122,10 @@ function initProductionOrderChart () {
 
 // 生产报工图表
 const ProductionReportChartRef = ref()
-const ProductionReportChart = ref()
+let ProductionReportChart = null
 function initProductionReportChart () {
-  ProductionReportChart.value = initChart(ProductionReportChartRef.value)
-  ProductionReportChart.value.setOption({
+  ProductionReportChart = initChart(ProductionReportChartRef.value)
+  ProductionReportChart.setOption({
     color: ['#67C23A', '#409EFF', '#0FCED3'],
     title: {
       text: '生产报工统计',
@@ -141,7 +141,7 @@ function initProductionReportChart () {
         type: 'line',
         smooth: true,
         barMaxWidth: 60,
-        name: '已完成订单数',
+        name: '报工数',
         data: [56, 60, 58, 62, 60, 56, 60]
       }
     ]
@@ -171,11 +171,8 @@ function initChart (ref) {
     tooltip: {
       trigger: 'axis',
       axisPointer: {
-        type: 'line',
-        axis: 'x'
+        type: 'shadow',
       },
-      showContent: true,
-      confine: true
     },
     xAxis: {
       type: 'category'
@@ -183,19 +180,16 @@ function initChart (ref) {
     yAxis: {
       type: 'value'
     },
-    series: [
-      {
-        type: 'bar'
-      }
-    ]
+    series: []
   })
   return chart
 }
 
 // 自适应大小
 window.onresize = function () {
-  SaleOrderChart.value.resize()
-  ProductionOrderChart.value.resize()
+  SaleOrderChart?.resize()
+  ProductionOrderChart?.resize()
+  ProductionReportChart?.resize()
 }
 </script>
 

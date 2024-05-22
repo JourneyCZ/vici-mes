@@ -27,38 +27,57 @@
       }
     }
 
-    .detail-form {
-      display: flex;
-      flex-wrap: wrap;
-      padding: 20px 20px 0;
+    .el-dialog__body {
+      padding: 20px;
 
-      .el-form-item {
-        width: calc(50% - 20px);
-        margin-right: 20px;
-
-        &.full-item {
-          width: calc(100% - 20px);
-        }
-
-        .el-input,
-        .el-input-number,
-        .el-cascader {
-          width: 100%;
-
-          .el-input__inner {
-            text-align: left;
+      .detail-form {
+        display: flex;
+        flex-wrap: wrap;
+  
+        .el-form-item {
+          width: calc(50% - 20px);
+          margin-right: 20px;
+  
+          &.full-item {
+            width: calc(100% - 20px);
+          }
+  
+          .el-input,
+          .el-input-number,
+          .el-cascader {
+            width: 100%;
+  
+            .el-input__inner {
+              text-align: left;
+            }
+          }
+  
+          .quarter-input {
+            width: calc(25% - 30px);
+          }
+  
+          .form-separator {
+            width: 10px;
+            padding: 0 10px;
+            text-align: center;
           }
         }
+      }
+  
+      .detail-title {
+        display: flex;
+        align-items: center;
+        margin-bottom: 8px;
 
-        .quarter-input {
-          width: calc(25% - 30px);
+        .detail-title-text {
+          font-size: 16px;
+          line-height: 20px;
+          color: theme('colorTextBase');
+          margin-right: 20px;
         }
-
-        .form-separator {
-          width: 10px;
-          padding: 0 10px;
-          text-align: center;
-        }
+      }
+  
+      .detail-table {
       }
     }
 

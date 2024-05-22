@@ -137,6 +137,7 @@
       "customerName": "李总",
       "orderType": "订单类型1",
       "orderAmount": "100000",
+      "deliveryTime": "",
       "merchandiser": "",
       "remark": "",
       "createUserName": "管理员",

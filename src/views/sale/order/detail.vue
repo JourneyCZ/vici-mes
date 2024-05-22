@@ -5,6 +5,7 @@
     :title="dialogTitle"
     :before-close="dialogClose"
   >
+    <!-- 详情表单 -->
     <el-form
       ref="DetailFormRef"
       class="detail-form"
@@ -61,6 +62,17 @@
         />
       </el-form-item>
       <el-form-item
+        label="交付时间"
+        prop="deliveryTime"
+      >
+        <el-date-picker
+          v-model="formData.deliveryTime"
+          type="datetime"
+          value-format="YYYY-MM-DD HH:mm:ss"
+          start-placeholder="请选择计划交付时间"
+        />
+      </el-form-item>
+      <el-form-item
         label="跟单员"
         prop="merchandiser"
       >
@@ -70,7 +82,46 @@
           clearable
         />
       </el-form-item>
+      <el-form-item
+        class="full-item"
+        label="备注"
+        prop="remark"
+      >
+        <el-input
+          v-model="formData.remark"
+          type="textarea"
+          :rows="2"
+          placeholder="请输入备注"
+          clearable
+        />
+      </el-form-item>
     </el-form>
+    <!-- 详情表格 -->
+    <div class="detail-title">
+      <div class="detail-title-text">订单产品列表</div>
+      <el-button
+        class="detail-title-button"
+        type="primary"
+        plain
+        :icon="Plus"
+        @click="initProductDialog"
+      >添加订单产品</el-button>
+    </div>
+    <el-table
+      ref="DetailTable"
+      class="detail-table"
+      :data="formData.productList"
+      header-cell-class-name="data-table-header"
+      height="300"
+      stripe
+      border
+    >
+      <el-table-column type="index" label="序号" width="80" fixed="left" />
+      <el-table-column prop="productCode" label="产品编号" minWidth="80" fixed="left" />
+      <el-table-column prop="productName" label="产品名称" minWidth="80" fixed="left" />
+      <el-table-column prop="productSpecification" label="产品规格" minWidth="80" />
+      <el-table-column prop="productUnit" label="产品单位" minWidth="80" />
+    </el-table>
     <template #footer>
       <div class="dialog-footer">
         <el-button
@@ -82,12 +133,21 @@
         <el-button @click="dialogClose">取消</el-button>
       </div>
     </template>
+    <!-- 订单产品弹窗 -->
+    <ProductDialog
+      ref="ProductDialogRef"
+      @save="productSelected"
+    />
   </el-dialog>
 </template>
 
 <script setup>
 import { ref, computed, watchEffect } from 'vue'
+import { Plus } from '@element-plus/icons-vue'
+import ProductDialog from './product.vue'
 import { addStorageItem, editStorageItem } from '@/utils/LocalStorageManage.js'
+
+const emits = defineEmits(['save', 'update:visible'])
 
 // 弹窗属性
 const props = defineProps({
@@ -127,7 +187,6 @@ function detailSave () {
 }
 
 // 弹窗开关
-const emits = defineEmits(['update:visible'])
 const dialogVisible = computed({
   get: () => props.visible,
   set: (val) => {
@@ -137,6 +196,19 @@ const dialogVisible = computed({
 function dialogClose () {
   dialogVisible.value = false
   DetailFormRef.value?.resetFields()
+}
+
+// 订单产品弹窗初始化
+const ProductDialogRef = ref()
+function initProductDialog () {
+  const productData = []
+  formData.value.productList?.forEach(item => {
+    productData.push(item.productCode)
+  })
+  ProductDialogRef.value?.dialogInit(productData)
+}
+function productSelected (data) {
+  formData.value.productList = data
 }
 
 </script>
