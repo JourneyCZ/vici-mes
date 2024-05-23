@@ -22,6 +22,7 @@
     // 数据表格
     :deep(.data-table) {
       flex: auto;
+      height: 100px;
 
       .data-table-header {
         background-color: rgb(245, 247, 250);

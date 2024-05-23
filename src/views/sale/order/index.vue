@@ -115,6 +115,11 @@
         :minWidth="col.minWidth || null"
         :fixed="col.fixed || null"
       />
+      <el-table-column label="产品清单" minWidth="200" fixed="left">
+        <template v-slot="{ row }">
+          {{ row.productList?.map(item => item.productName).join('，') || '' }}
+        </template>
+      </el-table-column>
       <el-table-column label="操作" width="120" fixed="right">
         <template v-slot="{ row }">
           <el-button type="primary" link @click="handleDetail('edit', row)">编辑</el-button>
@@ -194,10 +199,10 @@ const tableCols = ref([
     minWidth: '180px',
     fixed: 'left',
   }, {
-    prop: 'productList',
-    label: '产品清单',
-    minWidth: '180px',
-  }, {
+  //   prop: 'productList',
+  //   label: '产品清单',
+  //   minWidth: '180px',
+  // }, {
     prop: 'productFinished',
     label: '已完成产品',
     minWidth: '180px',
