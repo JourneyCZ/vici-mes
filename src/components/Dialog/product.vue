@@ -2,7 +2,7 @@
   <el-dialog
     class="product-dialog"
     v-model="dialogVisible"
-    :title="dialogTitle"
+    :title="dialogTitle || '产品'"
     :before-close="dialogClose"
   >
     <el-transfer
@@ -47,10 +47,11 @@ const emits = defineEmits(['save'])
 
 // 弹窗数据
 const dialogVisible = ref(false)
-const dialogTitle = ref('添加订单产品')
+const dialogTitle = ref('')
 // 弹窗初始化
-function dialogInit (data) {
+function dialogInit (title, data) {
   dialogVisible.value = true
+  dialogTitle.value = title || ''
   selectedList.value = data
 }
 // 弹窗关闭

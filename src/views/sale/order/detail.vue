@@ -144,7 +144,7 @@
 <script setup>
 import { ref, computed, watchEffect } from 'vue'
 import { Plus } from '@element-plus/icons-vue'
-import ProductDialog from './product.vue'
+import ProductDialog from '@/components/Dialog/product.vue'
 import { addStorageItem, editStorageItem } from '@/utils/LocalStorageManage.js'
 
 const emits = defineEmits(['save', 'update:visible'])
@@ -205,7 +205,7 @@ function initProductDialog () {
   formData.value.productList?.forEach(item => {
     productData.push(item.productCode)
   })
-  ProductDialogRef.value?.dialogInit(productData)
+  ProductDialogRef.value?.dialogInit('订单产品', productData)
 }
 function productSelected (data) {
   formData.value.productList = data
