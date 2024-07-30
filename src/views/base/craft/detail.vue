@@ -44,6 +44,7 @@
         >
           <el-option value="工序1">工序1</el-option>
           <el-option value="工序2">工序2</el-option>
+          <el-option value="工序3">工序3</el-option>
         </el-select>
       </el-form-item>
       <el-form-item

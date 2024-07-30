@@ -31,8 +31,8 @@
           placeholder="请选择产品"
           clearable
         >
-          <el-option value="产品1" label="产品1"></el-option>
-          <el-option value="产品2" label="产品2"></el-option>
+          <el-option value="水管1" label="水管1"></el-option>
+          <el-option value="水管2" label="水管2"></el-option>
           <el-option value="产品3" label="产品3"></el-option>
         </el-select>
       </el-form-item>

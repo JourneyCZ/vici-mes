@@ -8,12 +8,12 @@
     >
       <!-- 表单项 -->
       <template #FormItems="{ query }">
-        <el-form-item label="工单编号" prop="productionCode">
+        <!-- <el-form-item label="工单编号" prop="productionOrderCode">
           <el-input
-            v-model="query.productionCode"
+            v-model="query.productionOrderCode"
             placeholder="请输入工单编号"
           />
-        </el-form-item>
+        </el-form-item> -->
         <el-form-item label="产品名称" prop="productName">
           <el-input
             v-model="query.productName"
@@ -120,11 +120,11 @@
         :minWidth="col.minWidth || null"
         :fixed="col.fixed || null"
       />
-      <el-table-column label="操作" width="240" fixed="right">
+      <el-table-column label="操作" width="120" fixed="right">
         <template v-slot="{ row }">
           <el-button type="primary" link @click="handleDetail('edit', row)">查看</el-button>
-          <el-button type="primary" link @click="handleDetail('edit', row)">调整审批数据</el-button>
-          <el-button type="primary" link @click="handleDetail('edit', row)">调整记录</el-button>
+          <!-- <el-button type="primary" link @click="handleDetail('edit', row)">调整审批数据</el-button>
+          <el-button type="primary" link @click="handleDetail('edit', row)">调整记录</el-button> -->
         </template>
       </el-table-column>
     </el-table>
@@ -161,7 +161,7 @@ import { getStorageItem } from '@/utils/LocalStorageManage.js' // , deleteStorag
  */
 // 表单数据
 const query = ref({
-  productionCode: null, // 工单编号
+  productionOrderCode: null, // 工单编号
   productName: null, // 产品名称
   processName: null, // 工序名称
   reportStartTimeArr: [], // 报工开始时间
@@ -186,8 +186,8 @@ function reset (newQuery) {
 // 表格列数据
 const tableCols = ref([
   {
-    prop: 'productionCode',
-    label: '工单编号',
+    prop: 'taskCode',
+    label: '任务编号',
     minWidth: '180px',
     fixed: 'left',
   }, {
@@ -199,38 +199,38 @@ const tableCols = ref([
     label: '产品名称',
     minWidth: '180px',
   }, {
-    prop: 'productSpecification',
-    label: '产品规格',
-    minWidth: '180px',
-  }, {
+  //   prop: 'productSpecification',
+  //   label: '产品规格',
+  //   minWidth: '180px',
+  // }, {
     prop: 'processName',
     label: '工序名称',
     minWidth: '180px',
   }, {
-    prop: 'processCode',
-    label: '工序编号',
-    minWidth: '180px',
-  }, {
+  //   prop: 'processCode',
+  //   label: '工序编号',
+  //   minWidth: '180px',
+  // }, {
     prop: 'processStatus',
     label: '工序状态',
     minWidth: '180px',
   }, {
-    prop: 'reportQuantity',
-    label: '报工总数',
-    minWidth: '180px',
-  }, {
-    prop: 'pricingManner',
-    label: '计价方式',
-    minWidth: '180px',
-  }, {
-    prop: 'wagePrice',
-    label: '工资单价(元)',
-    minWidth: '180px',
-  }, {
-    prop: 'predictWage',
-    label: '预计工资(元)',
-    minWidth: '180px',
-  }, {
+  //   prop: 'reportQuantity',
+  //   label: '报工总数',
+  //   minWidth: '180px',
+  // }, {
+  //   prop: 'pricingManner',
+  //   label: '计价方式',
+  //   minWidth: '180px',
+  // }, {
+  //   prop: 'wagePrice',
+  //   label: '工资单价(元)',
+  //   minWidth: '180px',
+  // }, {
+  //   prop: 'predictWage',
+  //   label: '预计工资(元)',
+  //   minWidth: '180px',
+  // }, {
     prop: 'goodProductQuantity',
     label: '良品数量',
     minWidth: '180px',
@@ -243,18 +243,18 @@ const tableCols = ref([
     label: '进度',
     minWidth: '180px',
   }, {
-    prop: 'planStartTime',
-    label: '报工开始时间',
-    minWidth: '180px',
-  }, {
-    prop: 'planEndTime',
-    label: '报工结束时间',
-    minWidth: '180px',
-  }, {
-    prop: 'actualReportTime',
-    label: '实际报工时间',
-    minWidth: '180px',
-  }, {
+  //   prop: 'planStartTime',
+  //   label: '报工开始时间',
+  //   minWidth: '180px',
+  // }, {
+  //   prop: 'planEndTime',
+  //   label: '报工结束时间',
+  //   minWidth: '180px',
+  // }, {
+  //   prop: 'actualReportTime',
+  //   label: '实际报工时间',
+  //   minWidth: '180px',
+  // }, {
     prop: 'createUserName',
     label: '创建人',
     minWidth: '180px',

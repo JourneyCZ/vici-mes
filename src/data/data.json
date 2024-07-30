@@ -40,7 +40,7 @@
   "baseProduct": [
     {
       "productCode": "PROD1001",
-      "productName": "水管",
+      "productName": "水管1",
       "productType": "普通产品",
       "productUnit": "米",
       "businessScope": "排污",
@@ -51,6 +51,20 @@
       "warningInventory": "",
       "createUserName": "管理员",
       "createTime": "2024-04-02 08:32:12"
+    },
+    {
+      "productCode": "PROD1001",
+      "productName": "水管2",
+      "productType": "普通产品",
+      "productUnit": "米",
+      "businessScope": "供水",
+      "productStatus": "启用",
+      "productSpecification": "",
+      "processRoute": "",
+      "stockroomName": "",
+      "warningInventory": "",
+      "createUserName": "管理员",
+      "createTime": "2024-04-02 08:35:52"
     }
   ],
   "baseProcess": [
@@ -71,7 +85,7 @@
       "craftId": "CRAF1001",
       "craftName": "工艺1",
       "craftCode": "CRAF1001",
-      "processName": "工序1",
+      "processName": "工序1,工序3",
       "lastProcessName": "工序2",
       "createUserName": "管理员",
       "createTime": "2024-04-02 08:38:25"
@@ -158,8 +172,8 @@
   ],
   "productionOrder": [
     {
-      "orderCode": "ORDE1001",
-      "productName": "产品1",
+      "productionOrderCode": "PORD1001",
+      "productName": "水管1",
       "planQuantity": "100",
       "productionQuantity": "100",
       "deliveryTime": "2024-06-01 00:00:00",
@@ -173,10 +187,10 @@
   "productionTask": [
     {
       "taskCode": "TASK1001",
-      "productionCode": "ORDE1001",
+      "productionOrderCode": "PORD1001",
       "planCode": "PLAN1001",
       "productCode": "PROD1001",
-      "productName": "产品1",
+      "productName": "水管1",
       "productSpecification": "",
       "productUnit": "",
       "processCode": "",
@@ -186,13 +200,15 @@
       "assignList": "",
       "equipmentGroup": "",
       "reportRatio": "",
-      "planQuantity": "",
-      "productionQuantity": "",
-      "goodProductQuantity": "",
-      "defectiveProductQuantity": "",
-      "process": "",
-      "planStartTime": "",
-      "planEndTime": "",
+      "planQuantity": "100",
+      "productionQuantity": "100",
+      "goodProductQuantity": "0",
+      "defectiveProductQuantity": "0",
+      "process": "0",
+      "deliveryTime": "2024-08-10 00:00:00",
+      "planStartTime": "2024-08-06 00:00:00",
+      "planEndTime": "2024-08-010 00:00:00",
+      "productionStatus": "未开始",
       "productionStartTime": "",
       "productionEndTime": "",
       "createUserName": "管理员",
@@ -202,9 +218,10 @@
   "productionReport": [
     {
       "reportCode": "REPO1001",
-      "productionCode": "PROD1001",
-      "productCode": "PROD1001",
-      "productName": "产品1",
+      "taskCode": "TASK1001",
+      "productionOrderCode": "PORD1001",
+      "productCode": "PROD1002",
+      "productName": "水管1",
       "productSpecification": "",
       "processName": "",
       "processCode": "",
@@ -275,7 +292,7 @@
   "qualityTask": [
     {
       "taskCode": "TASK1001",
-      "productName": "产品1",
+      "productName": "水管1",
       "planStartTime": "2024-04-10 08:30:00",
       "planEndTime": "2024-04-10 17:30:00",
       "remark": "",

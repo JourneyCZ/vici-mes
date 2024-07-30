@@ -242,7 +242,7 @@ const tableCols = ref([
     label: '单位',
     minWidth: '180px',
   }, {
-    prop: 'productionCode',
+    prop: 'productionOrderCode',
     label: '工单编号',
     minWidth: '180px',
   }, {

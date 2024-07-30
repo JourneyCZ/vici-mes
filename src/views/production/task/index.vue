@@ -8,12 +8,12 @@
     >
       <!-- 表单项 -->
       <template #FormItems="{ query }">
-        <el-form-item label="工单编号" prop="productionCode">
+        <!-- <el-form-item label="工单编号" prop="productionOrderCode">
           <el-input
-            v-model="query.productionCode"
+            v-model="query.productionOrderCode"
             placeholder="请输入工单编号"
           />
-        </el-form-item>
+        </el-form-item> -->
         <el-form-item label="产品名称" prop="productName">
           <el-input
             v-model="query.productName"
@@ -29,12 +29,12 @@
       </template>
       <!-- 表单折叠项 -->
       <template #FoldedItems="{ query }">
-        <el-form-item label="计划编号" prop="planCode">
+        <!-- <el-form-item label="计划编号" prop="planCode">
           <el-input
             v-model="query.planCode"
             placeholder="请输入计划编号"
           />
-        </el-form-item>
+        </el-form-item> -->
         <el-form-item label="计划开始时间" prop="planStartTimeArr">
           <el-date-picker
             v-model="query.planStartTimeArr"
@@ -53,7 +53,7 @@
             end-placeholder="结束日期"
           />
         </el-form-item>
-        <el-form-item label="状态" prop="status">
+        <!-- <el-form-item label="状态" prop="status">
           <el-select
             v-model="query.status"
             placeholder="请选择状态"
@@ -65,7 +65,7 @@
             <el-option value="已完成" label="已完成"></el-option>
             <el-option value="已暂停" label="已暂停"></el-option>
           </el-select>
-        </el-form-item>
+        </el-form-item> -->
       </template>
     </QueryForm>
 
@@ -103,17 +103,18 @@
         :minWidth="col.minWidth || null"
         :fixed="col.fixed || null"
       />
-      <el-table-column label="操作" width="460" fixed="right">
+      <el-table-column label="操作" width="200" fixed="right">
         <template v-slot="{ row }">
-          <el-button type="primary" link @click="handleDetail('edit', row)">开始</el-button>
-          <el-button type="primary" link @click="handleDetail('edit', row)">暂停</el-button>
-          <el-button type="primary" link @click="handleDetail('edit', row)">完成</el-button>
-          <el-button type="primary" link @click="handleDetail('edit', row)">报修</el-button>
-          <el-button type="primary" link @click="handleDetail('edit', row)">报工</el-button>
-          <el-button type="primary" link @click="handleDetail('edit', row)">查看</el-button>
+          <el-button v-if="row.productionStatus === '未开始'" type="primary" link @click="handleDetail('start', row)">开始</el-button>
+          <el-button v-if="row.productionStatus === '进行中'" type="primary" link @click="handleDetail('pause', row)">暂停</el-button>
+          <el-button v-if="row.productionStatus === '已暂停'" type="primary" link @click="handleDetail('recove', row)">恢复</el-button>
+          <el-button v-if="row.productionStatus === '进行中'" type="primary" link @click="handleDetail('report', row)">报工</el-button>
+          <el-button v-if="row.productionStatus === '进行中'" type="primary" link @click="handleDetail('finish', row)">完成</el-button>
+          <el-button type="primary" link @click="handleDetail('check', row)">查看</el-button>
+          <!-- <el-button type="primary" link @click="handleDetail('edit', row)">报修</el-button>
           <el-button type="primary" link @click="handleDetail('edit', row)">换班</el-button>
           <el-button type="primary" link @click="handleDetail('edit', row)">换班记录</el-button>
-          <el-button type="primary" link @click="handleDetail('edit', row)">拆分</el-button>
+          <el-button type="primary" link @click="handleDetail('edit', row)">拆分</el-button> -->
         </template>
       </el-table-column>
     </el-table>
@@ -150,7 +151,7 @@ import { getStorageItem } from '@/utils/LocalStorageManage.js' // , deleteStorag
  */
 // 表单数据
 const query = ref({
-  productionCode: null, // 工单编号
+  productionOrderCode: null, // 工单编号
   productName: null, // 产品名称
   processName: null, // 工序名称
   planCode: null, // 计划编号
@@ -173,15 +174,15 @@ function reset (newQuery) {
 // 表格列数据
 const tableCols = ref([
   {
-    prop: 'productionCode',
-    label: '工单编号',
-    minWidth: '180px',
-    fixed: 'left',
-  }, {
-    prop: 'planCode',
-    label: '计划编号',
-    minWidth: '180px',
-  }, {
+  //   prop: 'productionOrderCode',
+  //   label: '工单编号',
+  //   minWidth: '180px',
+  //   fixed: 'left',
+  // }, {
+  //   prop: 'planCode',
+  //   label: '计划编号',
+  //   minWidth: '180px',
+  // }, {
     prop: 'productCode',
     label: '产品编号',
     minWidth: '180px',
@@ -190,42 +191,34 @@ const tableCols = ref([
     label: '产品名称',
     minWidth: '180px',
   }, {
-    prop: 'productSpecification',
-    label: '产品规格',
-    minWidth: '180px',
-  }, {
-    prop: 'productUnit',
-    label: '产品单位',
-    minWidth: '180px',
-  }, {
-    prop: 'processCode',
-    label: '工序编号',
-    minWidth: '180px',
-  }, {
-    prop: 'processName',
-    label: '工序名称',
-    minWidth: '180px',
-  }, {
-    prop: 'processStatus',
-    label: '工序状态',
-    minWidth: '180px',
-  }, {
-    prop: 'reportPermission',
-    label: '报工权限',
-    minWidth: '180px',
-  }, {
-    prop: 'assignList',
-    label: '分配列表',
-    minWidth: '180px',
-  }, {
-    prop: 'equipmentGroup',
-    label: '设备组',
-    minWidth: '180px',
-  }, {
-    prop: 'reportRatio',
-    label: '报工数配比',
-    minWidth: '180px',
-  }, {
+  //   prop: 'productSpecification',
+  //   label: '产品规格',
+  //   minWidth: '180px',
+  // }, {
+  //   prop: 'productUnit',
+  //   label: '产品单位',
+  //   minWidth: '180px',
+  // }, {
+  //   prop: 'processCode',
+  //   label: '工序编号',
+  //   minWidth: '180px',
+  // }, {
+  //   prop: 'reportPermission',
+  //   label: '报工权限',
+  //   minWidth: '180px',
+  // }, {
+  //   prop: 'assignList',
+  //   label: '分配列表',
+  //   minWidth: '180px',
+  // }, {
+  //   prop: 'equipmentGroup',
+  //   label: '设备组',
+  //   minWidth: '180px',
+  // }, {
+  //   prop: 'reportRatio',
+  //   label: '报工数配比',
+  //   minWidth: '180px',
+  // }, {
     prop: 'planQuantity',
     label: '计划数量',
     minWidth: '180px',
@@ -242,16 +235,28 @@ const tableCols = ref([
     label: '不良品数量',
     minWidth: '180px',
   }, {
-    prop: 'process',
-    label: '进度',
-    minWidth: '180px',
-  }, {
+  //   prop: 'process',
+  //   label: '进度',
+  //   minWidth: '180px',
+  // }, {
     prop: 'planStartTime',
     label: '计划开始时间',
     minWidth: '180px',
   }, {
     prop: 'planEndTime',
     label: '计划结束时间',
+    minWidth: '180px',
+  }, {
+    prop: 'processName',
+    label: '工序名称',
+    minWidth: '180px',
+  }, {
+    prop: 'processStatus',
+    label: '工序状态',
+    minWidth: '180px',
+  }, {
+    prop: 'productionStatus',
+    label: '生产状态',
     minWidth: '180px',
   }, {
     prop: 'productionStartTime',
@@ -262,14 +267,14 @@ const tableCols = ref([
     label: '生产结束时间',
     minWidth: '180px',
   }, {
-    prop: 'processFile',
-    label: '工序附件',
-    minWidth: '180px',
-  }, {
-    prop: 'processImage',
-    label: '工序图片',
-    minWidth: '180px',
-  }, {
+  //   prop: 'processFile',
+  //   label: '工序附件',
+  //   minWidth: '180px',
+  // }, {
+  //   prop: 'processImage',
+  //   label: '工序图片',
+  //   minWidth: '180px',
+  // }, {
     prop: 'createUserName',
     label: '创建人',
     minWidth: '180px',

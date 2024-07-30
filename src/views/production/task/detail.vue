@@ -20,6 +20,7 @@
           v-model="formData.taskCode"
           placeholder="可填写，忽略将自动生成"
           clearable
+          disabled
         />
       </el-form-item>
       <el-form-item
@@ -30,9 +31,10 @@
           v-model="formData.productName"
           placeholder="请选择产品"
           clearable
+          disabled
         >
-          <el-option value="产品1" label="产品1"></el-option>
-          <el-option value="产品2" label="产品2"></el-option>
+          <el-option value="水管1" label="水管1"></el-option>
+          <el-option value="水管2" label="水管2"></el-option>
         </el-select>
       </el-form-item>
       <el-form-item
@@ -45,18 +47,7 @@
           controls-position="right"
           placeholder="请输入计划数量"
           clearable
-        />
-      </el-form-item>
-      <el-form-item
-        label="生产数量"
-        prop="planQuantity"
-      >
-        <el-input-number
-          v-model="formData.planQuantity"
-          :min="0"
-          controls-position="right"
-          placeholder="请输入生产数量"
-          clearable
+          disabled
         />
       </el-form-item>
       <el-form-item
@@ -68,9 +59,9 @@
           type="datetime"
           value-format="YYYY-MM-DD HH:mm:ss"
           start-placeholder="请选择交货时间"
+          disabled
         />
       </el-form-item>
-      <el-form-item />
       <el-form-item
         label="计划开始时间"
         prop="planStartTime"
@@ -80,6 +71,7 @@
           type="datetime"
           value-format="YYYY-MM-DD HH:mm:ss"
           start-placeholder="请选择计划开始时间"
+          disabled
         />
       </el-form-item>
       <el-form-item
@@ -91,8 +83,99 @@
           type="datetime"
           value-format="YYYY-MM-DD HH:mm:ss"
           start-placeholder="请选择计划结束时间"
+          disabled
         />
       </el-form-item>
+      <el-form-item
+        label="生产开始时间"
+        prop="productionStartTime"
+      >
+        <el-date-picker
+          v-model="formData.productionStartTime"
+          type="datetime"
+          value-format="YYYY-MM-DD HH:mm:ss"
+          start-placeholder="请选择生产开始时间"
+          :disabled="operate !== 'start'"
+        />
+      </el-form-item>
+      <el-form-item
+        v-if="operate === 'finish' || operate === 'check'"
+        label="生产结束时间"
+        prop="productionEndTime"
+      >
+        <el-date-picker
+          v-model="formData.productionEndTime"
+          type="datetime"
+          value-format="YYYY-MM-DD HH:mm:ss"
+          start-placeholder="请选择生产开始时间"
+          :disabled="operate !== 'finish'"
+        />
+      </el-form-item>
+      <el-form-item v-else />
+      <template v-if="operate === 'report' || operate === 'check'">
+        <el-form-item
+          label="工序名称"
+          prop="processName"
+        >
+          <el-input
+            v-model="formData.processName"
+            placeholder="请输入工序名称"
+            clearable
+            :disabled="operate !== 'report'"
+          />
+        </el-form-item>
+        <el-form-item
+          label="工序状态"
+          prop="processStatus"
+        >
+          <el-input
+            v-model="formData.processStatus"
+            placeholder="请输入工序状态"
+            clearable
+            :disabled="operate !== 'report'"
+          />
+        </el-form-item>
+        <el-form-item
+          label="生产数量"
+          prop="productionQuantity"
+        >
+          <el-input-number
+            v-model="formData.productionQuantity"
+            :min="0"
+            controls-position="right"
+            placeholder="请输入生产数量"
+            clearable
+            :disabled="operate !== 'report'"
+          />
+        </el-form-item>
+      <el-form-item />
+        <el-form-item
+          label="良品数量"
+          prop="goodProductQuantity"
+        >
+          <el-input-number
+            v-model="formData.goodProductQuantity"
+            :min="0"
+            controls-position="right"
+            placeholder="请输入良品数量"
+            clearable
+            :disabled="operate !== 'report'"
+          />
+        </el-form-item>
+        <el-form-item
+          label="不良品数量"
+          prop="defectiveProductQuantity"
+        >
+          <el-input-number
+            v-model="formData.defectiveProductQuantity"
+            :min="0"
+            controls-position="right"
+            placeholder="请输入不良品数量"
+            clearable
+            :disabled="operate !== 'report'"
+          />
+        </el-form-item>
+      </template>
       <el-form-item
         class="full-item"
         label="备注"
@@ -104,6 +187,7 @@
           :rows="2"
           placeholder="请输入备注"
           clearable
+          :disabled="operate === 'check'"
         />
       </el-form-item>
     </el-form>
@@ -144,7 +228,7 @@ const props = defineProps({
 })
 
 // 弹窗数据
-const dialogTitle = ref('计划订单信息')
+const dialogTitle = ref('生产任务信息')
 const DetailFormRef = ref()
 const formData = ref({})
 watchEffect(() => {
@@ -157,6 +241,17 @@ const operate = computed({
 function detailSave () {
   const saveFunc = operate.value === 'add' ? addStorageItem : editStorageItem
   formData.value.taskCode = formData.value.taskCode || `TASK${new Date().getTime()}`
+  if (operate.value === 'start') {
+    formData.value.productionStatus = '进行中'
+  } else if (operate.value === 'pause') {
+    formData.value.productionStatus = '已暂停'
+  } else if (operate.value === 'recove') {
+    formData.value.productionStatus = '进行中'
+  } else if (operate.value === 'report') {
+    addStorageItem('productionReport', formData.value, 'reportCode')
+  } else if (operate.value === 'finish') {
+    formData.value.productionStatus = '已完成'
+  }
   saveFunc('productionTask', formData.value, 'taskCode')
   emits('save')
   dialogClose()

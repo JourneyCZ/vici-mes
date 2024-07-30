@@ -14,10 +14,10 @@
     >
       <el-form-item
         label="工单编号"
-        prop="productionOrder"
+        prop="productionOrderCode"
       >
         <el-input
-          v-model="formData.productionOrder"
+          v-model="formData.productionOrderCode"
           placeholder="可填写，忽略将自动生成"
           clearable
         />
@@ -30,9 +30,10 @@
           v-model="formData.productName"
           placeholder="请选择产品"
           clearable
+          @change="productChange"
         >
-          <el-option value="产品1" label="产品1"></el-option>
-          <el-option value="产品2" label="产品2"></el-option>
+          <el-option value="水管1" label="水管1"></el-option>
+          <el-option value="水管2" label="水管2"></el-option>
         </el-select>
       </el-form-item>
       <el-form-item
@@ -80,6 +81,7 @@
           type="datetime"
           value-format="YYYY-MM-DD HH:mm:ss"
           start-placeholder="请选择计划开始时间"
+          @change="planStartTimeChange"
         />
       </el-form-item>
       <el-form-item
@@ -91,6 +93,7 @@
           type="datetime"
           value-format="YYYY-MM-DD HH:mm:ss"
           start-placeholder="请选择计划结束时间"
+          @change="planEndTimeChange"
         />
       </el-form-item>
       <el-form-item
@@ -107,6 +110,20 @@
         />
       </el-form-item>
     </el-form>
+    <el-table
+      ref="DataTable"
+      class="data-table"
+      :data="tableData"
+      header-cell-class-name="data-table-header"
+      stripe
+      border
+    >
+      <el-table-column type="index" label="序号" width="80px" fixed="left" />
+      <el-table-column prop="productName" label="产品名称" min-width="180px" />
+      <el-table-column prop="processRoute" label="工艺路线" min-width="180px" />
+      <el-table-column prop="planStartTime" label="计划开始时间" min-width="180px" />
+      <el-table-column prop="planEndTime" label="计划结束时间" min-width="180px" />
+    </el-table>
     <template #footer>
       <div class="dialog-footer">
         <el-button
@@ -123,7 +140,7 @@
 
 <script setup>
 import { ref, computed, watchEffect } from 'vue'
-import { addStorageItem, editStorageItem } from '@/utils/LocalStorageManage.js'
+import { getStorageItem, addStorageItem, editStorageItem } from '@/utils/LocalStorageManage.js'
 
 // 弹窗属性
 const props = defineProps({
@@ -144,20 +161,46 @@ const props = defineProps({
 })
 
 // 弹窗数据
-const dialogTitle = ref('计划订单信息')
+const dialogTitle = ref('生产工单信息')
 const DetailFormRef = ref()
 const formData = ref({})
 watchEffect(() => {
   formData.value = props.data || {}
 })
+// 产品选择
+const tableData = ref([])
+function productChange (val) {
+  const productName = formData.value.productName
+  const productData = getStorageItem('baseProduct')
+  tableData.value = productData.filter(item => item.productName === productName)
+}
+// 计划时间选择
+function planStartTimeChange (val) {
+  tableData.value.forEach(item => {
+    item.planStartTime = val
+  })
+}
+function planEndTimeChange (val) {
+  tableData.value.forEach(item => {
+    item.planEndTime = val
+  })
+}
 // 弹窗数据保存
 const operate = computed({
   get: () => props.operate
 })
 function detailSave () {
   const saveFunc = operate.value === 'add' ? addStorageItem : editStorageItem
-  formData.value.productionOrder = formData.value.productionOrder || `PROD${new Date().getTime()}`
-  saveFunc('productionOrder', formData.value, 'productionOrder')
+  formData.value.productionOrderCode = formData.value.productionOrderCode || `PORD${new Date().getTime()}`
+  saveFunc('productionOrder', formData.value, 'productionOrderCode')
+  tableData.value.forEach(item => {
+    item.planQuantity = formData.value.planQuantity
+    item.productionQuantity = formData.value.productionQuantity
+    item.deliveryTime = formData.value.deliveryTime
+    item.productionStatus = '未开始'
+    item.taskCode = `TASK${new Date().getTime()}`
+    addStorageItem('productionTask', item, 'taskCode')
+  })
   emits('save')
   dialogClose()
 }

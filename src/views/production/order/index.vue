@@ -8,12 +8,12 @@
     >
       <!-- 表单项 -->
       <template #FormItems="{ query }">
-        <el-form-item label="工单编号" prop="productionOrder">
+        <!-- <el-form-item label="工单编号" prop="productionOrderCode">
           <el-input
-            v-model="query.productionOrder"
+            v-model="query.productionOrderCode"
             placeholder="请输入工单编号"
           />
-        </el-form-item>
+        </el-form-item> -->
         <el-form-item label="产品名称" prop="productName">
           <el-input
             v-model="query.productName"
@@ -145,7 +145,7 @@ import { getStorageItem } from '@/utils/LocalStorageManage.js' // , deleteStorag
  */
 // 表单数据
 const query = ref({
-  productionOrder: null, // 工单编号
+  productionOrderCode: null, // 工单编号
   productName: null, // 产品名称
   status: null, // 状态
   planCode: null, // 计划编号
@@ -167,35 +167,35 @@ function reset (newQuery) {
 // 表格列数据
 const tableCols = ref([
   {
-    prop: 'productionOrder',
+    prop: 'productionOrderCode',
     label: '工单编号',
     minWidth: '180px',
     fixed: 'left',
   }, {
-    prop: 'planCode',
-    label: '计划编号',
-    minWidth: '180px',
-  }, {
-    prop: 'productCode',
-    label: '产品编号',
-    minWidth: '180px',
-  }, {
+  //   prop: 'planCode',
+  //   label: '计划编号',
+  //   minWidth: '180px',
+  // }, {
+  //   prop: 'productCode',
+  //   label: '产品编号',
+  //   minWidth: '180px',
+  // }, {
     prop: 'productName',
     label: '产品名称',
     minWidth: '180px',
   }, {
-    prop: 'productUnit',
-    label: '产品单位',
-    minWidth: '180px',
-  }, {
-    prop: 'process',
-    label: '进度',
-    minWidth: '180px',
-  }, {
-    prop: 'status',
-    label: '状态',
-    minWidth: '180px',
-  }, {
+  //   prop: 'productUnit',
+  //   label: '产品单位',
+  //   minWidth: '180px',
+  // }, {
+  //   prop: 'process',
+  //   label: '进度',
+  //   minWidth: '180px',
+  // }, {
+  //   prop: 'status',
+  //   label: '状态',
+  //   minWidth: '180px',
+  // }, {
     prop: 'planQuantity',
     label: '计划数量',
     minWidth: '180px',
@@ -220,14 +220,14 @@ const tableCols = ref([
     label: '计划结束时间',
     minWidth: '180px',
   }, {
-    prop: 'productionStartTime',
-    label: '生产开始时间',
-    minWidth: '180px',
-  }, {
-    prop: 'productionEndTime',
-    label: '生产结束时间',
-    minWidth: '180px',
-  }, {
+  //   prop: 'productionStartTime',
+  //   label: '生产开始时间',
+  //   minWidth: '180px',
+  // }, {
+  //   prop: 'productionEndTime',
+  //   label: '生产结束时间',
+  //   minWidth: '180px',
+  // }, {
     prop: 'remark',
     label: '备注',
     minWidth: '180px',
